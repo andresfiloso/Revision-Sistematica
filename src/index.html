@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <title>Revision sistematica</title>
+
+    <!-- CSS  -->
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="shortcut icon" href="images/favicon (8).ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon (8).ico" type="image/x-icon">
+</head>
+
+<body>
+    <div id="navbar" class="navbar-fixed scrollspy">
+        <nav class="white">
+            <div class="nav-wrapper container">
+                <div class="container"> <a href="#navbar" class="brand-logo"></a></div>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a class="head-link" href="#projects">Proyectos</a></li>
+                    <li><a class="head-link" href="#aboutus">Configuración</a></li>
+                    <li><a class="head-link" href="#contactus">Contacto</a></li>
+                </ul>
+                <ul class="right side-nav" id="mobile-demo">
+                    <li><a class="head-link" href="#projects">Proyectos</a></li>
+                    <li><a class="head-link" href="#aboutus">Configuración</a></li>
+                    <li><a class="head-link" href="#contactus">Contacto</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="index-banner" class="parallax-container">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <br><br>
+                <h1 class="header center black-text ">Escribe los terminos que te interesan buscar</h1>
+                <div class="row center">
+                    <h5 class="header col s12 light">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</h5>
+                </div>
+                <div class="row center">
+                    <div class="row">
+                        <form class="col s12" action="scrapping.py">
+                            <div class="row" id="args">
+                                <div class="input-field col s2">
+                                    <input placeholder="Termino 1" name="arg" type="text" name="email[]">
+                                </div>
+                                <div class="row right">
+                                        <a class="btn-floating waves-effect waves-light black" id="add">+</a>
+                                </div>
+                            </div>
+                            
+                            <button class="btn waves-effect waves-light black" type="submit" name="action">Agregar tipo</button>
+                            <button class="btn waves-effect waves-light black" type="submit" name="action">Buscar</button>
+                        </form>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <footer class="page-footer black lighten-1">
+        <div class="footer-copyright">
+            <div class="container">
+                <p>Copyright © UNLa - Proyecto de software 2018</p>
+            </div>
+        </div>
+    </footer>
+    -->
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.materialboxed').materialbox();
+            $('.button-collapse').sideNav();
+
+        });
+    </script>
+    <script>
+        $('.head-link').click(function(e) {
+            e.preventDefault();
+
+            var goto = $(this).attr('href');
+
+            $('html, body').animate({
+                scrollTop: $(goto).offset().top
+            }, 800);
+        });
+    </script>
+
+<script>
+        $(document).ready(function() {
+        $("#add_arg").click(function(){
+        
+            
+        $(this).before('<input name="arg'+contador+'" type="text" name="arg[]"></div>');
+            
+    
+        });  
+        });
+</script>
+
+
+<script>
+    $("#add").click(function (e) {
+        var contador = $("input[type='text']").length;
+        var termino = contador + 1;
+ //Append a new row of code to the "#items" div
+ $("#args").append('<div class="input-field col s2"><input placeholder="Termino '+termino+'" name="arg'+contador+'" type="text" />'
+ + '<a class="delete btn-floating waves-effect waves-light btn-small red">X</a></div>'
+ 
+ 
+ ); });
+
+
+       $("body").on("click", ".delete", function (e) {
+ $(this).parent("div").remove();
+}); 
+</script>
+
+    
+</body>
+
+</html>
