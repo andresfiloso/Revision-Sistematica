@@ -31,7 +31,7 @@ pagination = html.find('ol', {'class': 'Pagination hor-separated-list'})
 
 
 print "Content-type: text/html"
-print
+print "<meta charset=_\"utf-8\">"
 print "<html><head>"
 print ""
 print "</head><body>"
