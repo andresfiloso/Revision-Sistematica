@@ -78,7 +78,7 @@
                         <span>
                          <!-- dark Logo text -->
                          <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                         <!-- Light Logo text -->    
+                         <!-- Light Logo text -->
                          <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
                 </div>
                 <!-- ============================================================== -->
@@ -327,7 +327,7 @@
                                         <!-- Column -->
                                         <div class="col text-right align-self-center">
                                             <div data-label="85%" class="css-bar m-b-0 css-bar-info css-bar-85"></div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -360,7 +360,7 @@
                                         <!-- Column -->
                                         <div class="col text-right align-self-center">
                                             <div data-label="10%" class="css-bar m-b-0 css-bar-danger css-bar-10"></div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -394,7 +394,7 @@
                                         <!-- Column -->
                                         <div class="col text-right align-self-center">
                                             <div data-label="30%" class="css-bar m-b-0 css-bar-warning css-bar-30"></div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -466,6 +466,58 @@
     <!-- Typehead Plugin JavaScript -->
     <script src="../assets/plugins/typeahead.js-master/dist/typeahead.bundle.min.js"></script>
     <script src="../assets/plugins/typeahead.js-master/dist/typeahead-init.js"></script>
+    <!-- This is data table -->
+    <script src="../assets/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+        $(document).ready(function() {
+            var table = $('#example').DataTable({
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
+                "order": [
+                    [2, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+                    api.column(2, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+                            last = group;
+                        }
+                    });
+                }
+            });
+            // Order by the grouping
+            $('#example tbody').on('click', 'tr.group', function() {
+                var currentOrder = table.order()[0];
+                if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                    table.order([2, 'desc']).draw();
+                } else {
+                    table.order([2, 'asc']).draw();
+                }
+            });
+        });
+    });
+    $('#example23').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+    </script>
+
+
     <script>
     jQuery(document).ready(function() {
         // Switchery
