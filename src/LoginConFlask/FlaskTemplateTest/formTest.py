@@ -9,7 +9,11 @@ def student():
 def result():
     if request.method == 'POST':
         result = request.form       #usar request.form porque request.get_json() no funciona
+        usr = request.form["User"]
+        passwd = request.form["Passwd"]
         print "Valores: "
+        print usr
+        print passwd
         for key,value in result.iteritems():        #result contiene un diccionario con los valores
             print  key +" "+ value #Imprime el campo y value, que  es lo que tenemos que extraer!!
 
