@@ -48,7 +48,7 @@ def login():
         	return redirect(url_for('lookup'),code=307)
         else:
         	return redirect(url_for('home'),code=307)
-    
+
 @app.route('/lookup',methods = ['POST', 'GET'])
 def lookup():
 
@@ -58,35 +58,45 @@ def lookup():
 
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
-
-	arg = "data"
+	if request.method == "POST":
+		arg = request.form["arg"]
 
 	urlScience = "https://www.sciencedirect.com/search?qs=" + arg + "&show=10&sortBy=relevance"
 	req = requests.get(urlScience)
 	statusCode = req.status_code
 	html = BeautifulSoup(req.text, "html.parser")
 	rawScience = html.findAll('div', {'class': 'result-item-content'})
+	data_ready = {}
 
-	data = {}
+	dataArray = {}
+
+	i = 0
 
 	for link in rawScience:
 	    result = "https://www.sciencedirect.com" + link.a['href']
-	    
-	    req = requests.get(result)
-	    statusCode = req.status_code
-	    html = BeautifulSoup(req.text, "html.parser")
-	    title = html.find('span', {'class': 'title-text'}).text
-	    abstract = html.find('div', {'class': 'abstract author'}).text
 
-	    print title.encode('utf8')
-	    print result.encode('utf8')
-	    print abstract.encode('utf8')
-	    
-	    data['title'] = title
-	    data['result'] = result
-	    data['abstract'] = abstract
+	    data = {
+	    	'title' : 'title',
+	    	'result' : result,
+	    	'abstract' : 'abstract'
+	    }
 
-	data_ready = json.dumps(data)
-	session['data_ready'] = data_ready
+	    dataArray[i] = data
 
-	return render_template('results.html',data_ready=json.loads(data_ready))
+	    i = i+1
+
+	print "AAAAAAAAAAAAAAAAAAa"
+	print i
+
+	data_ready = json.dumps(dataArray)
+	#session['data_ready'] = data_ready
+
+
+	return data_ready
+
+	#return render_template('results.html',data_ready=json.loads(data_ready))
+
+
+@app.route('/results',methods = ['POST', 'GET'])
+def results():
+	return render_template('results.html')

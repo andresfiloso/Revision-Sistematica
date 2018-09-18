@@ -53,7 +53,7 @@
                         <b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="../static/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- <img src="../static/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />-->
                             <!-- Light Logo icon -->
                             <img src="../static/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
                         </b>
@@ -61,7 +61,7 @@
                         <!-- Logo text -->
                         <span>
                          <!-- dark Logo text -->
-                         <img src="../static/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                         <!-- <img src="../static/assets/images/logo-text.png" alt="homepage" class="dark-logo" />-->
                          <!-- Light Logo text -->
                          <img src="../static/assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
                 </div>
@@ -268,16 +268,8 @@
                     </div>
                 </div>
 
-                <table border = 1>
-                 {% for key, value in data_ready.items() %}
-                 
-                    <tr>
-                       <th> {{ key }} </th>
-                       <td> {{ value }} </td>
-                    </tr>
-                    
-                 {% endfor %}
-              </table>
+
+
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
@@ -293,106 +285,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                  <div class="row">
-                                  <div class="card col-md-5 col-lg-10">
-                                      <div class="card-body" >
-                                          <h4 class="card-title"><a href="">A systematic literature review of software visualization evaluation</a></h4>
-                                          <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-                                          <p class="card-text">Two key elements of modern software development are collaboration and teamwork. Current methodologies (e.g., agile) and platforms are based on these key elements. This paper describes our experience in stimulating collaboration and teamwork activities of students in the context of a software engineering course at the third year of an undergraduate program...</p>
-                                          <p class="card-text"><small class="text-muted">Journal of Systems and Software, Volume 144, October 2018, Pages 165-180</small></p>
 
-                                      </div >
-                                  </div>
-                                      <div class="col-md-2 col-lg-2">
-                                          <form name="formRes5">
-                                              <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                      <input onClick="enableTest(5)" id="checkbox-select5" type="checkbox">
-                                                      <label for="checkbox-select5"> Seleccionar </label>
-                                              </div>
-                                              <br><br>
-                                              <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                      <input id="checkbox-testeo5" type="checkbox" disabled>
-                                                      <label for="checkbox-testeo5"> Testeo </label>
-                                              </div>
-                                          </form>
-                                          <br><br>
-                                          <button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
-                                          <button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
-                                          <br><br>
-                                      </div>
-                                  </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                              <td>
-                                <div class="row">
-                                <div class="card col-md-5 col-lg-10">
-                                    <div class="card-body" >
-                                        <h4 class="card-title"><a href="article.html">A systematic literature review of software visualization evaluation</a></h4>
-                                        <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-                                        <p class="card-text">Two key elements of modern software sebastian martins Current methodologies (e.g., agile) and platforms are based on these key elements. This paper describes our experience in stimulating collaboration and teamwork activities of students in the context of a software engineering course at the third year of an undergraduate program...</p>
-                                        <p class="card-text"><small class="text-muted">Journal of Systems and Software, Volume 144, October 2018, Pages 165-180</small></p>
-                                        <a href="https://reader.elsevier.com/reader/sd/0EEB935D416414BCFE1FE61B18A0A3A9324CCFA583EA2433C7F5E43E31AC72B08401EC7B4D8DA9A0DF306A079BAEDB65" class="ribbon ribbon-vertical-r ribbon-default"><i class="fa fa-file-pdf-o"></i></a>
-                                    </div >
-                                </div>
-                                    <div class="col-md-2 col-lg-2">
-                                        <form name="formRes1">
-                                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input onClick="enableTest(1)" id="checkbox-select1" type="checkbox">
-                                                    <label for="checkbox-select1"> Seleccionar </label>
-                                            </div>
-                                            <br><br>
-                                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input id="checkbox-testeo1" type="checkbox" disabled>
-                                                    <label for="checkbox-testeo1"> Testeo </label>
-                                            </div>
-                                        </form>
-
-                                        <br><br>
-                                        <button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
-                                        <button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
-                                        <br><br>
-                                    </div>
-                                </div>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td>
-                                <div class="row">
-                                <div class="card col-md-5 col-lg-10">
-                                    <div class="card-body" >
-                                        <h4 class="card-title"><a href="">A systematic literature review of software visualization evaluation</a></h4>
-                                        <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-                                        <p class="card-text">Two key elements of modern software development are collaboration and teamwork. Current methodologies (e.g., agile) and platforms are based on these key elements. This paper describes our experience in stimulating collaboration and teamwork activities of students in the context of a software engineering course at the third year of an undergraduate program...</p>
-                                        <p class="card-text"><small class="text-muted">Journal of Systems and Software, Volume 144, October 2018, Pages 165-180</small></p>
-
-                                    </div >
-                                </div>
-                                    <div class="col-md-2 col-lg-2">
-                                        <form name="formRes2">
-                                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input onClick="enableTest(2)" id="checkbox-select2" type="checkbox">
-                                                    <label for="checkbox-select2"> Seleccionar </label>
-                                            </div>
-                                            <br><br>
-                                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input id="checkbox-testeo2" type="checkbox" disabled>
-                                                    <label for="checkbox-testeo2"> Testeo </label>
-                                            </div>
-                                        </form>
-
-                                        <br><br>
-                                        <button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
-                                        <button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
-                                        <br><br>
-                                    </div>
-                                </div>
-                              </td>
-                            </tr>
+                            <!--
                             <tr>
                               <td>
                                 <div class="row">
@@ -425,73 +319,7 @@
                                 </div>
                               </td>
                             </tr>
-
-                            <tr>
-                              <td>
-                                <div class="row">
-                                <div class="card col-md-5 col-lg-10">
-                                    <div class="card-body" >
-                                        <h4 class="card-title"><a href="">A systematic literature review of software visualization evaluation</a></h4>
-                                        <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-                                        <p class="card-text">Two key elements of modern software development are collaboration and teamwork. Current methodologies (e.g., agile) and platforms are based on these key elements. This paper describes our experience in stimulating collaboration and teamwork activities of students in the context of a software engineering course at the third year of an undergraduate program...</p>
-                                        <p class="card-text"><small class="text-muted">Journal of Systems and Software, Volume 144, October 2018, Pages 165-180</small></p>
-                                        <a href="https://ac.els-cdn.com/S0164121218300517/1-s2.0-S0164121218300517-main.pdf?_tid=1430be08-cced-4688-971a-541fa7baa2f2&acdnat=1536198546_a0041832f01bee58adc6bfe1c3b9f183" class="ribbon ribbon-vertical-r ribbon-default"><i class="fa fa-file-pdf-o"></i></a>
-                                    </div >
-                                </div>
-                                    <div class="col-md-2 col-lg-2">
-                                        <form name="formRes3">
-                                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input onClick="enableTest(3)" id="checkbox-select3" type="checkbox">
-                                                    <label for="checkbox-select3"> Seleccionar </label>
-                                            </div>
-                                            <br><br>
-                                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input id="checkbox-testeo3" type="checkbox" disabled>
-                                                    <label for="checkbox-testeo3"> Testeo </label>
-                                            </div>
-                                        </form>
-                                        <br><br>
-                                        <button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
-                                        <button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
-                                        <br><br>
-                                    </div>
-                                </div>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td>
-                                <div class="row">
-                                <div class="card col-md-5 col-lg-10">
-                                    <div class="card-body" >
-                                        <h4 class="card-title"><a href="">A systematic literature review of software visualization evaluation</a></h4>
-                                        <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-                                        <p class="card-text">Two key elements of modern software development are collaboration and teamwork. Current methodologies (e.g., agile) and platforms are based on these key elements. This paper describes our experience in stimulating collaboration and teamwork activities of students in the context of a software engineering course at the third year of an undergraduate program...</p>
-                                        <p class="card-text"><small class="text-muted">Journal of Systems and Software, Volume 144, October 2018, Pages 165-180</small></p>
-                                        <a href="https://ac.els-cdn.com/S0164121218300517/1-s2.0-S0164121218300517-main.pdf?_tid=1430be08-cced-4688-971a-541fa7baa2f2&acdnat=1536198546_a0041832f01bee58adc6bfe1c3b9f183" class="ribbon ribbon-vertical-r ribbon-default"><i class="fa fa-file-pdf-o"></i></a>
-                                    </div >
-                                </div>
-                                    <div class="col-md-2 col-lg-2">
-                                        <form name="formRes3">
-                                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input onClick="enableTest(3)" id="checkbox-select3" type="checkbox">
-                                                    <label for="checkbox-select3"> Seleccionar </label>
-                                            </div>
-                                            <br><br>
-                                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input id="checkbox-testeo3" type="checkbox" disabled>
-                                                    <label for="checkbox-testeo3"> Testeo </label>
-                                            </div>
-                                        </form>
-                                        <br><br>
-                                        <button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
-                                        <button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
-                                        <br><br>
-                                    </div>
-                                </div>
-                              </td>
-                            </tr>
-
+                            -->
 
 
                         </tbody>
@@ -616,6 +444,36 @@
             }
 
         }
+
+
+        $(document).ready(function(){
+
+            function cargarTarjetas(){
+
+                var link = window.location.href;
+
+                var arg = link.substring(link.indexOf('arg=')+4,link.indexOf('&arg2'));
+
+                $.ajax({
+                    method:"POST",
+                    url: "scrapping",
+                    data: {"arg" : arg},
+                    async: true,
+                    success: function (data) {
+                        obj = JSON.parse(data);
+
+                        for (var i = 0; i < Object.keys(obj).length; i++) {
+                            $('#myTable tbody').append('<tr><td><div class="row"><div class="card col-md-5 col-lg-10"><div class="card-body" ><h4 class="card-title"><a href="#">TITULO</a></h4><h6 class="card-subtitle mb-2 text-muted"><a href="'+obj[i].result+'">'+obj[i].result+'</a></h6><p class="card-text">ABSTRACT</p><p class="card-text"><small class="text-muted">Autor</small></p><a href="https://ac.els-cdn.com/S0164121218300517/1-s2.0-S0164121218300517-main.pdf?_tid=1430be08-cced-4688-971a-541fa7baa2f2&acdnat=1536198546_a0041832f01bee58adc6bfe1c3b9f183" class="ribbon ribbon-vertical-r ribbon-default"><i class="fa fa-file-pdf-o"></i></a></div ></div><div class="col-md-2 col-lg-2"><form name="formRes3"><div class="checkbox checkbox-primary pull-left p-t-0"><input onClick="enableTest(3)" id="checkbox-select3" type="checkbox"><label for="checkbox-select3"> Seleccionar </label></div><br><br><div class="checkbox checkbox-primary pull-left p-t-0"><input id="checkbox-testeo3" type="checkbox" disabled><label for="checkbox-testeo3"> Testeo </label></div></form><br><br><button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button><button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button><br><br></div></div></td></tr>');
+                        }
+
+                    }
+                });//fin ajax
+
+            }
+
+            cargarTarjetas();
+
+        });
 
 </script>
 
