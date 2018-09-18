@@ -4,6 +4,7 @@ from app import app
 import MySQLdb
 from bs4 import BeautifulSoup
 import requests
+import time
 
 app = Flask(__name__,
             instance_relative_config=True,
@@ -58,14 +59,12 @@ def lookup():
 
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
-	if request.method == "POST":
-		arg = request.form["arg"]
-
-	urlScience = "https://www.sciencedirect.com/search?qs=" + arg + "&show=10&sortBy=relevance"
+	urlScience = "https://www.sciencedirect.com/search?qs=" + "software" + "&show=10&sortBy=relevance"
 	req = requests.get(urlScience)
 	statusCode = req.status_code
 	html = BeautifulSoup(req.text, "html.parser")
 	rawScience = html.findAll('div', {'class': 'result-item-content'})
+
 	data_ready = {}
 
 	dataArray = {}
@@ -75,11 +74,21 @@ def scrapping():
 	for link in rawScience:
 	    result = "https://www.sciencedirect.com" + link.a['href']
 
+	    req = requests.get(result)
+	    statusCode = req.status_code
+	    html = BeautifulSoup(req.text, "html.parser")
+	    title = html.find('span', {'class': 'title-text'}).text
+	    abstract = html.find('div', {'class': 'abstract author'}).text
+
 	    data = {
-	    	'title' : 'title',
+	    	'title' : title,
 	    	'result' : result,
-	    	'abstract' : 'abstract'
+	    	'abstract' : abstract
 	    }
+
+	    print title.encode('utf8')
+	    print result.encode('utf8')
+	    print abstract.encode('utf8')
 
 	    dataArray[i] = data
 
@@ -97,6 +106,8 @@ def scrapping():
 	#return render_template('results.html',data_ready=json.loads(data_ready))
 
 
+
 @app.route('/results',methods = ['POST', 'GET'])
 def results():
 	return render_template('results.html')
+
