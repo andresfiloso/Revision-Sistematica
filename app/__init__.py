@@ -42,22 +42,26 @@ def login():
         password = str(request.form["pass"])
 
         rows = cur.execute("SELECT * FROM Usuario where usuario = '"+user+"' and pass = '"+password+"'")
-
+        #hay que fetchear los datos de la consulta y enviar el json a la vista. 
+        #Estamos enviando los parametros recibimos del form
+        
+        error = None
         if rows == 1:
-        	messages = json.dumps({"user":user,"pass":password})
-        	session['messages'] = messages
+        	datosUsuario = json.dumps({"user":user})
+        	session['datosUsuario'] = datosUsuario
         	print "Welcome " + user
         	return redirect(url_for('lookup'),code=307)
         else:
-            print "Incorrect Password"
-            return redirect(url_for('home'),code=307)
+        	error = 'Usuario o clave incorrecta!'
+        	print error
+        	return render_template('login.html', error=error)
 
 @app.route('/lookup',methods = ['POST', 'GET'])
 def lookup():
 
-	messages = session['messages']
+	datosUsuario = session['datosUsuario']
 
-	return render_template('lookup.html',messages=json.loads(messages))
+	return render_template('lookup.html',datosUsuario=json.loads(datosUsuario))
 
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():

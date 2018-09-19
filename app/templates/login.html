@@ -38,11 +38,11 @@
                     <h3 class="box-title m-b-20">Iniciar Sesión</h3>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input value="gonzalo" class="form-control" name="user" type="text" required="" placeholder="Correo electrónico"> </div>
+                            <input value="admin" class="form-control" name="user" type="text" required="" placeholder="Correo electrónico"> </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input value="123456" class="form-control" name="pass" type="password" required="" placeholder="Contraseña"> </div>
+                            <input value="admin" class="form-control" name="pass" type="password" required="" placeholder="Contraseña"> </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
@@ -61,6 +61,18 @@
                     <div class="form-group m-b-0">
                         <div class="col-sm-12 text-center">
                             <p>No tenés una cuenta? <a href="register.html" class="text-info m-l-5"><b>Registrate</b></a></p>
+                            
+                            {% block body %}
+                              {% if error %}
+                                <div class="alert alert-danger" role="alert">{{ error }}</div>
+                              {% endif %}
+                            {% endblock %}
+
+
+                                
+          
+                                
+
                         </div>
                     </div>
                 </form>

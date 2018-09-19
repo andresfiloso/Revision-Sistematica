@@ -107,7 +107,9 @@
                                     <li>
                                         <div class="dw-user-box">
                                             <div class="u-text">
-                                                <h4>Sebastian Martins</h4>
+                                                {% for key in datosUsuario %}
+                                                <h4>{{datosUsuario[key]}}</h4>
+                                                {% endfor %}
                                                 <p class="text-muted">smartins@unla.edu.ar</p></div>
                                         </div>
                                     </li>
