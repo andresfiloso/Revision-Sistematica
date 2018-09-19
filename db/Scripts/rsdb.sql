@@ -1,0 +1,35 @@
+CREATE DATABASE rsdb;
+USE rsdb;
+
+CREATE TABLE Usuario (
+	idUsuario INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	usuario VARCHAR(30) NOT NULL,
+    pass VARCHAR(30) NOT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE Proyecto (
+	idProyecto INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	proyecto VARCHAR(120) NOT NULL,
+    descripcion VARCHAR(145) NOT NULL,
+    inclusion VARCHAR(145) NOT NULL,
+    exclusion VARCHAR(145) NOT NULL,
+    idUsuario INT UNSIGNED NOT NULL,
+    CONSTRAINT `fk_proyecto_usuario`
+		FOREIGN KEY (idUsuario) REFERENCES Usuario (idUsuario)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT
+) ENGINE = InnoDB;
+
+CREATE TABLE Articulo (
+	idArticulo INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	titulo VARCHAR(120) NOT NULL,
+    url VARCHAR(120) NOT NULL,
+    pdf_link VARCHAR(120) NOT NULL,
+    abstract TEXT NOT NULL,
+    idProyecto INT UNSIGNED NOT NULL,
+    CONSTRAINT `fk_articulo_proyecto`
+		FOREIGN KEY (idProyecto) REFERENCES Proyecto (idProyecto)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT
+) ENGINE = InnoDB;
+

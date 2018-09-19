@@ -18,7 +18,7 @@ app = Flask(__name__,
 db = MySQLdb.connect(host="127.0.0.1",
                      user="root",
                      passwd="",
-                     db="usuario")
+                     db="rsdb")
 
 
 
@@ -38,17 +38,19 @@ def home():
 def login():
     if request.method == 'POST':
         result = request.form       #usar request.form porque request.get_json() no funciona
-        usr = request.form["user"]
-        passwd = str(request.form["pass"])
+        user = request.form["user"]
+        password = str(request.form["pass"])
 
-        rows = cur.execute("SELECT * FROM usuarios where nombre = '"+usr+"' and pass = '"+passwd+"'")
+        rows = cur.execute("SELECT * FROM Usuario where usuario = '"+user+"' and pass = '"+password+"'")
 
         if rows == 1:
-        	messages = json.dumps({"user":usr,"pass":passwd})
+        	messages = json.dumps({"user":user,"pass":password})
         	session['messages'] = messages
+        	print "Welcome " + user
         	return redirect(url_for('lookup'),code=307)
         else:
-        	return redirect(url_for('home'),code=307)
+            print "Incorrect Password"
+            return redirect(url_for('home'),code=307)
 
 @app.route('/lookup',methods = ['POST', 'GET'])
 def lookup():
@@ -110,4 +112,3 @@ def scrapping():
 @app.route('/results',methods = ['POST', 'GET'])
 def results():
 	return render_template('results.html')
-

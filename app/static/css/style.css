@@ -1,15 +1,3 @@
-/*
-Template Name: Monster Admin
-Author: Themedesigner
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/*
-Template Name: Monster Admin
-Author: Themedesigner
-Email: niravjoshi87@gmail.com
-File: scss
-*/
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
 /*Theme Colors*/
 /*bootstrap Color*/
@@ -18,12 +6,7 @@ File: scss
 /*Extra Variable*/
 /*Preloader*/
 @import url(../scss/icons/font-awesome/css/font-awesome.min.css);
-@import url(../scss/icons/simple-line-icons/css/simple-line-icons.css);
-@import url(../scss/icons/weather-icons/css/weather-icons.min.css);
-@import url(../scss/icons/linea-icons/linea.css);
 @import url(../scss/icons/themify-icons/themify-icons.css);
-@import url(../scss/icons/flag-icon-css/flag-icon.min.css);
-@import url(../scss/icons/material-design-iconic-font/css/materialdesignicons.min.css);
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
 @import url(../css/spinners.css);
 @import url(../css/animate.css);
@@ -5683,26 +5666,6 @@ File: scss
       border-left: 1px solid rgba(120, 130, 140, 0.13); }
 
 /*******************/
-/*Dashboard1 Weather*/
-/*******************/
-.city-weather-days {
-  margin: 0px; }
-  .city-weather-days li {
-    text-align: center;
-    padding: 15px 0; }
-    .city-weather-days li span {
-      display: block;
-      padding: 10px 0 0;
-      color: #99abb4; }
-    .city-weather-days li i {
-      display: block;
-      font-size: 20px;
-      color: #009efb; }
-    .city-weather-days li h3 {
-      font-weight: 300;
-      margin-top: 5px; }
-
-/*******************/
 /*Comment widgets*/
 /*******************/
 .comment-widgets {
@@ -6247,13 +6210,6 @@ File: scss
     margin-bottom: 20px;
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); }
-
-/*Weather smal;*/
-.weather-small h1 {
-  line-height: 30px; }
-
-.weather-small sup {
-  font-size: 60%; }
 
 /*little-profile*/
 .little-profile .pro-img {
