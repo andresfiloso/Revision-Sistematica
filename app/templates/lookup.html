@@ -75,52 +75,24 @@
                                         <h5 class="card-title">Busqueda 1</h5>
                                     </div>
 
-                                    <div class="col-xs-2 col-md-2">
+                                    <div class="col-xs-8 col-md-8">
                                         <div class="controls">
                                             <div class="input-group">
-                                                <input placeholder="A" name="arg" type="text" class="form-control" required="">
+                                                <input placeholder="keywords" name="keywords" id="keywords" type="text" class="form-control" required="">
+                                                
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-2 col-md-2">
                                         <div class="controls">
                                             <div class="input-group">
-                                                <input  placeholder="B" name="arg2" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-2 col-md-2">
-                                        <div class="controls">
-                                            <div class="input-group">
-                                                <input  placeholder="C" name="arg3" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-2 col-md-2">
-                                        <div class="controls">
-                                            <div class="input-group">
-                                                <input  placeholder="D" name="arg4" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-2 col-md-2">
-                                        <div class="controls">
-                                            <div class="input-group">
-                                                <input  placeholder="E" name="arg5" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-2 col-md-2">
-                                        <div class="controls">
-                                            <div class="input-group">
-                                                <input  placeholder="F" name="arg6" type="text" class="form-control">
+                                                <input  placeholder="add keyword" name="newKeyword" id="newKeyword" type="text" class="form-control">
+                                                <span class="input-group-btn">
+                                                <button id="addKeyword" class="btn btn-info" type="button"><span class="fa fa-fw fa-plus field-icon "></span></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>
@@ -197,58 +169,75 @@
     <!-- ============================================================== -->
     <script src="../static/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
+    <script>
+        $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+    </script>
 
+   <script>
+    $(document).ready(function(){
+        $("#addKeyword").on("click", function(){
+            var keywords = document.getElementById("keywords").value;
+            var newKeyword = document.getElementById("newKeyword").value;
+            if(keywords == ""){
+             keywords = newKeyword;   
+            }else{
+             keywords = keywords + "; " + newKeyword;
+            }
+            $("input[name='keywords']").val(keywords);
+            $("input[name='newKeyword']").val("");
+        });
+    });
+    </script>
+    <script>
+        var input = document.getElementById("newKeyword");
+        input.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("addKeyword").click();
+            }
+        });
+    </script>
 
     <script>
     var cantTerminos = 1;
     $("#addTermino").click(function (e) {
         cantTerminos ++;
-     $("#terminos").append('<div class="card"><div class="card-body">'+
+     $("#terminos").append('<div class="row">'+
+                    '<div class="col-12">'+
+                    '<div class="card">'+
+                    '<div class="card-body ">'+
                     '<div class="row" id="args">'+
-                    '<div class="col-xs-12 col-md-11 " >'+
-                    '<h5 class="card-title">Busqueda '+cantTerminos+'</h5>'   +
+                    '<div class="col-xs-12 col-md-11">'+
+                    '<h5 class="card-title">Busqueda '+ cantTerminos +'</h5>'+
                     '</div>'+
-                    '<div class="col-xs-2 col-md-2">'+
+                    '<div class="col-xs-8 col-md-8">'+
                     '<div class="controls">'+
                     '<div class="input-group">'+
-                    '<input placeholder="A" name="arg" type="text" class="form-control" required="">'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="col-xs-2 col-md-2">'+
-                    '<div class="controls">'+
-                    '<div class="input-group">'+
-                    '<input  placeholder="B" name="arg2" type="text" class="form-control">'+
+                    '<input placeholder="keywords" name="keywords'+cantTerminos+'" id="keywords'+cantTerminos+'" type="text" class="form-control" required="">'+
                     '</div>'+
                     '</div>'+
                     '</div>'+
                     '<div class="col-xs-2 col-md-2">'+
                     '<div class="controls">'+
                     '<div class="input-group">'+
-                    '<input  placeholder="C" name="arg3" type="text" class="form-control">'+
+                    '<input  placeholder="add keyword" name="'+cantTerminos+'newKeyword" id="newKeyword" type="text" class="form-control">'+
+                    '<span class="input-group-btn">'+
+                    '<button id="addKeyword'+cantTerminos+'" class="btn btn-info" type="button"><span class="fa fa-fw fa-plus field-icon "></span></button>'+
                     '</div>'+
                     '</div>'+
                     '</div>'+
-                    '<div class="col-xs-2 col-md-2">'+
-                    '<div class="controls">'+
-                    '<div class="input-group">'+
-                    '<input  placeholder="D" name="arg4" type="text" class="form-control">'+
                     '</div>'+
                     '</div>'+
                     '</div>'+
-                    '<div class="col-xs-2 col-md-2">'+
-                    '<div class="controls">'+
-                    '<div class="input-group">'+
-                    '<input  placeholder="E" name="arg5" type="text" class="form-control">'+
                     '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="col-xs-2 col-md-2">'+
-                    '<div class="controls">'+
-                    '<div class="input-group">'+
-                    '<input  placeholder="F" name="arg6" type="text" class="form-control">'+
-                    '</div></div></div></div></div>'+
-                    '<a class="delete ribbon ribbon-corner ribbon-default ribbon-right"><i class="fa fa-times"></i></a></div>'
+                    '</div>'
 
 
 

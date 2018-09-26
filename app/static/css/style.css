@@ -7981,3 +7981,10 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
     background-color: rgba(255, 255, 255, 0.5); }
     .switch label input[type=checkbox]:checked + .lever.switch-col-white:after {
       background-color: #ffffff; }
+
+
+.ajax-loader {
+  visibility: hidden;
+  position: absolute;
+  z-index: +100 !important;
+}

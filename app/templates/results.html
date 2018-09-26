@@ -66,6 +66,9 @@
                             <li class="breadcrumb-item active">1546 resultados</li>
                         </ol>
                     </div>
+                    <div class="col-md-3 col-3 align-self-right">
+                        
+                    </div>
                 </div>
 
 
@@ -76,8 +79,12 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+
                 <div id="resultados">
-                    
+                    <div class="ajax-loader">
+                            <img src="static/img/loading.gif" class="img-responsive center" height="10" width="10"  />
+                            <p>Buscando articulos...</p>
+                        </div>
 
                 </div>
 
@@ -202,15 +209,17 @@
 
             function cargarTarjetas(){
 
-                var link = window.location.href;
-
-                var arg = link.substring(link.indexOf('arg=')+4,link.indexOf('&arg2'));
-
+                var urlString = window.location.href;
+                var urlParams = parseURLParams(urlString);
+                 alert(urlParams);
                 $.ajax({
-                    method:"POST",
+                    method:"GET",
                     url: "scrapping",
-                    data: {"arg" : arg},
+                    data: {"urlParams" : parseURLParams(urlString)},
                     async: true,
+                    beforeSend: function(){
+                      $('.ajax-loader').css("visibility", "visible");
+                    },
                     success: function (data) {
                         obj = JSON.parse(data);
 
@@ -219,7 +228,7 @@
 
 
                         for (var i = 0; i < Object.keys(obj).length; i++) {
-                            tabla+='<tr><td><div class="row"><div class="card col-md-5 col-lg-10"><div class="card-body" ><h4 class="card-title"><a href="#">'+obj[i].title+'</a></h4><h6 class="card-subtitle mb-2 text-muted"><a href="'+obj[i].result+'">'+obj[i].result+'</a></h6><p class="card-text">'+obj[i].abstract+'</p><p class="card-text"><small class="text-muted">Autor</small></p><a href="https://ac.els-cdn.com/S0164121218300517/1-s2.0-S0164121218300517-main.pdf?_tid=1430be08-cced-4688-971a-541fa7baa2f2&acdnat=1536198546_a0041832f01bee58adc6bfe1c3b9f183" class="ribbon ribbon-vertical-r ribbon-default"><i class="fa fa-file-pdf-o"></i></a></div ></div><div class="col-md-2 col-lg-2"><form name="formRes'+i+'"><div class="checkbox checkbox-primary pull-left p-t-0"><input onClick="enableTest('+i+')" id="checkbox-select'+i+'" type="checkbox"><label for="checkbox-select'+i+'"> Seleccionar </label></div><br><br><div class="checkbox checkbox-primary pull-left p-t-0"><input id="checkbox-testeo'+i+'" type="checkbox" disabled><label for="checkbox-testeo'+i+'"> Testeo </label></div></form><br><br><button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button><button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button><br><br></div></div></td></tr>';
+                            tabla+='<tr><td><div class="row"><div class="card col-md-10 col-lg-10"><div class="card-body" ><h4 class="card-title"><a href="article?id='+obj[i].id+'">'+obj[i].title+'</a></h4><h6 class="card-subtitle mb-2 text-muted"><a href="'+obj[i].result+'">'+obj[i].result+'</a></h6><p class="card-text">'+obj[i].abstract+'</p><p class="card-text"><small class="text-muted">Autor</small></p><a href="https://ac.els-cdn.com/S0164121218300517/1-s2.0-S0164121218300517-main.pdf?_tid=1430be08-cced-4688-971a-541fa7baa2f2&acdnat=1536198546_a0041832f01bee58adc6bfe1c3b9f183" class="ribbon ribbon-vertical-r ribbon-default"><i class="fa fa-file-pdf-o"></i></a></div ></div><div class="col-md-2 col-lg-2"><form name="formRes'+i+'"><div class="checkbox checkbox-primary pull-left p-t-0"><input onClick="enableTest('+i+')" id="checkbox-select'+i+'" type="checkbox"><label for="checkbox-select'+i+'"> Seleccionar </label></div><br><br><div class="checkbox checkbox-primary pull-left p-t-0"><input id="checkbox-testeo'+i+'" type="checkbox" disabled><label for="checkbox-testeo'+i+'"> Testeo </label></div></form><br><br><button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button><button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button><br><br></div></div></td></tr>';
                         }
 
                         tabla+='</tbody></table></div>';
@@ -229,6 +238,13 @@
                         $('#resultados').append(tabla);
 
 
+                    },
+                    complete: function(){
+                      $('.ajax-loader').css("visibility", "hidden");
+                    },
+                    error : function (xhr, ajaxOptions, thrownError){  
+                      console.log(xhr.status);          
+                      console.log(thrownError);
                     }
                 });//fin ajax
 
@@ -240,6 +256,43 @@
 
 
 
+</script>
+
+
+<script>
+    window.onload=function() {
+   document.getElementById("a").onclick=function() {
+     var myForm = document.createElement("form");
+     myForm.action=this.href;// the href of the link
+     myForm.target="myFrame";
+     myForm.method="POST";
+     myForm.submit();
+     return false; // cancel the actual link
+   }
+ }
+</script>
+
+
+<script>
+    function parseURLParams(url) {
+    var queryStart = url.indexOf("?") + 1,
+        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+        query = url.slice(queryStart, queryEnd - 1),
+        pairs = query.replace(/\+/g, " ").split("&"),
+        parms = {}, i, n, v, nv;
+
+    if (query === url || query === "") return;
+
+    for (i = 0; i < pairs.length; i++) {
+        nv = pairs[i].split("=", 2);
+        n = decodeURIComponent(nv[0]);
+        v = decodeURIComponent(nv[1]);
+
+        if (!parms.hasOwnProperty(n)) parms[n] = [];
+        parms[n].push(nv.length === 2 ? v : null);
+    }
+    return parms;
+}
 </script>
 
 

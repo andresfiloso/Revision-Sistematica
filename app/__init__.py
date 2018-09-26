@@ -65,7 +65,10 @@ def lookup():
 
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
+	print "PARAMETROS GET: "
+	print request.args.get("urlParams%5Bkeywords%5D%5B%5D")
 	urlScience = "https://www.sciencedirect.com/search?qs=" + "software" + "&show=10&sortBy=relevance"
+	print urlScience
 	req = requests.get(urlScience)
 	statusCode = req.status_code
 	html = BeautifulSoup(req.text, "html.parser")
@@ -78,34 +81,38 @@ def scrapping():
 	i = 0
 
 	for link in rawScience:
-	    result = "https://www.sciencedirect.com" + link.a['href']
 
-	    req = requests.get(result)
-	    statusCode = req.status_code
-	    html = BeautifulSoup(req.text, "html.parser")
-	    title = html.find('span', {'class': 'title-text'}).text
-	    abstract = html.find('div', {'class': 'abstract author'}).text
+		if(i < 5):
+		    result = "https://www.sciencedirect.com" + link.a['href']
 
-	    data = {
-	    	'title' : title,
-	    	'result' : result,
-	    	'abstract' : abstract
-	    }
+		    req = requests.get(result)
+		    statusCode = req.status_code
+		    html = BeautifulSoup(req.text, "html.parser")
+		    title = html.find('span', {'class': 'title-text'}).text
+		    abstract = html.find('div', {'class': 'abstract author'}).text
 
-	    print title.encode('utf8')
-	    print result.encode('utf8')
-	    print abstract.encode('utf8')
+		    data = {
+		    	'id' : i,
+		    	'title' : title,
+		    	'result' : result,
+		    	'abstract' : abstract
+		    }
 
-	    dataArray[i] = data
+		    print title.encode('utf8')
+		    print result.encode('utf8')
+		    print abstract.encode('utf8')
 
-	    i = i+1
+		    dataArray[i] = data
+
+		    i = i+1
 
 	print "AAAAAAAAAAAAAAAAAAa"
+	print "Cantidad de articulos"
 	print i
 
-	data_ready = json.dumps(dataArray)
-	#session['data_ready'] = data_ready
 
+	#session['articulos'] = dataArray
+	data_ready = json.dumps(dataArray)
 
 	return data_ready
 
@@ -116,3 +123,15 @@ def scrapping():
 @app.route('/results',methods = ['POST', 'GET'])
 def results():
 	return render_template('results.html')
+
+
+@app.route('/article',methods = ['POST', 'GET'])
+def article():
+	id = request.args.get("id")	
+	for article in session['articulos']:
+		print "articulo: "
+		print article[0]		
+
+	print session['titulo']
+
+	return render_template('article.html')
