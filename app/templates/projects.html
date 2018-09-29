@@ -22,7 +22,6 @@
 
     <link href="../static/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <link href="../static/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <link href="../static/assets/plugins/switchery/dist/switchery.min.css" rel="stylesheet" />
     <link href="../static/assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
     <link href="../static/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
     <link href="../static/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
@@ -114,414 +113,52 @@
                     </div>
                 </div>
 
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <div class="ribbon ribbon-default">Colaborador</div>
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Software en la salud</a></h2>
-                                            <h6 class="text-muted">Sebastian Martins</h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="85%" class="css-bar m-b-0 css-bar-info css-bar-85"></div>
 
+
+                          {% for key in session['proyectos'] %}
+                        <h4></h4>
+
+
+                                <!-- Row -->
+                        <div class="row">
+                            <!-- Column -->
+                            <div class="col-md-12 col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-10 col-lg-10">
+                                        <div class="ribbon-wrapper card card-body">
+                                            <!-- Row -->
+                                            <div class="row">
+                                                <div class="ribbon ribbon-default">Owner</div>
+                                                <!-- Column -->
+                                                <div class="col p-r-0 align-self-center">
+                                                    <h2 class="font-light m-b-0"><a href="/classify?project-id={{session['proyectos'][key].idProyecto}}">{{session['proyectos'][key].proyecto}}</a></h2>
+                                                    <h6 class="text-muted">{{session['datosUsuario'].usuario}}</h6>
+                                                    <h6 class="text-muted">{{session['proyectos'][key].descripcion}}</h6>
+                                                </div>
+                                                <!-- Porcentaje de desarrollo del proyecto:
+                                                <div class="col text-right align-self-center">
+                                                    <div data-label="85%" class="css-bar m-b-0 css-bar-info css-bar-85"></div>
+
+                                                </div>
+                                                -->
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-2 col-lg-2">
+                                        <br>
+                                        <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
+                                        <br><br>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" class="js-switch" data-color="#4286f4" data-size="small"/>
-                                <label for="checkbox">Notificaciones</label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br><br>
-                            </div>
                         </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Metodologías de explotación de información</a></h2>
-                                            <h6 class="text-muted"></h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="10%" class="css-bar m-b-0 css-bar-danger css-bar-10"></div>
+                        <!-- Row -->
+                
+                        {% endfor %}
+           
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" checked class="js-switch" data-color="#4286f4" data-size="small" />
-                                <label for="checkbox">Notificaciones </label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <div class="ribbon ribbon-default">Colaborador</div>
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Big data en latinoamérica</a></h2>
-                                            <h6 class="text-muted">Darío Andrés Cesarano</h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="30%" class="css-bar m-b-0 css-bar-warning css-bar-30"></div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" checked class="js-switch" data-color="#4286f4" data-size="small" />
-                                <label for="checkbox"> Notificaciones</label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <div class="ribbon ribbon-default">Colaborador</div>
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Software en la salud</a></h2>
-                                            <h6 class="text-muted">Sebastian Martins</h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="85%" class="css-bar m-b-0 css-bar-info css-bar-85"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" class="js-switch" data-color="#4286f4" data-size="small"/>
-                                <label for="checkbox">Notificaciones</label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Metodologías de explotación de información</a></h2>
-                                            <h6 class="text-muted"></h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="10%" class="css-bar m-b-0 css-bar-danger css-bar-10"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" checked class="js-switch" data-color="#4286f4" data-size="small" />
-                                <label for="checkbox">Notificaciones </label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <div class="ribbon ribbon-default">Colaborador</div>
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Big data en latinoamérica</a></h2>
-                                            <h6 class="text-muted">Darío Andrés Cesarano</h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="30%" class="css-bar m-b-0 css-bar-warning css-bar-30"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" checked class="js-switch" data-color="#4286f4" data-size="small" />
-                                <label for="checkbox"> Notificaciones</label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <div class="ribbon ribbon-default">Colaborador</div>
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Software en la salud</a></h2>
-                                            <h6 class="text-muted">Sebastian Martins</h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="85%" class="css-bar m-b-0 css-bar-info css-bar-85"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" class="js-switch" data-color="#4286f4" data-size="small"/>
-                                <label for="checkbox">Notificaciones</label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Metodologías de explotación de información</a></h2>
-                                            <h6 class="text-muted"></h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="10%" class="css-bar m-b-0 css-bar-danger css-bar-10"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" checked class="js-switch" data-color="#4286f4" data-size="small" />
-                                <label for="checkbox">Notificaciones </label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <div class="ribbon ribbon-default">Colaborador</div>
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Big data en latinoamérica</a></h2>
-                                            <h6 class="text-muted">Darío Andrés Cesarano</h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="30%" class="css-bar m-b-0 css-bar-warning css-bar-30"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" checked class="js-switch" data-color="#4286f4" data-size="small" />
-                                <label for="checkbox"> Notificaciones</label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <div class="ribbon ribbon-default">Colaborador</div>
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Software en la salud</a></h2>
-                                            <h6 class="text-muted">Sebastian Martins</h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="85%" class="css-bar m-b-0 css-bar-info css-bar-85"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" class="js-switch" data-color="#4286f4" data-size="small"/>
-                                <label for="checkbox">Notificaciones</label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Metodologías de explotación de información</a></h2>
-                                            <h6 class="text-muted"></h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="10%" class="css-bar m-b-0 css-bar-danger css-bar-10"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" checked class="js-switch" data-color="#4286f4" data-size="small" />
-                                <label for="checkbox">Notificaciones </label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-12 col-lg-12">
-                        <div class="row">
-                            <div class="col-md-10 col-lg-10">
-                                <div class="ribbon-wrapper card card-body">
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <div class="ribbon ribbon-default">Colaborador</div>
-                                        <!-- Column -->
-                                        <div class="col p-r-0 align-self-center">
-                                            <h2 class="font-light m-b-0"><a href="">Big data en latinoamérica</a></h2>
-                                            <h6 class="text-muted">Darío Andrés Cesarano</h6></div>
-                                        <!-- Column -->
-                                        <div class="col text-right align-self-center">
-                                            <div data-label="30%" class="css-bar m-b-0 css-bar-warning css-bar-30"></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-lg-2">
-                                <br>
-                                <input type="checkbox" checked class="js-switch" data-color="#4286f4" data-size="small" />
-                                <label for="checkbox"> Notificaciones</label>
-                                <br><br>
-                                <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
+                
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -676,18 +313,12 @@
     <script src="../static/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!--Custom JavaScript -->
     <script src="../static/js/custom.min.js"></script>
-    <!-- ============================================================== -->
-    <!-- This page plugins -->
-    <!-- ============================================================== -->
-    <script src="../static/assets/plugins/switchery/dist/switchery.min.js"></script>
+    
     <script src="../static/assets/plugins/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
     <script src="../static/assets/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="../static/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script src="../static/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="../static/assets/plugins/multiselect/js/jquery.multi-select.js"></script>
-    <!-- Typehead Plugin JavaScript -->
-    <script src="../static/assets/plugins/typeahead.js-master/dist/typeahead.bundle.min.js"></script>
-    <script src="../static/assets/plugins/typeahead.js-master/dist/typeahead-init.js"></script>
     <!-- This is data table -->
     <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
 

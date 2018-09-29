@@ -1,4 +1,4 @@
-<!-- ============================================================== -->
+        <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
         <header class="topbar">
@@ -7,17 +7,11 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/projects">
-                        <!-- Logo icon -->
+                    <a class="navbar-brand" href="/projects?user={{session['datosUsuario'].usuario}}">
                         <b>
-                            <!-- Light Logo icon -->
-                            <img width="90%" src="../static/assets/images/logo.png" alt="homepage" class="light-logo" />
+                            <i class="fa fa-modx fa-lg" style="color:white"></i>
                         </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        <span>
-                         <!-- Light Logo text -->
-                         <img src="../static/assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                    </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -32,8 +26,9 @@
                         <!-- ============================================================== -->
                         <li class="nav-item hidden-sm-down search-box">
                             <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <form class="app-search">
-                                <input type="text" class="form-control" placeholder="Query"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+                            <form class="app-search" action="/results" method="GET">
+                                <input type="text" class="form-control" placeholder="Query"> <a class="srh-btn"><i class="ti-close"></i></a> 
+                            </form>
                         </li>
                     </ul>
                     <!-- ============================================================== -->
@@ -47,7 +42,7 @@
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="user-img">
                                 <span class="round">
-                                  SM
+                                  {{session['datosUsuario'].usuario[0:2].upper()}}
                                 </span>
                                 <span class="profile-status away pull-right"></span>
                               </div>
@@ -58,15 +53,13 @@
                                     <li>
                                         <div class="dw-user-box">
                                             <div class="u-text">
-                                                {% for key in datosUsuario %}
-                                                <h4>{{datosUsuario[key]}}</h4>
-                                                {% endfor %}
-                                                <p class="text-muted">smartins@unla.edu.ar</p></div>
+                                                <h4>  {{session['datosUsuario'].usuario}}</h4>
+                                                <p class="text-muted">{{session['datosUsuario'].email}}</p></div>
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-user"></i> Mi cuenta</a></li>
-                                    <li><a href="/projects"><i class="ti-search"></i> Mis proyectos</a></li>
+                                    <li><a href="/projects?user={{session['datosUsuario'].usuario}}"><i class="ti-search"></i> Mis proyectos</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/classify"><i class="ti-check"></i> Clasificar articulos</a></li>
                                     <li role="separator" class="divider"></li>
@@ -94,8 +87,11 @@
                         <li>
                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-file"></i><span class="hide-menu">Mis proyectos </span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="#">Proyecto 1</a></li>
-                                <li><a href="#">Proyecto 2</a></li>
+                                {% for key in session['proyectos'] %}
+                                    <li><a href="/classify?project-id={{session['proyectos'][key].idProyecto}}">{{session['proyectos'][key].proyecto}}</a></li>
+
+                                     
+                                 {% endfor %}
                             </ul>
                         </li>
                         <li>
@@ -114,3 +110,7 @@
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
+
+
+
+        
