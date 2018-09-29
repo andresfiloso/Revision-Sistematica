@@ -53,12 +53,12 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-8 col-10 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Nombre de articulo</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">{{session['titulo']}}</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Nombre proyecto</a></li>
                             <li class="breadcrumb-item "><a href="lookup.html">Buscador</a></li>
                             <li class="breadcrumb-item "><a href="results.html">Resultados</a></li>
-                            <li class="breadcrumb-item active">Nombre articulo</li>
+                            <li class="breadcrumb-item active">{{session['titulo']}}</li>
                         </ol>
                         <p class="card-text"><small class="text-muted">Software / Health</small></p>
                     </div>
@@ -74,31 +74,14 @@
                     <div class="row">
                         <div class="card col-md-5 col-lg-10">
                             <div class="card-body">
-                                <h1 class="card-title"><a href="">{{session['titulo']}}/a></h1>
-                                <h5 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h5>
+                                <h1 class="card-title"><a href="">{{session['titulo']}}</a></h1>
+                                <h5 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">{{session['link']}}</a></h5>
 
-                                <h2 class="card-title">Abstract</h2>
-                                <h4 class="card-title">Context:</h4>
+                                <div id="abstract">
+                                    {{session['abstract']}}
+                                </div>
 
-                                    <p class="card-text">
-                                     Software systems evolve over time to meet the new requirements of users. These new requirements, usually, are not reflected in the original documents of these software systems. Therefore, the new version of a software system deviates from the original and documented architecture. This way, it will be more difficult to understand it after a while and it will be difficult to make new changes conveniently. Clustering techniques are used to extract the architecture of a software system in order to understand it. An artifact dependency graph (ADG) is often used for clustering, which is extracted from a source code. In the literature, some hierarchical and search-based clustering methods have been presented to extract the software architecture. Hierarchical algorithms have reasonable search time; however, they are not able to find a good architecture. In contrast, search-based algorithms are often better in this regard; however, their time and space limitations make them useless in practice for large-scale software systems. Both hierarchical and search-based clustering methods overlook the existing knowledge in an ADG for clustering.
-                                     </p>
-
-                                    <h4 class="card-title">Objective:</h4>
-                                     <p class="card-text">To overcome the limitations of the existing clustering methods, this paper presents a new deterministic clustering algorithm named Neighborhood Tree Algorithm.</p>
-
-
-                                    <h4 class="card-title">Method:</h4>
-                                    <p class="card-text">The new algorithm creates a neighborhood tree using available knowledge in an ADG and uses this tree for clustering.</p>
-
-                                    <h4 class="card-title">Results:</h4>
-                                    <p class="card-text">Our initial results indicate that the algorithm is better able to extract an acceptable architecture in a reasonable time, compared with hierarchical and search-based algorithms.</p>
-
-                                    <h4 class="card-title">Conclusions:</h4>
-                                    <p class="card-text">The proposed clustering algorithm is expected to greatly assist software engineers in extracting meaningful and understandable subsystems from a source code.</p>
-
-                                    <h4 class="card-title">Keywords</h4>
-                                    <p class="card-text">Software maintenanceClustering AlgorithmsSoftware architectureSoftware ComprehensionSoftware Evolution</p>
+                                
                             </div>
 
 
@@ -178,6 +161,7 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="../static/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+
 
 
     <script type="text/javascript">

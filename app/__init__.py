@@ -110,7 +110,7 @@ def scrapping():
 	print "Cantidad de articulos"
 	print i
 
-
+	session['cantArticulos'] = i
 	#session['articulos'] = dataArray
 	data_ready = json.dumps(dataArray)
 
@@ -127,11 +127,28 @@ def results():
 
 @app.route('/article',methods = ['POST', 'GET'])
 def article():
-	id = request.args.get("id")	
-	for article in session['articulos']:
-		print "articulo: "
-		print article[0]		
+	title = request.args.get("title")		
+	session['titulo'] = title
+	url = request.args.get("url")		
+	session['link'] = url
 
-	print session['titulo']
+	abstract = request.args.get("abstract")	
+
+	session['abstract'] = abstract
 
 	return render_template('article.html')
+
+
+@app.route('/projects',methods = ['POST', 'GET'])
+def projects():
+	return render_template('projects.html')
+
+@app.route('/newProyect',methods = ['POST', 'GET'])
+def newProyect():
+	return render_template('newProyect.html')
+
+
+@app.route('/classify',methods = ['POST', 'GET'])
+def classify():
+	return render_template('classify.html')
+

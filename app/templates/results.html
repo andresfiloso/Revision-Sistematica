@@ -63,7 +63,7 @@
                         </ol>
                         <ol class="breadcrumb">
 
-                            <li class="breadcrumb-item active">1546 resultados</li>
+                            <li class="breadcrumb-item active">{{session['cantArticulos']}} resultados</li>
                         </ol>
                     </div>
                     <div class="col-md-3 col-3 align-self-right">
@@ -228,7 +228,38 @@
 
 
                         for (var i = 0; i < Object.keys(obj).length; i++) {
-                            tabla+='<tr><td><div class="row"><div class="card col-md-10 col-lg-10"><div class="card-body" ><h4 class="card-title"><a href="article?id='+obj[i].id+'">'+obj[i].title+'</a></h4><h6 class="card-subtitle mb-2 text-muted"><a href="'+obj[i].result+'">'+obj[i].result+'</a></h6><p class="card-text">'+obj[i].abstract+'</p><p class="card-text"><small class="text-muted">Autor</small></p><a href="https://ac.els-cdn.com/S0164121218300517/1-s2.0-S0164121218300517-main.pdf?_tid=1430be08-cced-4688-971a-541fa7baa2f2&acdnat=1536198546_a0041832f01bee58adc6bfe1c3b9f183" class="ribbon ribbon-vertical-r ribbon-default"><i class="fa fa-file-pdf-o"></i></a></div ></div><div class="col-md-2 col-lg-2"><form name="formRes'+i+'"><div class="checkbox checkbox-primary pull-left p-t-0"><input onClick="enableTest('+i+')" id="checkbox-select'+i+'" type="checkbox"><label for="checkbox-select'+i+'"> Seleccionar </label></div><br><br><div class="checkbox checkbox-primary pull-left p-t-0"><input id="checkbox-testeo'+i+'" type="checkbox" disabled><label for="checkbox-testeo'+i+'"> Testeo </label></div></form><br><br><button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button><button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button><br><br></div></div></td></tr>';
+                            tabla+='<tr><td>'+
+                            '<div class="row">'+
+                            '<div class="card col-md-10 col-lg-10">'+
+                            '<div class="card-body" >'+
+                            '<h4 class="card-title">'+
+                            '<a href="article?title='+obj[i].title+'&url='+obj[i].result+'&abstract='+obj[i].abstract+'">'+obj[i].title+'</a></h4>'+
+                            '<h6 class="card-subtitle mb-2 text-muted">'+
+                            '<a href="'+obj[i].result+'">'+obj[i].result+'</a></h6>'+
+                            '<p class="card-text">'+ parseAbstract(obj[i].abstract)  +'</p>'+
+                            '<a href="" class="ribbon ribbon-vertical-r ribbon-default">'+
+                            '<i class="fa fa-file-pdf-o"></i></a>'+
+                            '</div >'+
+                            '</div>'+
+                            '<div class="col-md-2 col-lg-2">'+
+                            '<form name="formRes'+i+'">'+
+                            '<div class="checkbox checkbox-primary pull-left p-t-0">'+
+                            '<input onClick="enableTest('+i+')" id="checkbox-select'+i+'" type="checkbox">'+
+                            '<label for="checkbox-select'+i+'"> Seleccionar </label>'+
+                            '</div>'+
+                            '<br><br>'+
+                            '<div class="checkbox checkbox-primary pull-left p-t-0">'+
+                            '<input id="checkbox-testeo'+i+'" type="checkbox" disabled>'+
+                            '<label for="checkbox-testeo'+i+'"> Testeo </label>'+
+                            '</div>'+
+                            '</form>'+
+                            '<br><br>'+
+                            '<button class="saveArticle btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>'+
+                            '<button class="deleteArticle btn btn-block btn-danger waves-effect waves-light">Eliminar</button>'+
+                            '<br><br>'+
+                            '</div>'+
+                            '</div>'+
+                            '</td></tr>';
                         }
 
                         tabla+='</tbody></table></div>';
@@ -272,6 +303,15 @@
  }
 </script>
 
+<script>
+    function parseAbstract(abstract) {
+    var parseAbstract = "";
+    parseAbstract = abstract.replace("Abstract","<h6>Abstract</h6>");
+    res = parseAbstract.substring(0, 500) + "...";
+
+    return res;
+}
+</script>
 
 <script>
     function parseURLParams(url) {
@@ -294,7 +334,6 @@
     return parms;
 }
 </script>
-
 
 
 </body>
