@@ -5544,12 +5544,12 @@ When click on sidebar toggler and also for tablet
     width: 50px; }
   .mini-sidebar .sidebar-nav #sidebarnav > li:hover > a {
     width: 260px;
-    background: #26c6da;
+    background: #1e88e5;
     color: #ffffff;
     -webkit-transition: none !important;
     -o-transition: none !important;
     transition: none !important;
-    border-color: #009efb; }
+    border-color: #1e88e5; }
     .mini-sidebar .sidebar-nav #sidebarnav > li:hover > a i {
       color: #ffffff; }
     .mini-sidebar .sidebar-nav #sidebarnav > li:hover > a .hide-menu {
@@ -5557,7 +5557,7 @@ When click on sidebar toggler and also for tablet
   .mini-sidebar .sidebar-nav #sidebarnav > li.active > a {
     border-color: transparent; }
     .mini-sidebar .sidebar-nav #sidebarnav > li.active > a.active {
-      border-color: #009efb; } }
+      border-color: #1e88e5; } }
 
 @media (max-width: 767px) {
   .mini-sidebar .left-sidebar {
@@ -7987,4 +7987,18 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
   visibility: hidden;
   position: absolute;
   z-index: +100 !important;
+}
+
+
+html, body {
+margin: 0;
+padding: 0;
+}
+
+.background {
+position:absolute;
+display: block;
+top: 0;
+left: 0;
+z-index: 0;
 }

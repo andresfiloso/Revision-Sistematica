@@ -57,13 +57,13 @@
                     <div class="col-md-8 col-10 align-self-center">
                         <h3 class="text-themecolor m-b-0 m-t-0">Resultados</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/classify">Nombre proyecto</a></li>
+                            <li class="breadcrumb-item"><a href="/classify?project-id={{ session['proyecto'].idProyecto }}">{{ session['proyecto'].proyecto }}</a></li>
                             <li class="breadcrumb-item"><a href="/lookup">Buscador</a></li>
-                            <li class="breadcrumb-item active">query</li>
+                            <li class="breadcrumb-item active">{{ keywords }}</li>
                         </ol>
                         <ol class="breadcrumb">
 
-                            <li class="breadcrumb-item active">{{session['cantArticulos']}} resultados</li>
+                            <li class="breadcrumb-item active"><div id="cantArticulos"></div></li>
                         </ol>
                     </div>
                     <div class="col-md-3 col-3 align-self-right">
@@ -87,6 +87,7 @@
                         </div>
 
                 </div>
+
 
 
                 <!-- ============================================================== -->
@@ -211,7 +212,6 @@
 
                 var urlString = window.location.href;
                 var urlParams = parseURLParams(urlString);
-                 alert(urlParams);
                 $.ajax({
                     method:"GET",
                     url: "scrapping",
@@ -229,14 +229,21 @@
 
                         for (var i = 0; i < Object.keys(obj).length; i++) {
                             tabla+='<tr><td>'+
+                            '<form id="form'+i+'" action="article" method="POST">' +
+                            '<input type="hidden" name="titulo" value="'+obj[i].title+'">' +
+                            '<input type="hidden" name="url" value="'+obj[i].result+'">' +
+                            '<input type="hidden" name="abstract" value="'+ obj[i].abstract  +'"> ' +
+                            '<input type="hidden" name="keywords" value="'+ obj[i].keywords  +'"> ' +
                             '<div class="row">'+
                             '<div class="card col-md-10 col-lg-10">'+
                             '<div class="card-body" >'+
                             '<h4 class="card-title">'+
-                            '<a href="article?title='+obj[i].title+'&url='+obj[i].result+'&abstract='+obj[i].abstract+'">'+obj[i].title+'</a></h4>'+
+                            '<a onClick="redirigir('+i+')" href="#">'+obj[i].title+'</a>'+
+                            '</h4>'+
                             '<h6 class="card-subtitle mb-2 text-muted">'+
                             '<a href="'+obj[i].result+'">'+obj[i].result+'</a></h6>'+
                             '<p class="card-text">'+ parseAbstract(obj[i].abstract)  +'</p>'+
+                            '<p class="card-text">'+ parseKeywords(obj[i].keywords) +'</p>'+
                             '<a href="" class="ribbon ribbon-vertical-r ribbon-default">'+
                             '<i class="fa fa-file-pdf-o"></i></a>'+
                             '</div >'+
@@ -259,12 +266,13 @@
                             '<br><br>'+
                             '</div>'+
                             '</div>'+
+                            '</form>'
                             '</td></tr>';
                         }
 
                         tabla+='</tbody></table></div>';
 
-
+                        document.getElementById("cantArticulos").innerHTML = 'Cantidad de articulos: {{session['cantArticulos']}}';
 
                         $('#resultados').append(tabla);
 
@@ -291,25 +299,31 @@
 
 
 <script>
-    window.onload=function() {
-   document.getElementById("a").onclick=function() {
-     var myForm = document.createElement("form");
-     myForm.action=this.href;// the href of the link
-     myForm.target="myFrame";
-     myForm.method="POST";
-     myForm.submit();
-     return false; // cancel the actual link
-   }
- }
+    function redirigir(numero) {
+    document.getElementById("form" + numero ).submit()
+    }
+
 </script>
 
 <script>
     function parseAbstract(abstract) {
-    var parseAbstract = "";
-    parseAbstract = abstract.replace("Abstract","<h6>Abstract</h6>");
+    var parseAbstract = abstract;
+    parseAbstract = parseAbstract.replace("Abstract","<h6>Abstract</h6>");
+    parseAbstract = parseAbstract.replace("Summary","<h6>Summary</h6>");
+    parseAbstract = parseAbstract.replace("Resumen","<h6>Resumen</h6>");
+    parseAbstract = parseAbstract.replace("Introduction","<h6>Introduction</h6>");
     res = parseAbstract.substring(0, 500) + "...";
 
     return res;
+}
+</script>
+
+<script>
+    function parseKeywords(keywords) {
+    var parseKeyWords = keywords;
+    parseKeyWords = parseKeyWords.replace("Keywords","<h6>Keywords</h6>");
+    parseKeyWords = parseKeyWords.split(/(?=[A-Z])/).join(" ");
+    return parseKeyWords;
 }
 </script>
 

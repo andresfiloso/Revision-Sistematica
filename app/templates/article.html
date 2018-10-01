@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-    <title>Nombre articulo</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
+    <title>{{session['article'].title}}</title>
     <!-- Bootstrap Core CSS -->
     <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -52,15 +52,18 @@
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-8 col-10 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">{{session['titulo']}}</h3>
+                    <div class="col-md-12 col-12 align-self-center">
+                        <h3 class="text-themecolor m-b-0 m-t-0">{{session['article'].title}}</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Nombre proyecto</a></li>
-                            <li class="breadcrumb-item "><a href="lookup.html">Buscador</a></li>
-                            <li class="breadcrumb-item "><a href="results.html">Resultados</a></li>
-                            <li class="breadcrumb-item active">{{session['titulo']}}</li>
+                            <li class="breadcrumb-item"><a href="/classify?project-id={{session['proyecto'].idProyecto}}">{{ session['proyecto'].proyecto }}</a></li>
+                            <li class="breadcrumb-item "><a href="/lookup">Buscador</a></li>
+                            <li class="breadcrumb-item "><a href="javascript:history.back()">Resultados</a></li>
+                            <li class="breadcrumb-item active">{{session['article'].title}}</li>
                         </ol>
-                        <p class="card-text"><small class="text-muted">Software / Health</small></p>
+                        <p class="card-text">
+                            <small class="text-muted" id="keywords">
+                            </small>
+                        </p>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -70,15 +73,16 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-md-5 col-lg-12">
+                    <div class="col-md-12 col-lg-12">
                     <div class="row">
-                        <div class="card col-md-5 col-lg-10">
+                        <div class="card col-md-10 col-lg-10">
                             <div class="card-body">
-                                <h1 class="card-title"><a href="">{{session['titulo']}}</a></h1>
-                                <h5 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">{{session['link']}}</a></h5>
+                                <h1 class="card-title"><a href="{{session['article'].url}}">{{session['article'].title}}</a></h1>
+                                <h5 class="card-subtitle mb-2 text-muted"><a href="{{session['article'].url}}">{{session['article'].url}}</a></h5>
 
                                 <div id="abstract">
-                                    {{session['abstract']}}
+
+                                    
                                 </div>
 
                                 
@@ -181,8 +185,63 @@
 
         }
 
+        
+
 </script>
 
+
+<script>
+        $(document).ready(function() {
+            var returnAbstract = '{{session['article'].abstract}}';
+
+            returnAbstract = returnAbstract.replace('Abstract','<h2 class="card-title">Abstract</h2>');
+            returnAbstract = returnAbstract.replace('Summary','<h2 class="card-title">Summary</h2>');
+            returnAbstract = returnAbstract.replace('Resumen','<h2 class="card-title">Resumen</h2>');
+            returnAbstract = returnAbstract.replace('Methods','<h2 class="card-title">Method</h2>');
+            returnAbstract = returnAbstract.replace('Introduction','<h2 class="card-title">Introduction</h2>');
+            returnAbstract = returnAbstract.replace('Results','<h2 class="card-title">Results</h2>');
+            returnAbstract = returnAbstract.replace('Conclusion','<h2 class="card-title">Conclusion</h2>');
+
+            document.getElementById("abstract").innerHTML = returnAbstract;
+        }); 
+</script>
+
+<script>
+        $(document).ready(function() {
+            var returnKeywords = '{{session['article'].keywords}}';
+
+            returnKeywords = returnKeywords.split(/(?=[A-Z])/).join(" ");
+            returnKeywords = returnKeywords.replace('Keywords','</b>Keywords:</b>');
+
+            document.getElementById("keywords").innerHTML = returnKeywords;
+        }); 
+</script>
+
+
+
+
+
+<script>
+    /* Se intenta parsear el string para que muestre estilos en el div
+        $(document).ready(function() {
+            var string = '{{session['article'].abstract}}';
+            alert (string);
+
+            var parser, xmlDoc;
+            var text = "<bookstore><book>" +
+            "<title>Everyday Italian</title>" +
+            "<author>Giada De Laurentiis</author>" +
+            "<year>2005</year>" +
+            "</book></bookstore>";
+
+            parser = new DOMParser();
+            xmlDoc = parser.parseFromString(string,"text/xml");
+
+            document.getElementById("abstract").innerHTML =
+            xmlDoc.getElementsByTagName("h2")[0].childNodes[0].nodeValue;
+        }); 
+        */
+</script>
 
 </body>
 

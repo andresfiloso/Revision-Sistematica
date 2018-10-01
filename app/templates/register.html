@@ -26,6 +26,10 @@
 </head>
 
 <body>
+
+    <canvas class="background"></canvas>
+          
+    <script src="../static/assets/plugins/particles.js-master/dist/particles.min.js"></script>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -44,7 +48,7 @@
                     <h3 class="box-title m-b-20">Registro</h3>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input class="form-control" type="text" required="" placeholder="Nombre">
+                            <input class="form-control" type="text" required="" placeholder="Usuario">
                         </div>
                     </div>
                     <div class="form-group ">
@@ -77,7 +81,7 @@
                     </div>
                     <div class="form-group m-b-0">
                         <div class="col-sm-12 text-center">
-                            <p>Ya tenes una cuenta? <a href="login.html" class="text-info m-l-5"><b>Iniciar sesión</b></a></p>
+                            <p>Ya tenes una cuenta? <a href="/login" class="text-info m-l-5"><b>Iniciar sesión</b></a></p>
                         </div>
                     </div>
                 </form>
@@ -93,10 +97,10 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="../assets/plugins/jquery/jquery.min.js"></script>
+    <script src="../static/assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="../assets/plugins/bootstrap/js/popper.min.js"></script>
-    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="../static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="../static/js/jquery.slimscroll.js"></script>
     <!--Wave Effects -->
@@ -104,14 +108,25 @@
     <!--Menu sidebar -->
     <script src="../static/js/sidebarmenu.js"></script>
     <!--stickey kit -->
-    <script src="../assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-    <script src="../assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="../static/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="../static/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!--Custom JavaScript -->
     <script src="../static/js/custom.min.js"></script>
-    <!-- ============================================================== -->
-    <!-- Style switcher -->
-    <!-- ============================================================== -->
-    <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+        
+    <!-- Particle Background -->
+    <script src="../static/assets/plugins/particles.js-master/dist/particles.min.js"></script>
+
+    <script type="text/javascript">
+        window.onload= function() {
+            Particles.init({
+                selector: '.background',
+                color: ['#1e90ff', '#404B69', '#DBEDF3'],
+                maxParticles: 200,
+                connectParticles: true
+            });
+        };
+    </script>
+
 </body>
 
 </html>

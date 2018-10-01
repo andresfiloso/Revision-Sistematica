@@ -73,8 +73,17 @@
                         <h3 class="text-themecolor m-b-0 m-t-0">Panel de proyectos</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item active">Panel de proyectos</li>
-
                         </ol>
+                    </div>
+                    <div class="col-md-7 col-4 align-self-center">
+                        <div class="d-flex m-t-10 justify-content-end">
+                            <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                                <form action="/newProyect">
+                                <button class="btn btn-info waves-effect waves-light" type="submit">Nuevo proyecto</button>
+                                </form>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -83,42 +92,8 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Buscar Proyecto</h4>
-                                <div id="the-basics">
-                                    <input class="form-control" type="text" placeholder="Nombre del proyecto">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Nuevo proyecto</h4>
-                                <form action="/newProyect" method="POST">
-                                <div class="input-group">
-                                    
-                                    <input class="form-control" type="text" placeholder="Nombre del proyecto">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-info"  type="submit">Crear</button>
-                                        </span>
-                                    
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
 
                           {% for key in session['proyectos'] %}
-                        <h4></h4>
-
-
                                 <!-- Row -->
                         <div class="row">
                             <!-- Column -->
@@ -141,12 +116,14 @@
 
                                                 </div>
                                                 -->
+                                                <div class="ribbon ribbon-corner ribbon-info ribbon-right ribbon-bottom"><i class="fa fa-pencil" data-toggle="modal" data-target="#editarProyecto" class="model_img img-responsive"></i></div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-2 col-lg-2">
                                         <br>
                                         <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
+                                        <button class="btn btn-block btn-danger waves-effect waves-light" data-toggle="modal" data-target="#eliminarProyecto" class="model_img img-responsive" >Eliminar proyecto</button>
                                         <br><br>
                                     </div>
                                 </div>
@@ -255,8 +232,8 @@
                                           <div class="box bg-light-danger">Big data AND Paralisis OR Big data AND Health AND NOT POWERFULL</div>
                                       </div>
                                       <div class="chat-time">
-                                        <a href="#"><i class="fa fa-pencil fa-3x"></i></a>
-                                        <a href="#"><i class="fa fa-eye fa-3x"></i></a>
+                                        <a href="#"><i class="fa fa-pencil fa-2x"></i></a>
+                                        <a href="#"><i class="fa fa-eye fa-2x"></i></a>
                                       </div>
                                   </li>
                                   <!--chat Row -->
@@ -280,6 +257,85 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
+            <!-- /.modal -->
+          </div>
+
+          <div id="editarProyecto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                   <div class="modal-content">
+              <form action="/editProject" method="POST">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Editar proyecto</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <input id="nombre" type="text" class="form-control" value="NombreProyecto" descripcion>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <input id="descripcion" type="text" class="form-control" value="descripcion" descripcion>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <textarea name="inclusion" class="form-control" rows="3" required>Criterios inclusion</textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <textarea name="exclusion" class="form-control" rows="3" required>Criterios exclusion</textarea>
+                        </div>
+                    </div>
+
+
+                  </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-info waves-effect waves-light">Actualizar</button>
+                </div>
+                </form>
+            </div>
+                <!-- /.modal-dialog -->
+            </div>
+          </div>
+            <!-- /.modal -->
+
+            <div id="eliminarProyecto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                   <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Eliminar Proyecto</h4>
+                            </div>
+                            <div class="modal-body text-center">
+                              
+                                <h4 class="modal-title">¿Seguro quieres eliminar el proyecto?</h4>
+                                <br><br>
+                                <div class="modal-footer">
+                                    
+                                      <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Volver</button>
+                                      <button type="submit" class="btn btn-danger waves-effect waves-light">Eliminar proyecto</button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                <!-- /.modal-dialog -->
+            </div>
+          </div>
             <!-- /.modal -->
             <!-- ============================================================== -->
             <!-- End Modals -->

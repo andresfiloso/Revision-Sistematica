@@ -7,9 +7,9 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/projects?user={{session['datosUsuario'].usuario}}">
+                    <a class="navbar-brand" href="/projects">
                         <b>
-                            <i class="fa fa-modx fa-lg" style="color:white"></i>
+                            <i class=" ti-infinite" style="color:white; font-size: 40px; text-align:center;vertical-align: middle; "></i>
                         </b>
                     </a>
                 </div>
@@ -27,7 +27,7 @@
                         <li class="nav-item hidden-sm-down search-box">
                             <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
                             <form class="app-search" action="/results" method="GET">
-                                <input type="text" class="form-control" placeholder="Query"> <a class="srh-btn"><i class="ti-close"></i></a> 
+                                <input type="text" name="keywords" class="form-control" placeholder="Query" value="{{ session['keywords'] }}"> <a class="srh-btn"><i class="ti-close"></i></a> 
                             </form>
                         </li>
                     </ul>
@@ -58,12 +58,12 @@
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-user"></i> Mi cuenta</a></li>
-                                    <li><a href="/projects?user={{session['datosUsuario'].usuario}}"><i class="ti-search"></i> Mis proyectos</a></li>
+                                    <li><a href="/micuenta"><i class="ti-user"></i> Mi cuenta</a></li>
+                                    <li><a href="/projects"><i class="ti-search"></i> Mis proyectos</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/classify"><i class="ti-check"></i> Clasificar articulos</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Salir</a></li>
+                                    <li><a href="/logout"><i class="fa fa-power-off"></i> Salir</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -85,8 +85,8 @@
                     <ul id="sidebarnav">
                         <li class="nav-small-cap">Revision Sistematica</li>
                         <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-file"></i><span class="hide-menu">Mis proyectos </span></a>
-                            <ul aria-expanded="false" class="collapse">
+                            <a class="has-arrow waves-effect waves-dark" href="/projects" aria-expanded="false"><i class="fa fa-cubes"></i><span class="hide-menu"> Mis proyectos </span></a>
+                            <ul aria-expanded="true" class="collapse">
                                 {% for key in session['proyectos'] %}
                                     <li><a href="/classify?project-id={{session['proyectos'][key].idProyecto}}">{{session['proyectos'][key].proyecto}}</a></li>
 
@@ -95,10 +95,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">Buscador </span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="/lookup">Buscador</a></li>
-                            </ul>
+                            <a class="has-arrow waves-effect waves-dark" href="/classify" aria-expanded="false"><i class="fa fa-check-square-o"></i><span class="hide-menu">Clasificar articulos </span></a>
                         </li>
 
                     </ul>

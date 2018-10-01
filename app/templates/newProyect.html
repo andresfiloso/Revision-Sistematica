@@ -67,6 +67,8 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <!-- Row -->
+
+                <form action="/insertProyecto" method="POST">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card card-outline-info">
@@ -80,7 +82,7 @@
                                                 <div class="form-group row">
                                                     <label class="control-label text-right col-md-3">Nombre</label>
                                                     <div class="col-md-9">
-                                                        <input type="text" class="form-control" placeholder="Data mining">
+                                                        <input name="nombre" type="text" class="form-control" placeholder="Data mining" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -97,7 +99,7 @@
                                                     <label class="control-label text-right col-md-3">Descripción</label>
                                                     <div class="col-md-9">
                                                       <div class="form-group">
-                                                              <textarea class="form-control" rows="5" placeholder="Una breve descripción de los objetivos del proyecto"></textarea>
+                                                              <textarea name="descripcion" class="form-control" rows="5" placeholder="Una breve descripción de los objetivos del proyecto" required></textarea>
                                                       </div>
 
                                                     </div>
@@ -129,7 +131,7 @@
                                                     <label class="control-label text-right col-md-3">Criterios de inclusión</label>
                                                     <div class="col-md-9">
                                                       <div class="form-group">
-                                                              <textarea class="form-control" rows="5" placeholder="Criterios por los cuales se seleccionanar los articulos"></textarea>
+                                                              <textarea name="inclusion" class="form-control" rows="5" placeholder="Criterios por los cuales se seleccionanar los articulos" required></textarea>
                                                       </div>
                                                     </div>
                                                 </div>
@@ -139,7 +141,7 @@
                                                     <label class="control-label text-right col-md-3">Criterios de exclusión</label>
                                                     <div class="col-md-9">
                                                       <div class="form-group">
-                                                              <textarea class="form-control" rows="5" placeholder="Criterios por los cuales se descartaran los articulos"></textarea>
+                                                              <textarea name="exclusion" class="form-control" rows="5" placeholder="Criterios por los cuales se descartaran los articulos" required></textarea>
                                                       </div>
                                                     </div>
                                                 </div>
@@ -154,7 +156,7 @@
                                                   <label class="control-label text-right col-md-3">Usuario</label>
                                                   <div class="col-md-9">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="smartins@unla.edu.ar">
+                                                        <input name="colaborador" type="text" class="form-control">
                                                             <span class="input-group-btn">
                                                                 <button id="addColaborador" class="btn btn-info waves-effect waves-light" type="button"><i class="fa fa-plus"></i> </button>
                                                             </span>
@@ -190,6 +192,7 @@
                         </div>
                     </div>
                 </div>
+                </form>
                 <!-- Row -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
@@ -234,16 +237,16 @@
     $("#addColaborador").click(function (e) {
         cantTerminos ++;
      $("#colaboradores").append('<div class="input-group">' +
-            '<input type="text" class="form-control" placeholder="usuario@mail.com">' +
+            '<input type="text" class="form-control">' +
              '<span class="input-group-btn">' +
-             '<button id="delete" class="btn btn-danger waves-effect waves-light" type="button"><i class="fa fa-times"></i> </button>' +
+             '<button id="delete" class=" delete btn btn-danger waves-effect waves-light" type="button"><i class="fa fa-times"></i> </button>' +
              '</span></div>'
 
 
      ); });
 
 
-           $("body").on("click", ".delete", function (e) {
+   $("body").on("click", "#delete", function (e) {
      $(this).parent("div").remove();
      cantTerminos --;
     });
