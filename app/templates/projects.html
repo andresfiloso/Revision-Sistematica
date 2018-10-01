@@ -77,6 +77,15 @@
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
                         <div class="d-flex m-t-10 justify-content-end">
+                              {% if session['error'] %}
+                               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Cuidado! </strong> {{session.pop('error')}} 
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              {% endif %}
+                         
                             <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                                 <form action="/newProyect">
                                 <button class="btn btn-info waves-effect waves-light" type="submit">Nuevo proyecto</button>
@@ -86,12 +95,16 @@
                         </div>
                     </div>
                 </div>
+
+
+            
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                        
 
                           {% for key in session['proyectos'] %}
                                 <!-- Row -->
@@ -100,38 +113,62 @@
                             <div class="col-md-12 col-lg-12">
                                 <div class="row">
                                     <div class="col-md-10 col-lg-10">
-                                        <div class="ribbon-wrapper card card-body">
+
+                                        <div class="ribbon-wrapper card card-body"> 
+
+                                          {% if session['proyecto'] %}
+                                            {% if session['proyecto'].idProyecto == session['proyectos'][key].idProyecto %}
+
+                                            <div data-toggle="tooltip" data-placement="top" title="Proyecto seleccionado" class="ribbon ribbon-warning ribbon-vertical-r"><i class="fa fa-check-circle"></i></div>
+
+                                          {% endif %}
+                                          {% endif %}
+                                          
                                             <!-- Row -->
                                             <div class="row">
+
+
                                                 <div class="ribbon ribbon-default">Owner</div>
                                                 <!-- Column -->
+
                                                 <div class="col p-r-0 align-self-center">
                                                     <h2 class="font-light m-b-0"><a href="/classify?project-id={{session['proyectos'][key].idProyecto}}">{{session['proyectos'][key].proyecto}}</a></h2>
                                                     <h6 class="text-muted">{{session['datosUsuario'].usuario}}</h6>
                                                     <h6 class="text-muted">{{session['proyectos'][key].descripcion}}</h6>
                                                 </div>
+
+
                                                 <!-- Porcentaje de desarrollo del proyecto:
                                                 <div class="col text-right align-self-center">
                                                     <div data-label="85%" class="css-bar m-b-0 css-bar-info css-bar-85"></div>
 
                                                 </div>
                                                 -->
-                                                <div class="ribbon ribbon-corner ribbon-info ribbon-right ribbon-bottom"><i class="fa fa-pencil" data-toggle="modal" data-target="#editarProyecto" class="model_img img-responsive"></i></div>
+                                                <div class="ribbon ribbon-corner ribbon-info ribbon-right ribbon-bottom"><i class="editarProyecto fa fa-pencil" data-toggle="modal" data-id="{{session['proyectos'][key].idProyecto}}" data-proyecto="{{session['proyectos'][key].proyecto}}" data-descripcion="{{session['proyectos'][key].descripcion}}" data-inclusion="{{session['proyectos'][key].inclusion}}" data-exclusion="{{session['proyectos'][key].exclusion}}" data-target="#editarProyecto" class="model_img img-responsive"></i></div>
+
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="col-md-2 col-lg-2">
                                         <br>
                                         <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                        <button class="btn btn-block btn-danger waves-effect waves-light" data-toggle="modal" data-target="#eliminarProyecto" class="model_img img-responsive" >Eliminar proyecto</button>
+                                        <button class="eliminarProyecto btn btn-block btn-danger waves-effect waves-light" data-toggle="modal" data-id="{{session['proyectos'][key].idProyecto}}" data-proyecto="{{session['proyectos'][key].proyecto}}" data-target="#eliminarProyecto" class="model_img img-responsive" >Eliminar proyecto</button>
                                         <br><br>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- Row -->
-                
+
+
                         {% endfor %}
+
+                        {% block body %}
+                              {% if not session['proyectos'] %}
+                                <h2>No tienes proyectos. Crea uno para empezar a buscar articulos.</h2>
+                              {% endif %}
+                        {% endblock %}
            
 
 
@@ -263,7 +300,8 @@
           <div id="editarProyecto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                    <div class="modal-content">
-              <form action="/editProject" method="POST">
+              <form action="/updateProject" method="POST">
+                <input type="hidden" id="idProyectoAEditar" name="idProyectoAEditar" value="">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title">Editar proyecto</h4>
@@ -273,35 +311,32 @@
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <input id="nombre" type="text" class="form-control" value="NombreProyecto" descripcion>
+                            <input id="nombre" name="nombre" type="text" class="form-control" value="" >
                         </div>
                     </div>
                     <br>
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <input id="descripcion" type="text" class="form-control" value="descripcion" descripcion>
+                            <input id="descripcion" name="descripcion" type="text" class="form-control" value="" >
                         </div>
                     </div>
                     <br>
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <textarea name="inclusion" class="form-control" rows="3" required>Criterios inclusion</textarea>
+                            <textarea id="inclusion" name="inclusion" class="form-control" rows="3" required></textarea>
                         </div>
                     </div>
                     <br>
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <textarea name="exclusion" class="form-control" rows="3" required>Criterios exclusion</textarea>
+                            <textarea id="exclusion" name="exclusion" class="form-control" rows="3" required></textarea>
                         </div>
                     </div>
 
 
                   </div>
-
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
@@ -312,31 +347,37 @@
                 <!-- /.modal-dialog -->
             </div>
           </div>
-            <!-- /.modal -->
 
-            <div id="eliminarProyecto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog">
-                   <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="modal-title">Eliminar Proyecto</h4>
-                            </div>
-                            <div class="modal-body text-center">
-                              
-                                <h4 class="modal-title">¿Seguro quieres eliminar el proyecto?</h4>
-                                <br><br>
-                                <div class="modal-footer">
-                                    
-                                      <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Volver</button>
-                                      <button type="submit" class="btn btn-danger waves-effect waves-light">Eliminar proyecto</button>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                <!-- /.modal-dialog -->
+
+                                       <!-- /.modal -->
+
+              <div id="eliminarProyecto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                  <div class="modal-dialog">
+                     <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                  <h4 class="modal-title">Eliminar Proyecto</h4>
+                              </div>
+                              <div class="modal-body text-center">
+
+                                <form action="deleteProject" method="POST" >
+                                <input type="hidden" id="idProyectoAEliminar" name="idProyectoAEliminar" value="">
+                                
+                                  <h4 class="modal-title">¿Seguro quieres eliminar el proyecto?</h4>
+                                  <span id="modal-proyecto"></span>
+                                  <br><br>
+                                  <div class="modal-footer">
+                                        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Volver</button>
+                                        <button type="submit" class="btn btn-danger waves-effect waves-light">Eliminar proyecto</button>
+                                  </div>
+                                  </form>
+                              </div>
+                          </div>
+                  <!-- /.modal-dialog -->
+              </div>
             </div>
-          </div>
-            <!-- /.modal -->
+              <!-- /.modal -->
+
             <!-- ============================================================== -->
             <!-- End Modals -->
             <!-- ============================================================== -->
@@ -377,6 +418,42 @@
     <script type="text/javascript" src="../static/assets/plugins/multiselect/js/jquery.multi-select.js"></script>
     <!-- This is data table -->
     <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+
+       <script type="text/javascript">
+        $('.eliminarProyecto').on('click', function() {
+            var dataId = $(this).attr("data-id");
+            $("#modal-idProyecto").html(dataId);
+            var dataProyecto = $(this).attr("data-proyecto");
+            $("#modal-proyecto").html(dataProyecto);
+            $("input[name='idProyectoAEliminar']").val(dataId);
+        });
+
+    </script>
+
+
+    <script type="text/javascript">
+        $('.editarProyecto').on('click', function() {
+            var idProyecto = $(this).attr("data-id");
+            $("#modal-idProyecto").html(idProyecto);
+            var proyecto = $(this).attr("data-proyecto");
+            $("#modal-proyecto").html(proyecto);
+            var descripcion = $(this).attr("data-descripcion");
+            $("#modal-descripcion").html(descripcion);
+            var inclusion = $(this).attr("data-inclusion");
+            $("#modal-inclusion").html(inclusion);
+            var exclusion = $(this).attr("data-exclusion");
+            $("#modal-exclusion").html(exclusion);
+
+            $("#nombre").val(proyecto);
+            $("#descripcion").val(descripcion);
+            $("#inclusion").val(inclusion);
+            $("#exclusion").val(exclusion);
+
+            $("input[name='idProyectoAEditar']").val(idProyecto);
+        });
+
+    </script>
+
 
     <script>
     $(document).ready(function() {

@@ -68,8 +68,8 @@
                             <p>No tenés una cuenta? <a href="/signup" class="text-info m-l-5"><b>Registrate</b></a></p>
                             
                             {% block body %}
-                              {% if error %}
-                                <div class="alert alert-danger" role="alert">{{ error }}</div>
+                              {% if session['error'] %}
+                                <div class="alert alert-danger" role="alert">{{session.pop('error')}} </div>
                               {% endif %}
                             {% endblock %}
 

@@ -27,8 +27,6 @@ db = MySQLdb.connect(host="127.0.0.1",
 cur = db.cursor()
 conf=False
 
-cur2 = db.cursor()
-
 @app.route('/')
 def default():
 	return redirect(url_for('home'),code=307)
@@ -36,13 +34,9 @@ def default():
 
 @app.route('/home',methods = ['POST', 'GET'])
 def home():
-	try:
-		print "idUSuario"
-		print session['datosUsuario']['idUsuario'] #Busco variable de session de login. Si no hay session, entra en el catch y redirige a home
-
-
+	if session.get('datosUsuario') is not None:
 		return redirect(url_for('projects'))
-	except Exception as e:
+	else:
 		#error = "Session Timeout"
 		return render_template('login.html',)
 
@@ -69,44 +63,13 @@ def login():
 
 		if rows == 1: #Autenticacion correcta
 
-			proyectosArray = {}
-			proyectos_ready = {}
-
-			session['datosUsuario'] = datosUsuario # Se guardan los datos del usuario en la session.
-
-			cur2.execute("SELECT * FROM Proyecto where idUsuario = " + str(datosUsuario['idUsuario']))
-
-			i = 0
-			for r in cur2.fetchall():
-
-				print "id:" + str(r[0])
-				print "nombre:" + str(r[1])
-				print "descr:" + str(r[2])
-				print "inclu:" + str(r[3])
-				print "exclu:" + str(r[4])
-
-				proyecto = {
-				'idProyecto' : r[0],
-				'proyecto' : r[1],
-				'descripcion' : r[2],
-				'inclusion': r[3],
-				'exclusion': r[4]
-				}
-
-				proyectosArray[i] = proyecto
-				i = i + 1
-
-			print "Cantidad de proyectos encontrados: "
-			print i
-			proyectos_ready = json.dumps(proyectosArray)
-			session['proyectos'] = proyectosArray
+			session['datosUsuario'] = datosUsuario
 
 			print "Welcome " + user
 			return redirect(url_for('projects'))
 		else:
-			error = 'Usuario o clave incorrecta!'
-			print error
-			return render_template('login.html', error = error)
+			session['error'] = 'Usuario o clave incorrecta!'
+			return render_template('login.html')
 
 
 @app.route('/signup',methods = ['POST', 'GET'])
@@ -116,40 +79,35 @@ def signup():
 
 @app.route('/lookup',methods = ['POST', 'GET'])
 def lookup():
-	try:
-		print "idUSuario"
-		print session['datosUsuario']['idUsuario'] #Busco variable de session de login. Si no hay session, entra en el catch y redirige a home
+	if session.get('datosUsuario') is not None:
+		if session.get('proyecto') is not None:
 
+			return render_template('lookup.html') 
+		else:
+			session['error'] = "Antes de buscar articulos tienes que seleccionar un proyecto"
+			return redirect(url_for('projects'))
 
-		return render_template('lookup.html',) 
-	except Exception as e:
+	else:
 		return redirect(url_for('home'))
 
 
 @app.route('/micuenta',methods = ['POST', 'GET'])
 def micuenta():
-	try:
-		print "idUSuario"
-		print session['datosUsuario']['idUsuario'] #Busco variable de session de login. Si no hay session, entra en el catch y redirige a home
-
-
+	if session.get('datosUsuario') is not None:
 		return render_template('micuenta.html',) 
-	except Exception as e:
+	else:
 		return redirect(url_for('home'))
 
 @app.route('/results',methods = ['POST', 'GET'])
 def results():
-	try:
-		print "idUSuario"
-		print session['datosUsuario']['idUsuario'] #Busco variable de session de login. Si no hay session, entra en el catch y redirige a home
-
+	if session.get('datosUsuario') is not None:
 		keywords = request.args.get('keywords', default = '*', type = str)
  		newKeyword = request.args.get('newKeyword', default = '*', type = str)
 
  		session['keywords'] = keywords
 
 		return render_template('results.html', keywords = keywords)
-	except Exception as e:
+	else: 
 		return redirect(url_for('home'))
 
 
@@ -231,10 +189,7 @@ def scrapping():
 
 @app.route('/article',methods = ['POST', 'GET'])
 def article():
-	try:
-		print "idUSuario"
-		idUsuario = session['datosUsuario']['idUsuario'] #Busco variable de session de login. Si no hay session, entra en el catch y redirige a home
-		print idUsuario
+	if session.get('datosUsuario') is not None:
 
 		title = request.form["titulo"]
 		print title
@@ -258,33 +213,109 @@ def article():
 		session['article'] = article
 		print "ARTICULO CARGADO EN SESSION"
 		return render_template('article.html')
-	except Exception as e:
-		print "Type error: " + str(e)
+	else:
 		return redirect(url_for('home'))
 	
 
 
 @app.route('/projects',methods = ['POST', 'GET'])
 def projects():
-	try:
-		print "idUSuario"
-		print session['datosUsuario']['idUsuario'] #Busco variable de session de login. Si no hay session, entra en el catch y redirige a home
+	if session.get('datosUsuario') is not None:
+
+		proyectosArray = {}
+		proyectos_ready = {}
+
+		cur.execute("SELECT * FROM Proyecto where idUsuario = " + str(session['datosUsuario']['idUsuario']))
+
+		i = 0
+		for r in cur.fetchall():
+
+			print "id:" + str(r[0])
+			print "nombre:" + str(r[1])
+			print "descr:" + str(r[2])
+			print "inclu:" + str(r[3])
+			print "exclu:" + str(r[4])
+
+			proyecto = {
+			'idProyecto' : r[0],
+			'proyecto' : r[1],
+			'descripcion' : r[2],
+			'inclusion': r[3],
+			'exclusion': r[4]
+			}
+
+			proyectosArray[i] = proyecto
+			i = i + 1
+
+		print "Cantidad de proyectos encontrados: "
+		print i
+		proyectos_ready = json.dumps(proyectosArray)
+		session['proyectos'] = proyectosArray
+
 
 		return render_template('projects.html')
-	except Exception as e:
+	else:
 		return redirect(url_for('home'))
 
 
 @app.route('/newProyect',methods = ['POST', 'GET'])
 def newProyect():
-	try:
-		print "idUSuario"
-		idUsuario = session['datosUsuario']['idUsuario'] #Busco variable de session de login. Si no hay session, entra en el catch y redirige a home
-		print idUsuario
-
+	if session.get('datosUsuario') is not None:
 		return render_template('newProyect.html')
-	except Exception as e:
+	else:
 		return redirect(url_for('home'))
+
+@app.route('/actualizarDatos',methods = ['POST', 'GET'])
+def actualizarDatos():
+	if request.method == 'POST':
+
+		idUsuario = str(session['datosUsuario']['idUsuario'])
+
+		usuario = request.form["usuario"]
+		print usuario
+		email = request.form["email"]
+		print email
+
+		sql = ("UPDATE `usuario` SET `usuario` = '" + usuario + "', `email` = '" + email + "' WHERE `usuario`.`idUsuario` = '" + idUsuario + "';")
+
+		print sql
+
+		rows = cur.execute(sql)
+		db.commit()
+
+		print "ROWSSSSS"
+		print rows
+
+		datosUsuario = {
+				'idUsuario' : idUsuario,
+				'usuario' : usuario,
+				'email' : email
+			}
+
+		session['datosUsuario'] = datosUsuario
+
+		return redirect(url_for('micuenta'))
+
+@app.route('/deleteProject',methods = ['POST', 'GET'])
+def deleteProject():
+	if request.method == 'POST':
+
+		idUsuario = str(session['datosUsuario']['idUsuario'])
+
+		idProyecto = str(request.form["idProyectoAEliminar"])
+		print idProyecto
+
+		sql = ("DELETE FROM `proyecto` WHERE `proyecto`.`idProyecto` = '" + idProyecto + "';")
+
+		print sql
+
+		rows = cur.execute(sql)
+		db.commit()
+
+		print "ROWSSSSS"
+		print rows
+
+		return redirect(url_for('projects'))
 
 @app.route('/insertProyecto',methods = ['POST', 'GET'])
 def insertProyecto():
@@ -308,15 +339,16 @@ def insertProyecto():
 		print sql
 
 		rows = cur.execute(sql)
+		db.commit()
 
 		print "ROWSSSSS"
 		print rows
 		proyectosArray = {}
 
-		cur2.execute("SELECT * FROM Proyecto where idUsuario = " + str(idUsuario))
+		cur.execute("SELECT * FROM Proyecto where idUsuario = " + str(idUsuario))
 
 		i = 0
-		for r in cur2.fetchall():
+		for r in cur.fetchall():
 			print "id:" + str(r[0])
 			print "nombre:" + str(r[1])
 			print "descr:" + str(r[2])
@@ -343,40 +375,73 @@ def insertProyecto():
 
 @app.route('/classify',methods = ['POST', 'GET'])
 def classify():
-	try:
-		print "idUSuario"
-		print session['datosUsuario']['idUsuario'] #Busco variable de session de login. Si no hay session, entra en el catch y redirige a home
-
+	if session.get('datosUsuario') is not None:
 		idProyecto = request.args.get('project-id')
 		print "IDPROYECTO: " + str(idProyecto)
 
-		cur2.execute("SELECT * FROM Proyecto where idProyecto = " + str(idProyecto))
+		if idProyecto != None:
 
-		proyectoActual = {}
-		i = 0
-		for r in cur2.fetchall():
-			print "id:" + str(r[0])
-			print "nombre:" + str(r[1])
-			print "descr:" + str(r[2])
-			print "inclu:" + str(r[3])
-			print "exclu:" + str(r[4])
+			rows = cur.execute("SELECT * FROM Proyecto where idProyecto = " + str(idProyecto))
 
-			proyecto = {
-				'idProyecto': r[0],
-				'proyecto': r[1],
-				'descripcion': r[2],
-				'inclusion': r[3],
-				'exclusion': r[4]
-			}
+			proyectoActual = {}
+			i = 0
+			for r in cur.fetchall():
+				print "id:" + str(r[0])
+				print "nombre:" + str(r[1])
+				print "descr:" + str(r[2])
+				print "inclu:" + str(r[3])
+				print "exclu:" + str(r[4])
 
-			proyecto
-			i = i + 1
+				proyecto = {
+					'idProyecto': r[0],
+					'proyecto': r[1],
+					'descripcion': r[2],
+					'inclusion': r[3],
+					'exclusion': r[4]
+				}
 
-		print "Cantidad de proyectos encontrados: DEBERIA SER UNO -> " + str(i)
-		session['proyecto'] = proyecto
-
-		return render_template('classify.html')
-	except Exception as e:
+				session['proyecto'] = proyecto
+				i = i + 1
+		
+			print "Cantidad de proyectos encontrados: DEBERIA SER UNO -> " + str(i)
+			return render_template('classify.html')
+		else:
+			if session.get('proyecto') is not None:
+				return render_template('classify.html') 
+			else:
+				session['error'] = "Antes de clasificar articulos tienes que seleccionar un proyecto"
+				return redirect(url_for('projects'))
+	else:
 		return redirect(url_for('home'))
-	
+
+
+@app.route('/updateProject',methods = ['POST', 'GET'])
+def updateProject():
+	if request.method == 'POST':
+
+		idUsuario = str(session['datosUsuario']['idUsuario'])
+		
+		idProyecto = str(request.form["idProyectoAEditar"])
+		print idProyecto
+
+		proyecto = request.form["nombre"]
+		print proyecto
+		descripcion = request.form["descripcion"]
+		print descripcion
+		inclusion = request.form["inclusion"]
+		print inclusion
+		exclusion = request.form["exclusion"]
+		print exclusion
+
+		sql = ("UPDATE `proyecto` SET `proyecto` = '" + proyecto + "', `descripcion` = '" + descripcion + "', `inclusion` = '" + inclusion + "', `exclusion` = '" + exclusion + "' WHERE `proyecto`.`idProyecto` = '" + idProyecto + "';")
+
+		print sql
+
+		rows = cur.execute(sql)
+		db.commit()
+
+		print "ROWSSSSS"
+		print rows
+		
+		return redirect(url_for('projects'))
 
