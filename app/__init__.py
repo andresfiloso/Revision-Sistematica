@@ -115,7 +115,7 @@ def results():
 def scrapping():
 	print "PARAMETROS GET: "
 	print session['keywords']
-	args = session['keywords'].replace('; ', ' AND ')
+	args = session['keywords']
 	print "Argumentos a pasar a la query: " + str(args)
 	session['query'] = args
 
