@@ -45,6 +45,14 @@ def logout():
 	session.clear()
 	return render_template('login.html')
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errorTemplates/pages-error-404.html'), 404
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('errorTemplates/pages-error-500.html'), 500
+
 @app.route('/login',methods = ['POST', 'GET'])
 def login():
 	if request.method == 'POST':
@@ -74,7 +82,33 @@ def login():
 
 @app.route('/signup',methods = ['POST', 'GET'])
 def signup():
-	return render_template('register.html',) 
+	return render_template('signup.html',) 
+
+@app.route('/registrarUsuario',methods = ['POST', 'GET'])
+def registrarUsuario():
+	usuario = request.form["usuario"]
+	print usuario
+	email = request.form["email"]
+	print email
+	password = request.form["password"]
+	print password
+	password2 = request.form["password2"]
+	print password2
+
+	sql = ("INSERT INTO `usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES (NULL, '"+usuario+"', '"+password+"', '"+email+"');")
+
+	print sql
+
+	rows = cur.execute(sql)
+	db.commit()
+
+	print "ROWSSSSS"
+	print rows
+
+	session['status'] = "Usuario registrado correctamente"
+
+	return redirect(url_for('home'))
+
 
 
 @app.route('/lookup',methods = ['POST', 'GET'])

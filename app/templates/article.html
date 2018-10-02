@@ -93,7 +93,7 @@
                         </div>
                         <div class="col-md-2 col-lg-2">
                                 <br>
-                                <button class="btn btn-outline-danger waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>Descargar PDF</button>
+                                <button class="btn btn-outline-danger waves-effect waves-light" type="button" disabled><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>PDF no disponible</button>
                                 <br>
                                 <br>
                                 <form name="formRes1">
@@ -191,28 +191,35 @@
 
 
 <script>
-        $(document).ready(function() {
+        $(document).ready(function() {  // Hay que cambiar la logica de esto porque no es viable a largo plazo
             var returnAbstract = '{{session['article'].abstract}}';
 
             returnAbstract = returnAbstract.replace('Abstract','<h2 class="card-title">Abstract</h2>');
-            returnAbstract = returnAbstract.replace('Summary','<h2 class="card-title">Summary</h2>');
-            returnAbstract = returnAbstract.replace('Resumen','<h2 class="card-title">Resumen</h2>');
-            returnAbstract = returnAbstract.replace('Methods','<h2 class="card-title">Method</h2>');
-            returnAbstract = returnAbstract.replace('Introduction','<h2 class="card-title">Introduction</h2>');
-            returnAbstract = returnAbstract.replace('Results','<h2 class="card-title">Results</h2>');
-            returnAbstract = returnAbstract.replace('Conclusion','<h2 class="card-title">Conclusion</h2>');
+            returnAbstract = returnAbstract.replace('Summary','<h4 class="card-title">Summary</h4>');
+            returnAbstract = returnAbstract.replace('Resumen','<h4 class="card-title">Resumen</h4>');
+            returnAbstract = returnAbstract.replace('Methods','<h4 class="card-title">Method</h4>');
+            returnAbstract = returnAbstract.replace('Introduction','<h4 class="card-title">Introduction</h4>');
+            returnAbstract = returnAbstract.replace('Results','<h4 class="card-title">Results</h4>');
+            returnAbstract = returnAbstract.replace('Conclusion','<h4 class="card-title">Conclusion</h4>');
+
+
+            returnAbstract = returnAbstract.replace('Introducción','<h4 class="card-title">Introducción</h4>');
+            returnAbstract = returnAbstract.replace('Material y métodos','<h4 class="card-title">Material y métodos</h4>');
+            returnAbstract = returnAbstract.replace('Resultados','<h4 class="card-title">Resultados</h4>');
+            returnAbstract = returnAbstract.replace('Conclusión','<h4 class="card-title">Conclusión</h4>');
+
 
             document.getElementById("abstract").innerHTML = returnAbstract;
         }); 
 </script>
 
 <script>
-        $(document).ready(function() {
+        $(document).ready(function() {  // Hay que cambiar la logica de esto porque no es viable a largo plazo
             var returnKeywords = '{{session['article'].keywords}}';
 
             returnKeywords = returnKeywords.split(/(?=[A-Z])/).join(" ");
             returnKeywords = returnKeywords.replace('Keywords','</b>Keywords:</b>');
-
+            returnKeywords = returnKeywords.replace("Palabras clave","</b>Palabras Clave</b>");
             document.getElementById("keywords").innerHTML = returnKeywords;
         }); 
 </script>

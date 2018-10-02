@@ -71,6 +71,9 @@
                               {% if session['error'] %}
                                 <div class="alert alert-danger" role="alert">{{session.pop('error')}} </div>
                               {% endif %}
+                              {% if session['status'] %}
+                                <div class="alert alert-info" role="alert">{{session.pop('status')}} </div>
+                              {% endif %}
                             {% endblock %}
 
 

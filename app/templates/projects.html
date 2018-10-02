@@ -85,6 +85,14 @@
                                 </button>
                               </div>
                               {% endif %}
+                              {% if session['status'] %}
+                               <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                {{session.pop('status')}} 
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              {% endif %}
                          
                             <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                                 <form action="/newProyect">
@@ -311,27 +319,27 @@
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <input id="nombre" name="nombre" type="text" class="form-control" value="" >
+                            <input id="nombre" name="nombre" type="text" class="form-control" value="" placeholder="Nombre del proyecto">
                         </div>
                     </div>
                     <br>
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <input id="descripcion" name="descripcion" type="text" class="form-control" value="" >
+                            <input id="descripcion" name="descripcion" type="text" class="form-control" value="" placeholder="Descripcion">
                         </div>
                     </div>
                     <br>
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <textarea id="inclusion" name="inclusion" class="form-control" rows="3" required></textarea>
+                            <textarea id="inclusion" name="inclusion" class="form-control" rows="3" placeholder="Criterios de inclusion" required></textarea>
                         </div>
                     </div>
                     <br>
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <textarea id="exclusion" name="exclusion" class="form-control" rows="3" required></textarea>
+                            <textarea id="exclusion" name="exclusion" class="form-control" rows="3" placeholder="Criterios de exclusion" required></textarea>
                         </div>
                     </div>
 
