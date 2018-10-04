@@ -2,19 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07a06ac0-5846-4ac7-8a4d-f25f43da917d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/assets/plugins/datatables/jquery.dataTables.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/assets/plugins/datatables/jquery.dataTables.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/article.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/article.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/classify.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/classify.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/controllerTemplate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/modelTemplate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/scrappingScience.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/lookup.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/lookup.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/newProyect.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/newProyect.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/projects.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/projects.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Revision sistematica.doc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Revision sistematica.doc" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,11 +23,11 @@
     <session id="-686100711">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -62,14 +59,7 @@
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="303" selection-start-line="303" selection-end-line="304" />
-              <folding>
-                <element signature="e#42#134#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -108,6 +98,7 @@
       <path value="$PROJECT_DIR$/app/static/assets/plugins/jsgrid/package.json" />
       <path value="$PROJECT_DIR$/app/static/assets/plugins/morrisjs/package.json" />
       <path value="$PROJECT_DIR$/app/static/assets/plugins/particles.js-master/package.json" />
+      <path value="$PROJECT_DIR$/app/static/assets/plugins/particles.js-master/particles.js-master/package.json" />
       <path value="$PROJECT_DIR$/app/static/assets/plugins/select2/package.json" />
       <path value="$PROJECT_DIR$/app/static/assets/plugins/sidebar-nav/package.json" />
       <path value="$PROJECT_DIR$/app/static/assets/plugins/tablesaw-master/package.json" />
@@ -116,8 +107,8 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="45" />
-    <option name="y" value="111" />
-    <option name="width" value="979" />
+    <option name="y" value="110" />
+    <option name="width" value="980" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -226,7 +217,7 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11311914" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11445783" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
@@ -254,17 +245,6 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/__init__.py</url>
-          <line>294</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/run.py">
@@ -297,14 +277,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="303" selection-start-line="303" selection-end-line="304" />
-          <folding>
-            <element signature="e#42#134#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

@@ -89,7 +89,6 @@
                 </div>
 
 
-
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -204,8 +203,10 @@
 
         }
 
+</script>
 
-
+<script>
+    
         $(document).ready(function(){
 
             function cargarTarjetas(){
@@ -223,17 +224,15 @@
                     success: function (data) {
                         obj = JSON.parse(data);
 
-                        var tabla = '<div class="table-responsive m-t-40"><table id="myTable" class="table"><thead><tr><th></th></tr></thead><tbody>';
-
-
+                        var tabla = '<div class="table-responsive m-t-40">'+
+                                    '<table id="myTable" class="table">'+
+                                    '<tbody>';
 
                         for (var i = 0; i < Object.keys(obj).length; i++) {
                             tabla+='<tr><td>'+
                             '<form id="form'+i+'" action="article" method="POST">' +
-                            '<input type="hidden" name="titulo" value="'+obj[i].title+'">' +
-                            '<input type="hidden" name="url" value="'+obj[i].result+'">' +
-                            '<input type="hidden" name="abstract" value="'+ obj[i].abstract  +'"> ' +
-                            '<input type="hidden" name="keywords" value="'+ obj[i].keywords  +'"> ' +
+                            '<input type="hidden" name="url" value="'+obj[i].result+'">'+
+                            '<input type="hidden" name="pdf" value="'+obj[i].pdf+'">' +
                             '<div class="row">'+
                             '<div class="card col-md-10 col-lg-10">'+
                             '<div class="card-body" >'+
@@ -242,11 +241,15 @@
                             '</h4>'+
                             '<h6 class="card-subtitle mb-2 text-muted">'+
                             '<a href="'+obj[i].result+'" target="_blank">'+obj[i].result+'</a></h6>'+
-                            '<p class="card-text">'+ parseAbstract(obj[i].abstract)  +'</p>'+
-                            '<p class="card-text">'+ parseKeywords(obj[i].keywords) +'</p>'+
-                            '<a href="" class="ribbon ribbon-vertical-r ribbon-default">'+
-                            '<i class="fa fa-file-pdf-o"></i></a>'+
-                            '</div >'+
+                            '<p class="card-text"><small class="text-muted">'+obj[i].info+'</small></p>' +
+                            '<p class="card-text"><small class="text-muted">'+obj[i].authors+'</small></p>';
+
+                            if(obj[i].pdf != 0){
+                            tabla+='<a href="'+obj[i].pdf+'" target="_blank" class="ribbon ribbon-vertical-r ribbon-default">'+
+                                '<i class="fa fa-file-pdf-o"></i></a>';
+                            }
+
+                            tabla+='</div >'+
                             '</div>'+
                             '<div class="col-md-2 col-lg-2">'+
                             '<form name="formRes'+i+'">'+
@@ -294,8 +297,8 @@
         });
 
 
-
 </script>
+
 
 <script type="text/javascript">
         $('.saveArticle').on('click', function() {
@@ -368,7 +371,6 @@
     return parms;
 }
 </script>
-
 
 </body>
 

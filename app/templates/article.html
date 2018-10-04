@@ -93,7 +93,20 @@
                         </div>
                         <div class="col-md-2 col-lg-2">
                                 <br>
+
+                                {% if session['article'].pdf == '0' %}
+
                                 <button class="btn btn-outline-danger waves-effect waves-light" type="button" disabled><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>PDF no disponible</button>
+                                {% endif %}
+
+                                {% if session['article'].pdf != '0' %}
+
+                                <a href="{{session['article'].pdf}}" target="_blank" class="btn btn-outline-danger waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>Descargar PDF</a>
+
+                                {% endif %}
+
+
+                                
                                 <br>
                                 <br>
                                 <form name="formRes1">
