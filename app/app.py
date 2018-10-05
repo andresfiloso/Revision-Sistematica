@@ -113,7 +113,7 @@ def results():
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
 
-    return get_scrapping_ieee()
+    return get_scrapping_springer()
 
 @app.route('/article',methods = ['POST', 'GET'])
 def article():
