@@ -5,6 +5,22 @@ import re
 
 import time
 
+
+########################################################################
+# Switcher: selecciona el articulo y lo parsea dependiendo de la fuente
+########################################################################
+
+def scrap_article(url, page,  pdf):
+	if(page == "ScienceDirect"):
+		return scrap_article_sciencedirect(url, page, pdf)
+	if(page == "Springer"):
+		return scrap_article_springer(url, page, pdf)
+	if(page == "IEEE Xplore"):
+		return scrap_article_ieee(url, page, pdf)
+
+########################################################################
+########################################################################
+
 def get_scrapping_full():
 	start = time.time()
 	urlScience = "https://www.sciencedirect.com/search?qs=" + session['keywords'] + "&show=10&sortBy=relevance"
@@ -72,6 +88,10 @@ def get_scrapping_full():
 
 	return data_ready
 
+######################################################################################################################################
+########################################################## SCIENCE DIRECT ############################################################
+######################################################################################################################################
+
 def get_scrapping_url():
 	start = time.time()
 	urlScience = "https://www.sciencedirect.com/search?qs=" + session['keywords'] + "&show=100&sortBy=relevance&offset=0"
@@ -119,6 +139,7 @@ def get_scrapping_url():
 
 		data = {
 		    'id' : i,
+		    'page' : "ScienceDirect",
 		    'title' : title,
 		    'result' : url,
 		    'info' : info,
@@ -143,8 +164,7 @@ def get_scrapping_url():
 
 	return data_ready
 
-
-def scrap_article(url, pdf):
+def scrap_article_sciencedirect(url, page, pdf):
 	start = time.time()
 
 	req = requests.get(url)
@@ -163,18 +183,26 @@ def scrap_article(url, pdf):
 	else:
 	    abstract = "El articulo no tiene abstract"
 
-	keywords = html.find('div', {'class': 'keywords-section'})
+	keywordsRaw = html.findAll('div', {'class': 'keyword'})
+
+	keywords = ""
+	for keyword in keywordsRaw:
+		keySpan = keyword.find('span').text
+		keywords = keywords + ", " + str(keySpan)
+
+
 	if(keywords != None):
-	    keywords = keywords.text
+	    keywords = "KeyWords: " + keywords 
 	else:
 	    keywords = "El articulo no tiene palabras claves"
  
 	data = {
-	    'title' : title,
-	    'url' : url,
-	    'abstract' : abstract,
-	    'keywords' : keywords,
-	    'pdf' : pdf,
+		'title' : title,
+		'page' : page,
+		'url' : url,
+		'abstract' : abstract,
+		'keywords' : keywords,
+		'pdf' : pdf,
 	}
 
 	end = time.time()
@@ -183,7 +211,11 @@ def scrap_article(url, pdf):
 
 	return data
 
-def get_scrapping_ieee():
+######################################################################################################################################
+########################################################## SPRINGER ##################################################################
+######################################################################################################################################
+
+def get_scrapping_springer():
 	start = time.time()
 	url = 'https://link.springer.com/search?&query=' + session['keywords'] + '&facet-content-type="ConferencePaper"&showAll=true'
 	print url
@@ -214,14 +246,14 @@ def get_scrapping_ieee():
 		metadataAuthors = authors.findAll('a')
 
 		enumerationLink = "https://link.springer.com" + enumeration.find('a')['href']
-		enumerationReady = '<a href="' + enumerationLink + '">' + enumeration.text + '</a>'
+		enumerationReady = '<a href="' + enumerationLink + '" target="_blank">' + enumeration.text + '</a>'
 
 		metadata = ""
 
 		for link in metadataAuthors:
 			rawText = link.text
 			rawlink = "https://link.springer.com" + link['href']
-			linkReady = '<a href="' + rawlink + '">' + rawText + '</a>'
+			linkReady = '<a href="' + rawlink + '" target="_blank">' + rawText + '</a>'
 			metadata = metadata + linkReady + ", "
 
 
@@ -236,6 +268,7 @@ def get_scrapping_ieee():
 
 		data = {
 			'id' : i,
+			'page' : "Springer",
 			'title' : title,
 			'result' : url,
 			'abstract' : abstract,
@@ -251,6 +284,80 @@ def get_scrapping_ieee():
 	session['cantArticulos'] = i
 	data_ready = json.dumps(dataArray)
 
+	end = time.time()
+	tiempoTotal = end - start
+	session['lookup_time'] = str(tiempoTotal) + " segundos"
+	print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
+	print "Tiempo por articulo: " + str(tiempoTotal / i) + " segundos"
+
+	return data_ready
+
+def scrap_article_springer(url, page, pdf):
+	start = time.time()
+
+	req = requests.get(url)
+	statusCode = req.status_code
+	html = BeautifulSoup(req.text, "html.parser")
+
+	title = html.find('h1', {'class': 'ChapterTitle'})
+	if(title != None):
+		title = title.text
+	else:
+		title = "El articulo no tiene titulo"
+
+	abstract = html.find('p', {'class': 'Para'})
+	if(abstract != None):
+	    abstract = 'Abstract' + abstract.text
+	else:
+	    abstract = "El articulo no tiene abstract"
+
+	keywords = html.find('div', {'class': 'keywords-section'})
+	if(keywords != None):
+	    keywords = keywords.text
+	else:
+	    keywords = "Springer no tiene palabras claves"
+ 
+	data = {
+	    'title' : title,
+		'page' : page,
+	    'url' : url,
+	    'abstract' : abstract,
+	    'keywords' : keywords,
+	    'pdf' : '0',
+	}
+
+	end = time.time()
+	tiempoTotal = end - start
+	print "Tiempo de scrapping de articulo: " + str(tiempoTotal) + " segundos"
+
+	return data
+
+
+######################################################################################################################################
+########################################################## IEEE Xplore ###############################################################
+######################################################################################################################################
+
+def get_scrapping_ieee():
+	start = time.time()
+	url = 'https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=' + session['keywords']
+	print url
+	req = requests.get(url)
+	statusCode = req.status_code
+	html = BeautifulSoup(req.text, "html.parser")
+	divMain = html.find('div', {'class': 'main-section'})
+	results = divMain.findAll('div', {'class': 'List-results-items'})
+
+
+	data_ready = {}
+
+	dataArray = {}
+
+	i = 0
+
+	for result in results:
+		link = result.find('h2')
+		print link.text.encode('utf8')
+		
 	end = time.time()
 	tiempoTotal = end - start
 	session['lookup_time'] = str(tiempoTotal) + " segundos"

@@ -118,12 +118,17 @@ def scrapping():
 @app.route('/article',methods = ['POST', 'GET'])
 def article():
     if session.get('datosUsuario') is not None:
+        print "ingreso a requestear el formulario"
         url = request.form["url"]
+        print url
+        page = request.form["page"]
+        print page
         pdf = request.form["pdf"]
+        print pdf
 
         #abstract =  rawAbstract.replace('Abstract', '<h2 class="card-title">Abstract</h2>')
-
-        session['article'] = scrap_article(url, pdf)
+        print "Se va a ir a scrap_article"
+        session['article'] = scrap_article(url, page, pdf)
 
         return render_template('article.html')
     else:

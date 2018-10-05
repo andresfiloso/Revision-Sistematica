@@ -212,7 +212,6 @@
 <script>
    // ESTA FUNCIONANDO CORRECTAMENTE CON EL SCRAPPING DE SCIENCE DIRECT. HAY OTRO MAS ABAJO PARA LAS DEMAS PAGINAS. NO HAY UNA UNIFICACION AUN
 
-   /*
         $(document).ready(function(){
 
             function cargarTarjetas(){
@@ -238,12 +237,13 @@
                             tabla+='<tr><td>'+
                             '<form id="form'+i+'" action="article" method="POST">' +
                             '<input type="hidden" name="url" value="'+obj[i].result+'">'+
+                            '<input type="hidden" name="page" value="'+obj[i].page+'">'+
                             '<input type="hidden" name="pdf" value="'+obj[i].pdf+'">' +
                             '<div class="row">'+
                             '<div class="card col-md-10 col-lg-10">'+
                             '<div class="card-body" >'+
                             '<h4 class="card-title">'+
-                            '<a onClick="redirigir('+i+')" href="#">'+obj[i].title+'</a>'+
+                            '<a onClick="redirigir('+i+')" href="#">'+obj[i].title+'&nbsp;<span class="label label-info">'+obj[i].page+'</span></a>  '+
                             '</h4>'+
                             '<h6 class="card-subtitle mb-2 text-muted">'+
                             '<a href="'+obj[i].result+'" target="_blank">'+obj[i].result+'</a></h6>'+
@@ -307,7 +307,9 @@
 
 
 <script>
+    // ESTA FUNCIONANDO CORRECTAMENTE CON EL SCRAPPING DE SCIENCE DIRECT. HAY OTRO MAS ABAJO PARA LAS DEMAS PAGINAS. NO HAY UNA UNIFICACION AUN
     
+    /*
         $(document).ready(function(){
 
             function cargarTarjetas(){
@@ -333,24 +335,19 @@
                             tabla+='<tr><td>'+
                             '<form id="form'+i+'" action="article" method="POST">' +
                             '<input type="hidden" name="url" value="'+obj[i].result+'">'+
+                            '<input type="hidden" name="page" value="'+obj[i].page+'">'+
                             '<input type="hidden" name="pdf" value="'+obj[i].pdf+'">' +
                             '<div class="row">'+
                             '<div class="card col-md-10 col-lg-10">'+
                             '<div class="card-body" >'+
                             '<h4 class="card-title">'+
-                            '<a onClick="redirigir('+i+')" href="#">'+obj[i].title+'</a>'+
+                            '<a onClick="redirigir('+i+')" href="#">'+obj[i].title + '&nbsp;<span class="label label-info">'+obj[i].page+'</span> </a>'+
                             '</h4>'+
                             '<h6 class="card-subtitle mb-2 text-muted">'+
                             '<a href="'+obj[i].result+'" target="_blank">'+obj[i].result+'</a></h6>'+
                             '<p class="card-text">'+obj[i].abstract+'</p>' +
-                            '<p class="card-text"><small class="text-muted">'+obj[i].metadata+'</small></p>';
-
-                            if(obj[i].pdf != 0){
-                            tabla+='<a href="'+obj[i].pdf+'" target="_blank" class="ribbon ribbon-vertical-r ribbon-default">'+
-                                '<i class="fa fa-file-pdf-o"></i></a>';
-                            }
-
-                            tabla+='</div >'+
+                            '<p class="card-text"><small class="text-muted">'+obj[i].metadata+'</small></p>'+
+                            '</div >'+
                             '</div>'+
                             '<div class="col-md-2 col-lg-2">'+
                             '<form name="formRes'+i+'">'+
