@@ -1,6 +1,24 @@
 # Revision-Sistematica
 Proyecto de software 2018 - Grupo 2
 
+### Requirements
+
+```
+beautifulsoup4==4.6.3
+Flask==1.0.2
+Flask-MySQL==1.4.0
+Jinja2==2.10
+mysql-connector-python==8.0.12
+MySQL-python==1.2.5
+request==1.0.2
+requests==2.19.1
+```
+
+## Built With
+
+* [Flask](https://github.com/pallets/flask) - The Python micro framework for building web applications
+
+
 ## Authors
 
 * **Andrés Filoso** - [andresfiloso](https://github.com/andresfiloso)
