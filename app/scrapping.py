@@ -1,6 +1,7 @@
 from flask import session, json
 from bs4 import BeautifulSoup
 import requests
+import re
 
 import time
 
@@ -136,6 +137,7 @@ def get_scrapping_url():
 
 	end = time.time()
 	tiempoTotal = end - start
+	session['lookup_time'] = str(tiempoTotal) + " segundos"
 	print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
 	print "Tiempo por articulo: " + str(tiempoTotal / i) + " segundos"
 
@@ -180,3 +182,79 @@ def scrap_article(url, pdf):
 	print "Tiempo de scrapping de articulo: " + str(tiempoTotal) + " segundos"
 
 	return data
+
+def get_scrapping_ieee():
+	start = time.time()
+	url = 'https://link.springer.com/search?&query=' + session['keywords'] + '&facet-content-type="ConferencePaper"&showAll=true'
+	print url
+	req = requests.get(url)
+	statusCode = req.status_code
+	html = BeautifulSoup(req.text, "html.parser")
+	ol = html.find('ol', {'class': 'content-item-list'})
+	li = ol.findAll('li')
+
+
+	data_ready = {}
+
+	dataArray = {}
+
+	i = 0
+
+
+
+	for result in li:
+		link = result.find('a', {'class': 'title'})
+		url = "https://link.springer.com" + link['href']
+		title = link.text.encode('utf8')
+		abstract = result.find('p', {'class': 'snippet'}).text.encode('utf8').strip()
+		metaRaw = result.find('p', {'class': 'meta'})
+
+		authors = metaRaw.find('span', {'class': 'authors'})
+		enumeration = metaRaw.find('span', {'class': 'enumeration'})
+		metadataAuthors = authors.findAll('a')
+
+		enumerationLink = "https://link.springer.com" + enumeration.find('a')['href']
+		enumerationReady = '<a href="' + enumerationLink + '">' + enumeration.text + '</a>'
+
+		metadata = ""
+
+		for link in metadataAuthors:
+			rawText = link.text
+			rawlink = "https://link.springer.com" + link['href']
+			linkReady = '<a href="' + rawlink + '">' + rawText + '</a>'
+			metadata = metadata + linkReady + ", "
+
+
+		metadata = metadata.encode('utf8') + " in " + enumerationReady.encode('utf8')
+		
+
+		print "ARTICULO: " + str(i)
+		print "URL: " + url
+		print "TITLE: " + title
+		print "ABSTRACT: " + abstract
+		print "METADATA: " + metadata
+
+		data = {
+			'id' : i,
+			'title' : title,
+			'result' : url,
+			'abstract' : abstract,
+			'metadata' : metadata,
+		}
+		
+		dataArray[i] = data
+
+		i = i+1
+
+	print "Cantidad de articulos: " + str(i)
+
+	session['cantArticulos'] = i
+	data_ready = json.dumps(dataArray)
+
+	end = time.time()
+	tiempoTotal = end - start
+	session['lookup_time'] = str(tiempoTotal) + " segundos"
+	print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
+	print "Tiempo por articulo: " + str(tiempoTotal / i) + " segundos"
+
+	return data_ready

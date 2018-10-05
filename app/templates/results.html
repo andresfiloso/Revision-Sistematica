@@ -62,9 +62,13 @@
                             <li class="breadcrumb-item active">{{ keywords }}</li>
                         </ol>
                         <ol class="breadcrumb">
-
                             <li class="breadcrumb-item active"><div id="cantArticulos"></div></li>
                         </ol>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active"><div id="tiempoBusqueda"></div></li>
+                        </ol>
+
+                        
                     </div>
                     <div class="col-md-3 col-3 align-self-right">
                         
@@ -206,7 +210,9 @@
 </script>
 
 <script>
-    
+   // ESTA FUNCIONANDO CORRECTAMENTE CON EL SCRAPPING DE SCIENCE DIRECT. HAY OTRO MAS ABAJO PARA LAS DEMAS PAGINAS. NO HAY UNA UNIFICACION AUN
+
+   /*
         $(document).ready(function(){
 
             function cargarTarjetas(){
@@ -275,10 +281,105 @@
 
                         tabla+='</tbody></table></div>';
 
+                        $('#resultados').append(tabla);
+
                         document.getElementById("cantArticulos").innerHTML = 'Cantidad de articulos: {{session['cantArticulos']}}';
+                        document.getElementById("tiempoBusqueda").innerHTML = 'Cantidad de articulos: {{session['lookup_time']}}';
+
+                    },
+                    complete: function(){
+                      $('.ajax-loader').css("visibility", "hidden");
+                    },
+                    error : function (xhr, ajaxOptions, thrownError){  
+                      console.log(xhr.status);          
+                      console.log(thrownError);
+                    }
+                });//fin ajax
+
+            }
+
+            cargarTarjetas();
+
+        });
+
+
+</script>
+
+
+<script>
+    
+        $(document).ready(function(){
+
+            function cargarTarjetas(){
+
+                var urlString = window.location.href;
+                var urlParams = parseURLParams(urlString);
+                $.ajax({
+                    method:"GET",
+                    url: "scrapping",
+                    data: {"urlParams" : parseURLParams(urlString)},
+                    async: true,
+                    beforeSend: function(){
+                      $('.ajax-loader').css("visibility", "visible");
+                    },
+                    success: function (data) {
+                        obj = JSON.parse(data);
+
+                        var tabla = '<div class="table-responsive m-t-40">'+
+                                    '<table id="myTable" class="table">'+
+                                    '<tbody>';
+
+                        for (var i = 0; i < Object.keys(obj).length; i++) {
+                            tabla+='<tr><td>'+
+                            '<form id="form'+i+'" action="article" method="POST">' +
+                            '<input type="hidden" name="url" value="'+obj[i].result+'">'+
+                            '<input type="hidden" name="pdf" value="'+obj[i].pdf+'">' +
+                            '<div class="row">'+
+                            '<div class="card col-md-10 col-lg-10">'+
+                            '<div class="card-body" >'+
+                            '<h4 class="card-title">'+
+                            '<a onClick="redirigir('+i+')" href="#">'+obj[i].title+'</a>'+
+                            '</h4>'+
+                            '<h6 class="card-subtitle mb-2 text-muted">'+
+                            '<a href="'+obj[i].result+'" target="_blank">'+obj[i].result+'</a></h6>'+
+                            '<p class="card-text">'+obj[i].abstract+'</p>' +
+                            '<p class="card-text"><small class="text-muted">'+obj[i].metadata+'</small></p>';
+
+                            if(obj[i].pdf != 0){
+                            tabla+='<a href="'+obj[i].pdf+'" target="_blank" class="ribbon ribbon-vertical-r ribbon-default">'+
+                                '<i class="fa fa-file-pdf-o"></i></a>';
+                            }
+
+                            tabla+='</div >'+
+                            '</div>'+
+                            '<div class="col-md-2 col-lg-2">'+
+                            '<form name="formRes'+i+'">'+
+                            '<div class="checkbox checkbox-primary pull-left p-t-0">'+
+                            '<input onClick="enableTest('+i+')" id="checkbox-select'+i+'" type="checkbox">'+
+                            '<label for="checkbox-select'+i+'"> Seleccionar </label>'+
+                            '</div>'+
+                            '<br><br>'+
+                            '<div class="checkbox checkbox-primary pull-left p-t-0">'+
+                            '<input id="checkbox-testeo'+i+'" type="checkbox" disabled>'+
+                            '<label for="checkbox-testeo'+i+'"> Testeo </label>'+
+                            '</div>'+
+                            '</form>'+
+                            '<br><br>'+
+                            '<button id="saveArticle" class="saveArticle btn btn-block btn-info waves-effect waves-light" data-title="'+obj[i].title+'">Agregar a proyecto</button>'+
+                            '<button class="btn btn-block btn-danger waves-effect waves-light">Eliminar</button>'+
+                            '<br><br>'+
+                            '</div>'+
+                            '</div>'+
+                            '</form>'
+                            '</td></tr>';
+                        }
+
+                        tabla+='</tbody></table></div>';
 
                         $('#resultados').append(tabla);
 
+                        document.getElementById("cantArticulos").innerHTML = 'Cantidad de articulos: {{session['cantArticulos']}}';
+                        document.getElementById("tiempoBusqueda").innerHTML = 'Cantidad de articulos: {{session['lookup_time']}}';
 
                     },
                     complete: function(){
