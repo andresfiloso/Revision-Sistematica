@@ -112,7 +112,7 @@ def results():
 
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
-
+    # Cambio para verificar problema de mail en github
     return get_scrapping_springer()
 
 @app.route('/article',methods = ['POST', 'GET'])
