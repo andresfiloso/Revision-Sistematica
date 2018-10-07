@@ -60,8 +60,12 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/micuenta"><i class="ti-user"></i> Mi cuenta</a></li>
                                     <li><a href="/projects"><i class="ti-search"></i> Mis proyectos</a></li>
+
+                                    {% if session['proyecto'] %}
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="/classify"><i class="ti-check"></i> Clasificar articulos</a></li>
+                                    <li><a href="/classify"><i class="ti-check"></i> Clasificar articulos</a></li>        
+                                    {% endif %}
+
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/logout"><i class="fa fa-power-off"></i> Salir</a></li>
                                 </ul>
@@ -94,9 +98,11 @@
                                  {% endfor %}
                             </ul>
                         </li>
+                        {% if session['proyecto'] %}
                         <li>
                             <a class="has-arrow waves-effect waves-dark" href="/classify" aria-expanded="false"><i class="fa fa-check-square-o"></i><span class="hide-menu">Clasificar articulos </span></a>
                         </li>
+                        {% endif %}
 
                     </ul>
                 </nav>

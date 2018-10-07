@@ -112,22 +112,34 @@ def results():
 
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
-    # Cambio para verificar problema de mail en github
+    start = time.time()
+    session['key'] = 0
 
     science = get_scrapping_sciencedirect()
     springer = get_scrapping_springer()
     ieee = get_scrapping_ieee()
 
-    print science
-    science.concat(springer)
+    end = time.time()
+    tiempoTotal = end - start
+    session['lookup_time'] = str(tiempoTotal) + " segundos"
+    print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
 
-    science.concat(ieee)
+    allData = {}
+    allData.update(science)
+    allData.update(springer)
+    allData.update(ieee)
 
-    return science
+   
+    data_ready = json.dumps(allData)
+    print data_ready
+
+    # La idea seria poder enviar directamente el JSON desde aca hacia la vista sin tener que ser llamado desde el ajax.
+    return data_ready
 
 @app.route('/article',methods = ['POST', 'GET'])
 def article():
     if session.get('datosUsuario') is not None:
+
         print "ingreso a requestear el formulario"
         url = request.form["url"]
         print url
@@ -135,9 +147,10 @@ def article():
         print page
         pdf = request.form["pdf"]
         print pdf
+ 
 
         #abstract =  rawAbstract.replace('Abstract', '<h2 class="card-title">Abstract</h2>')
-        print "Se va a ir a scrap_article"
+    
         session['article'] = scrap_article(url, page, pdf)
 
         return render_template('article.html')
