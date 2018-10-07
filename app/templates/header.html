@@ -24,12 +24,14 @@
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
+                        {% if session['proyecto'] %}
                         <li class="nav-item hidden-sm-down search-box">
                             <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
                             <form class="app-search" action="/results" method="GET">
                                 <input type="text" name="keywords" class="form-control" placeholder="Query" value="{{ session['keywords'] }}"> <a class="srh-btn"><i class="ti-close"></i></a> 
                             </form>
                         </li>
+                         {% endif %}
                     </ul>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
