@@ -1,0 +1,53 @@
+=============================================
+********************************************
+LISTA DE REQUISITOS FUNCIONALES - 9/9/2018
+********************************************
+=============================================
+
+/register
+* El sistema estará desarrollado en un entorno web.
+* El usuario podrá registrarse en el sistema.
+
+/login
+* El usuario podrá acceder al sistema autenticando credenciales.
+* El usuario no podrá acceder si no posee una cuenta.
+
+/recover-password
+* El usuario podrá resetear su contraseña mediante un e-mail, si la olvida.
+
+/mi-cuenta
+* El usuario podrá modificar los datos correspondiente a su usuario.
+
+/projects
+* El usuario podrá acceder a un panel de proyectos donde obtendrá informacion de los proyectos en donde participa.
+* El usuario podrá buscar un proyecto existente propio o de otro usuario.
+* El usuario podrá crear un proyecto de revision sistematica.
+* El usuario no podrá ver detalles de proyectos donde: no sea colaborador o creador.
+* El usuario podrá ver la lista de busquedas que se realizaron de cada proyecto, modificarlas y eliminarlas.
+
+/lookup
+* El usuario podrá realizar busquedas en un proyecto, en base a diferentes terminos clave.
+* El usuario podrá realizar simultaneamente busquedas paralelas.
+* El usuario podrá especificar que terminas están incluidos en la busqueda y cuales quedán excluidos de la misma.
+
+/classify
+* El usuario podrá ver los articulos que fueron seleccionados a traves de la busqueda.
+* El usuario podrá clasificar los articulos seleccionados bajo una única categoria.
+* El usuario podrá modificar la categoria que eligió para un articulo.
+* El usuario podrá eliminar articulos que haya seleccionado dentro de un proyecto.
+* El usuario podrá visualizar gráfica y textualmente estadisticas de los articulos de un proyecto.
+* El usuario podrá elegir la cantidad de articulos que se muestran en esta sección.
+* El usuario podrá buscar articulos que se muestran en esta sección.
+
+/results
+* El usuario podrá elegir la cantidad de articulos que se visualizan en los resultados.
+* El usuario podrá agregar articulos al proyecto, para luego ser clasificados.
+* El usuario podrá eliminar un documento de la busqueda que realizó.
+* El usuario podrá modificar la busqueda sin salir de esta sección.
+
+/article
+* El usuario podrá ingresar en un articulo y visualizar su contenido
+* El usuario podrá ingresar al pdf del articulo si estuviese disponible.
+* El usuario podrá agregar una descripción al articulo a modo de anotación.
+* El usuario podrá eligir si un articulo corresponde a la categoria "testeado". 
+
