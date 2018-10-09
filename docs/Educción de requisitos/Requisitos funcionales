@@ -1,8 +1,10 @@
-=============================================
-********************************************
-LISTA DE REQUISITOS FUNCIONALES - 9/9/2018
-********************************************
-=============================================
+====================================
+Proyecto: Revisión Sistematica
+Documento: Requisitos funcionales
+Fecha: 09/09/2018
+Versión: 0.1
+Dueño: Guido Contento
+====================================
 
 /register
 * El sistema estará desarrollado en un entorno web.

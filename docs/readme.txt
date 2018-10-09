@@ -1,0 +1,17 @@
+Guia de documentación del proyecto Revisión Sistematica
+
+1- Todos los documentos producidos van a ser almacenados en el proyecto dentro del directorio /docs.
+2- Todos los documentos producidos deberán ser almacenadas en formato original (Ej: Proyecto de Visio, Excel) y en algun otro formato para ser visualizado rapidamente (Ej: PDF, PNG).
+3- Todos los documentos deberán indicar los siguiente datos: proyecto, documento, fecha, versión, dueño.
+
+Ej:
+
+Proyecto: Revisión Sistemática
+Documento: Diagrama de contexto (DC)
+Fecha: 08/10/2018
+Versión: 0.1
+Dueño: Darío Andrés Cesarano
+
+4- Para definir las versiones se utilizará Versionado Semántico (https://semver.org/lang/es/).
+5- En caso de que un documento posea mas de una version, se deberá crear un directorio aparte para dichos documentos con el nombre del documento.
+

@@ -341,7 +341,7 @@ def get_scrapping_ieee():
 	}
 
 	payload = json.dumps(search_request)
-	req = requests.post('https://ieeexplore.ieee.org/rest/search', data=payload ,headers=headers)	
+	req = requests.post('https://ieeexplore.ieee.org/rest/search', data=payload, headers=headers)	
 	statusCode = req.status_code
 	json_data = req.text
 	item_dict = json.loads(json_data)
