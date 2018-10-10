@@ -31,6 +31,8 @@ def auth_user(user, password):
 
 	    return rows
 
+
+
 def signup_user(usuario, email, password, password2):
     sql = ("INSERT INTO `usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES (NULL, '"+usuario+"', '"+password+"', '"+email+"');")
     rows = get_cur(datasource).execute(sql)

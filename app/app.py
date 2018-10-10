@@ -23,6 +23,7 @@ def default():
 def home():
     if session.get('datosUsuario') is not None:
         return redirect(url_for('projects'))
+       
     else:
         #error = "Session Timeout"
         return render_template('login.html',)
@@ -39,6 +40,10 @@ def page_not_found(e):
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template('errorTemplates/pages-error-500.html'), 500
+
+@app.errorhandler(400)
+def page_not_found(e):
+    return render_template('errorTemplates/pages-error-400.html'), 400
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -92,6 +97,28 @@ def micuenta():
         return render_template('micuenta.html',) 
     else:
         return redirect(url_for('home'))
+
+
+@app.route('/no_projects_view',methods = ['POST', 'GET'])
+def no_projects_view():
+    if session.get('datosUsuario') is not None:
+        return render_template('no_projects_view.html',) 
+    else:
+        return redirect(url_for('home'))
+
+@app.route('/firstProject',methods = ['POST', 'GET'])
+def firstProject():
+    if session.get('datosUsuario') is not None:
+    
+        nombre = request.form["nombre"]
+        print nombre
+
+        session['nombreProyecto'] = nombre
+
+        return render_template('firstProject.html')
+    else:
+        return redirect(url_for('home'))
+
 
 @app.route('/results',methods = ['POST', 'GET'])
 def results():
@@ -163,9 +190,10 @@ def article():
 def projects():
     if session.get('datosUsuario') is not None:
 
-        get_projects()
-
-        return render_template('projects.html')
+        if(get_projects()):
+            return render_template('projects.html')
+        else:
+            return redirect(url_for('no_projects_view'))
     else:
         return redirect(url_for('home'))
 

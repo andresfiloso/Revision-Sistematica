@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
+    <title>{{ session['nombreProyecto'] }}</title>
+    <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/colors/blue-dark.css" id="theme" rel="stylesheet">
+</head>
+
+<body class="fix-header card-no-border">
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <div id="main-wrapper">
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/home">
+                        <b>
+                            <i class=" ti-infinite" style="color:white; font-size: 40px; text-align:center;vertical-align: middle; "></i>
+                        </b>
+                    </a>
+                </div>
+            </nav>
+        </header>
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <br><br>
+                <form action="/insertProyecto" method="POST">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-outline-info">
+                            <div class="card-body">
+                                <form action="#" class="form-horizontal">
+                                    <div class="form-body">
+                                        <h3 class="box-title">{{ session['nombreProyecto'] }}</h3>
+                                        <hr class="m-t-0 m-b-40">
+
+                                        <input type="hidden" name="nombre" value="{{ session['nombreProyecto'] }}">
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="control-label text-right col-md-3">Descripción</label>
+                                                    <div class="col-md-9">
+                                                      <div class="form-group">
+                                                              <textarea name="descripcion" class="form-control" rows="5" placeholder="Una breve descripción de los objetivos del proyecto" required></textarea>
+                                                      </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <h3 class="box-title">Criterios de categorización</h3>
+                                        <hr class="m-t-0 m-b-40">
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="control-label text-right col-md-3">Criterios de inclusión</label>
+                                                    <div class="col-md-9">
+                                                      <div class="form-group">
+                                                              <textarea name="inclusion" class="form-control" rows="5" placeholder="Criterios por los cuales se seleccionanar los articulos" required></textarea>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="control-label text-right col-md-3">Criterios de exclusión</label>
+                                                    <div class="col-md-9">
+                                                      <div class="form-group">
+                                                              <textarea name="exclusion" class="form-control" rows="5" placeholder="Criterios por los cuales se descartaran los articulos" required></textarea>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h3 class="box-title">Invitar colaboradores</h3>
+                                        <hr class="m-t-0 m-b-40">
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                              <div class="form-group row">
+                                                  <label class="control-label text-right col-md-3">Usuario</label>
+                                                  <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <input name="colaborador" type="text" class="form-control">
+                                                            <span class="input-group-btn">
+                                                                <button id="addColaborador" class="btn btn-info waves-effect waves-light" type="button"><i class="fa fa-plus"></i> </button>
+                                                            </span>
+                                                    </div>
+
+                                                    <div id="colaboradores">
+
+                                                    </div>
+
+
+                                                  </div>
+                                              </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button type="submit" class="btn btn-info waves-effect waves-light">Crear</button>
+                                                        <button type="button" class="btn btn-inverse waves-effect waves-light">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"> </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+
+
+            </div>
+
+   
+
+
+        
+
+
+
+    </div>
+    <script src="../static/assets/plugins/jquery/jquery.min.js"></script>
+    <script src="../static/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="../static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/js/custom.min.js"></script>
+</body>
+
+</html>

@@ -61,9 +61,10 @@
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/micuenta"><i class="ti-user"></i> Mi cuenta</a></li>
-                                    <li><a href="/projects"><i class="ti-search"></i> Mis proyectos</a></li>
 
                                     {% if session['proyecto'] %}
+                                    <li><a href="/projects"><i class="ti-search"></i> Mis proyectos</a></li>
+
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/classify"><i class="ti-check"></i> Clasificar articulos</a></li>        
                                     {% endif %}
@@ -90,6 +91,8 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="nav-small-cap">Revision Sistematica</li>
+
+                        {% if session['proyecto'] %}
                         <li>
                             <a class="has-arrow waves-effect waves-dark" href="/projects" aria-expanded="false"><i class="fa fa-cubes"></i><span class="hide-menu"> Mis proyectos </span></a>
                             <ul aria-expanded="true" class="collapse">
@@ -100,7 +103,7 @@
                                  {% endfor %}
                             </ul>
                         </li>
-                        {% if session['proyecto'] %}
+                        
                         <li>
                             <a class="has-arrow waves-effect waves-dark" href="/classify" aria-expanded="false"><i class="fa fa-check-square-o"></i><span class="hide-menu">Clasificar articulos </span></a>
                         </li>
