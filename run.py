@@ -1,6 +1,3 @@
-#####################
-###### run.py #######
-#####################
 from app import app
 from flask import Flask, session
 

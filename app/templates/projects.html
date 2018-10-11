@@ -4,42 +4,26 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
     <title>Panel de proyectos</title>
-    <!-- Bootstrap Core CSS -->
     <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- chartist CSS -->
     <link href="../static/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
     <link href="../static/assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
     <link href="../static/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
     <link href="../static/assets/plugins/css-chart/css-chart.css" rel="stylesheet">
-    <!-- page CSS -->
-
     <link href="../static/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <link href="../static/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="../static/assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
     <link href="../static/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
     <link href="../static/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
     <link href="../static/assets/plugins/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
-    <!-- Typehead CSS -->
     <link href="../static/assets/plugins/typeahead.js-master/dist/typehead-min.css" rel="stylesheet">
-    <!-- Vector CSS -->
     <link href="../static/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-    <!-- Custom CSS -->
     <link href="../static/css/style.css" rel="stylesheet">
-    <!-- You can change the theme colors from here -->
     <link href="../static/css/colors/blue-dark.css" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 
 <body class="fix-header card-no-border">
@@ -50,24 +34,82 @@
         <svg class="circular" viewBox="25 25 50 50">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
+
+
+
+
+                
+
+        
+
+
+
     <div id="main-wrapper">
         
         {% include 'header.html' %}
 
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
+
+        {% if session['noProject'] == True %}
+
         <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
             <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
+                <br><br>
+                <div class="row">
+                     <div class="col-3">
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            
+                            <div class="card-body">
+                                <h1 class="card-title">Bienvenido</h1>
+                                <h3 class="card-title">Para comenzar, primero crea un proyecto.</h3>
+                                
+
+                                <button data-toggle="modal" data-target="#crearProyecto" class="btn btn-info waves-effect waves-light" type="submit">Nuevo proyecto</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div id="crearProyecto" class="modal fade">
+                <div class="modal-dialog">
+                   <div class="modal-content">
+              <form action="firstProject" method="POST">
+                <div class="modal-header">
+                    <h4 class="modal-title">Crear proyecto</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <p>Indica un nombre para tu proyecto. Vas a poder modificar esta informacion cuando quieras</p>
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <input id="nombre" name="nombre" type="text" class="form-control" value="" required>
+                        </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info waves-effect waves-light">Crear proyecto</button>
+                </div>
+                </form>
+            </div>
+                <!-- /.modal-dialog -->
+            </div>
+          </div>
+
+
+          {% else %}
+
+        <div class="page-wrapper">
+            <div class="container-fluid">
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
                         <h3 class="text-themecolor m-b-0 m-t-0">Panel de proyectos</h3>
@@ -96,17 +138,6 @@
                         </div>
                     </div>
                 </div>
-
-
-            
-                <!-- ============================================================== -->
-                <!-- End Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                        
-
                           {% for key in session['proyectos'] %}
                                 <!-- Row -->
                         <div class="row">
@@ -123,7 +154,7 @@
                               {% if session['status'] %}
                                <div class="alert alert-info alert-dismissible fade show" role="alert">
                                 {{session.pop('status')}} 
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="alert" id="success-alert" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
@@ -148,7 +179,7 @@
                                                 <!-- Column -->
 
                                                 <div class="col p-r-0 align-self-center">
-                                                    <h2 class="font-light m-b-0"><a href="/classify?project-id={{session['proyectos'][key].idProyecto}}">{{session['proyectos'][key].proyecto}}</a></h2>
+                                                    <h2 class="font-light m-b-0"><a href="/project?project-id={{session['proyectos'][key].idProyecto}}">{{session['proyectos'][key].proyecto}}</a></h2>
                                                     <h6 class="text-muted">{{session['datosUsuario'].usuario}}</h6>
                                                     <h6 class="text-muted">{{session['proyectos'][key].descripcion}}</h6>
                                                 </div>
@@ -187,17 +218,8 @@
                         {% endblock %}
            
 
-
-                
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            
-            {% include 'footer.html' %}
+
             
             <!-- ============================================================== -->
             <!-- Modals -->
@@ -295,12 +317,7 @@
 
 
 
-
-
-
-
                           <hr class="m-t-0 m-b-40">
-
 
 
                         <div class="modal-footer">
@@ -394,23 +411,15 @@
             </div>
               <!-- /.modal -->
 
-            <!-- ============================================================== -->
-            <!-- End Modals -->
-            <!-- ============================================================== -->
-
             {% include 'footer.html' %}
 
         </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
+
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
+
+    {% endif %}
+
+
     <script src="../static/assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="../static/assets/plugins/bootstrap/js/popper.min.js"></script>

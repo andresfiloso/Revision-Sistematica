@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
+    <title>{{ session['proyecto'].proyecto }}</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../static/css/style.css" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="../static/assets/plugins/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="../static/css/colors/blue-dark.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+            
+        {% include 'header.html' %}
+
+        <div class="page-wrapper">
+
+            <div class="container-fluid">
+     
+                <div class="row page-titles">
+                    <div class="col-md-5 col-8 align-self-center">
+                        <h3 class="text-themecolor m-b-0 m-t-0">{{ session['proyecto'].proyecto }}</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/projects">Panel de proyectos</a></li>
+                            <li class="breadcrumb-item active">{{ session['proyecto'].proyecto }}</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-7 col-4 align-self-center">
+                        <div class="d-flex m-t-10 justify-content-end">
+                            <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                                <form action="/lookup">
+                                <button class="btn btn-info waves-effect waves-light" type="submit">Buscar articulos</button>
+                                </form>
+                            </div>
+                            <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                                <form action="/classify">
+                                <button class="btn btn-info waves-effect waves-light" type="submit">Clasificar articulos</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card">
+
+                            
+
+                            <div class="card-body"> 
+                                <i class="editarProyecto fa fa-pencil pull-right" data-toggle="modal" data-target="#editarProyecto" class="model_img img-responsive"></i>
+
+
+                                <small class="text-muted">Proyecto </small>
+                                <h6>{{ session['proyecto'].proyecto }}</h6> 
+
+                                <small class="text-muted p-t-30 db">Descripcion</small>
+                                <h6>{{ session['proyecto'].descripcion }}</h6> 
+
+                                <small class="text-muted p-t-30 db">Criterios de inclusion</small>
+                                <h6>{{ session['proyecto'].inclusion }}</h6>
+
+                                <small class="text-muted p-t-30 db">Criterios de exclusion</small>
+                                <h6>{{ session['proyecto'].exclusion }}</h6>
+
+                                <br>
+
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <div class="card">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs profile-tab" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#historial" role="tab">Historial</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#discusion" role="tab">Discusion</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#busquedas" role="tab">Busquedas</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#participantes" role="tab">Participantes</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#configuracion" role="tab">Configuracion</a> </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="historial" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="profiletimeline">
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                <div class="user-img">
+                                                <span class="round">
+                                                  AF
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">Andres Filoso</a> <span class="sl-date">Hace 2 dias</span>
+                                                        <p>Creo el proyecto <a href="#"> nombre del proyecto</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                <div class="user-img">
+                                                <span class="round">
+                                                  SM
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div> 
+                                                        <a href="#" class="link">Sebastian Martins</a> <span class="sl-date">Hace 5 minutos</span>
+                                                          <p>Ingreso como participante del proyecto </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                  <div class="user-img">
+                                                <span class="round">
+                                                  SM
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">Sebastian Martins</a> <span class="sl-date">Hace 2 minutos</span>
+                                                        <p>Realizo la busqueda </p>
+
+                                                        <blockquote class="m-t-10">
+                                                            Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang 
+                                                        </blockquote>
+
+                                                        <div class="like-comm m-t-20"> 
+                                                            <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-search text-info"></i> Ver resultados</a> </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--second tab-->
+                                <div class="tab-pane" id="discusion" role="tabpanel">
+                                    <div class="card-body">   
+                            <div class="chat-main-box">
+                                    <div class="chat-rbox">
+                                        <ul class="chat-list p-20">
+                                            <!--chat Row -->
+                                            <li>
+                                                <div class="chat-img">
+                                                    <div class="user-img">
+                                                <span class="round">
+                                                  SM
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <h5>Sebastian Martins</h5>
+                                                    <div class="box bg-light-info">Lorem Ipsum is simply dummy text of the printing & type setting industry.</div>
+                                                </div>
+                                                <div class="chat-time">10:56 am</div>
+                                            </li>
+                                            <!--chat Row -->
+                                            <li>
+                                                <div class="chat-img">
+                                                    <div class="user-img">
+                                                <span class="round">
+                                                  SM
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+
+                                                </div>
+                                                <div class="chat-content">
+                                                    <h5>Sebastian Martins</h5>
+                                                    <div class="box bg-light-success">It’s Great opportunity to work.</div>
+                                                </div>
+                                                <div class="chat-time">10:57 am</div>
+                                            </li>
+                                            <!--chat Row -->
+                                            <li class="reverse">
+                                                <div class="chat-time">10:57 am</div>
+                                                <div class="chat-content">
+                                                    <h5>Andres Filoso</h5>
+                                                    <div class="box bg-light-inverse">It’s Great opportunity to work.</div>
+                                                </div>
+                                                <div class="chat-img">
+                                                    <div class="user-img">
+                                                <span class="round">
+                                                  AF
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                    <div class="card-body b-t">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <textarea placeholder="Escribi aca tu mensaje" class="form-control b-0"></textarea>
+                                            </div>
+                                            <div class="col-4 text-right">
+                                                <button type="button" class="btn btn-info btn-circle btn-lg"><i class="fa fa-paper-plane-o"></i> </button>
+                                            </div>
+                                      </div>
+                                </div>
+                            </div>
+                            <!-- /.chat-row -->
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="busquedas" role="tabpanel">
+                                    <div class="card-body">
+
+                                        <div class="profiletimeline">
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                <div class="user-img">
+                                                <span class="round">
+                                                  AF
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">Andres Filoso</a>
+                                                          <p></p>  
+                                                        <blockquote >
+                                                            
+                                                            Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang AND Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang OR Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang 
+                                        
+                                                        </blockquote>
+
+                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#verBusqueda">  Ver resultados </button>
+                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#editarBusqueda"> Editar</button>
+                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-id="" data-target="#borrarBusqueda"> Borrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                <div class="user-img">
+                                                <span class="round">
+                                                  SM
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">Sebastian Martins</a>
+                                                           <p></p>  
+                                                        <blockquote >
+                                                            
+                                                            Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang
+                                        
+                                                        </blockquote>
+
+                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#verBusqueda">  Ver resultados </button>
+                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#editarBusqueda"> Editar</button>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                  <div class="user-img">
+                                                <span class="round">
+                                                  SM
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">Sebastian Martins</a>
+                                                         <p></p>  
+                                                        <blockquote >
+                                                            
+                                                            Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang
+                                        
+                                                        </blockquote>
+
+                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#verBusqueda">  Ver resultados </button>
+                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#editarBusqueda"> Editar</button>
+           
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    
+                                    </div>
+                                </div>
+
+
+
+                                <div class="tab-pane" id="participantes" role="tabpanel">
+                                    <div class="card-body">
+
+                                        <div class="profiletimeline">
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                <div class="user-img">
+                                                <span class="round">
+                                                  AF
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">Andres Filoso</a>
+                                                          <p>Autor</p>  
+                                                
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                <div class="user-img">
+                                                <span class="round">
+                                                  SM
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">Sebastian Martins</a>
+                                                           <p>Invitado</p>  
+                                                    
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                  <div class="user-img">
+                                                <span class="round">
+                                                  SM
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">Guido Contento</a>
+                                                         <p>Invitado</p>  
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                  <div class="user-img">
+                                                <span class="round">
+                                                  <i class="fa fa-plus"></i>
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+    
+                                                <input id="invitacion" name="invitacion" type="text" class="form-control col-md-10" placeholder="Usuario" required>
+                                                <button class="btn btn-info waves-effect waves-light pull-right" type="submit">Invitar</button>
+                                                <br><br>
+                                                
+                                            
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    
+                                    
+                                </div>
+
+
+                                <div class="tab-pane" id="configuracion" role="tabpanel">
+                                    <div class="card-body">
+
+                                      
+                                    
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+
+
+                <div id="editarProyecto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                   <div class="modal-content">
+              <form action="/updateProject" method="POST">
+                <input type="hidden" id="idProyectoAEditar" name="idProyectoAEditar" value="">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Editar proyecto</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+
+                    <input type="hidden" name="idProyectoAEditar" value="{{ session['proyecto'].idProyecto}}"> <!-- esto esta fallando. revisar -->
+
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <input id="nombre" name="nombre" type="text" class="form-control" value="{{ session['proyecto'].proyecto }}" placeholder="Nombre del proyecto">
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <textarea id="descripcion" name="descripcion" class="form-control" rows="3" placeholder="Descripcion">{{ session['proyecto'].descripcion }}</textarea>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <textarea id="inclusion" name="inclusion" class="form-control" rows="3" placeholder="Criterios de inclusion" required>{{ session['proyecto'].inclusion }}</textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <textarea id="exclusion" name="exclusion" class="form-control" rows="3" placeholder="Criterios de exclusion" required>{{ session['proyecto'].exclusion }}</textarea>
+                        </div>
+                    </div>
+
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-info waves-effect waves-light">Actualizar</button>
+                </div>
+                </form>
+            </div>
+                <!-- /.modal-dialog -->
+            </div>
+          </div>
+
+
+                
+            </div>
+
+
+        </div>
+
+            </div>
+            
+            {% include 'footer.html' %}
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+
+
+
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="../static/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../static/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="../static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="../static/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="../static/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="../static/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="../static/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="../static/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="../static/js/custom.min.js"></script>
+    <script src="../static/assets/plugins/toast-master/js/jquery.toast.js"></script>
+    <script src="../static/js/toastr.js"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="../static/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+
+    <!-- This is data table -->
+    <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+        $(document).ready(function() {
+            var table = $('#example').DataTable({
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
+                "order": [
+                    [2, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+                    api.column(2, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+                            last = group;
+                        }
+                    });
+                }
+            });
+            // Order by the grouping
+            $('#example tbody').on('click', 'tr.group', function() {
+                var currentOrder = table.order()[0];
+                if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                    table.order([2, 'desc']).draw();
+                } else {
+                    table.order([2, 'asc']).draw();
+                }
+            });
+        });
+    });
+    $('#example23').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+    </script>
+
+</body>
+
+</html>

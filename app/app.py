@@ -23,7 +23,6 @@ def default():
 def home():
     if session.get('datosUsuario') is not None:
         return redirect(url_for('projects'))
-       
     else:
         #error = "Session Timeout"
         return render_template('login.html',)
@@ -98,14 +97,6 @@ def micuenta():
     else:
         return redirect(url_for('home'))
 
-
-@app.route('/no_projects_view',methods = ['POST', 'GET'])
-def no_projects_view():
-    if session.get('datosUsuario') is not None:
-        return render_template('no_projects_view.html',) 
-    else:
-        return redirect(url_for('home'))
-
 @app.route('/firstProject',methods = ['POST', 'GET'])
 def firstProject():
     if session.get('datosUsuario') is not None:
@@ -142,26 +133,41 @@ def scrapping():
     start = time.time()
     session['key'] = 0
 
-    science = get_scrapping_sciencedirect()
-    springer = get_scrapping_springer()
-    ieee = get_scrapping_ieee()
+    try:
+        print "INTENTANDO BUSCAR JSON"
+        print "EL ARCHIVO A LLAMAR SE VA A LLAMAR: " + 'json/'+session['keywords']+'.json'
 
-    end = time.time()
-    tiempoTotal = end - start
-    session['lookup_time'] = str(tiempoTotal) + " segundos"
-    print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
+        with open('json/'+session['keywords']+'.json', 'r') as file:
+            print "ABRI EL ARCHIVO BIEN"
+            data = json.load(file)
+            data_ready = json.dumps(data)
+            print data_ready
+            return data_ready
+    except:
 
-    allData = {}
-    allData.update(science)
-    allData.update(springer)
-    allData.update(ieee)
+        science = get_scrapping_sciencedirect()
+        springer = get_scrapping_springer()
+        ieee = get_scrapping_ieee()
 
-   
-    data_ready = json.dumps(allData)
-    print data_ready
+        end = time.time()
+        tiempoTotal = end - start
+        session['lookup_time'] = str(tiempoTotal) + " segundos"
+        print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
 
-    # La idea seria poder enviar directamente el JSON desde aca hacia la vista sin tener que ser llamado desde el ajax.
-    return data_ready
+        allData = {}
+        allData.update(science)
+        allData.update(springer)
+        allData.update(ieee)
+
+       
+        data_ready = json.dumps(allData)
+
+        with open('json/'+session['keywords']+'.json', 'w') as file:
+            json.dump(allData, file)
+
+        print data_ready
+
+        return data_ready
 
 @app.route('/article',methods = ['POST', 'GET'])
 def article():
@@ -189,11 +195,31 @@ def article():
 @app.route('/projects',methods = ['POST', 'GET'])
 def projects():
     if session.get('datosUsuario') is not None:
+        if(get_projects()): session['noProject'] = False      
+        else: session['noProject'] = True    
+        return render_template('projects.html')
+    else:
+        return redirect(url_for('home'))
 
-        if(get_projects()):
-            return render_template('projects.html')
-        else:
-            return redirect(url_for('no_projects_view'))
+@app.route('/project',methods = ['POST', 'GET'])
+def project():
+    if session.get('datosUsuario') is not None:
+
+        idProyecto = request.args.get('project-id')
+        print "IDPROYECTO: " + str(idProyecto)
+        if idProyecto != None: # se llama a classify con get
+            if(get_project(idProyecto)):
+                return render_template('project.html')
+            else: # no se encontro el idProyecto en la bd
+                session['error'] = "El proyecto no existe o fue eliminado"
+                return redirect(url_for('projects'))
+        else: # se llama a project sin get
+            if session.get('proyecto') is not None:
+                return render_template('project.html') 
+            else: # el proyecto no esta seleccionado
+                session['error'] = "Vamos por paso. Primero, seleccciona un proyecto."
+                return redirect(url_for('projects'))
+
     else:
         return redirect(url_for('home'))
 
