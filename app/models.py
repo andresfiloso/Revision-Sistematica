@@ -40,6 +40,11 @@ class Proyecto:
   def setExlcusion(self, exclusion):
     self.exclusion = exclusion
 
+  def __repr__(self):
+    return "Esto seria un proyecto"
+  def __str__(self):
+    return "[" + str(self.getIdProyecto()) + ", " + self.getProyecto() + ", " + self.getDescripcion() + ", " +  self.getInclusion() + ", " +  self.getExclusion() + "]"
+
 
 #######################
 ##### Usuario.py ######

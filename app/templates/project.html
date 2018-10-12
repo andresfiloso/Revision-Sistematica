@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
-    <title>{{ session['proyecto'].proyecto }}</title>
+    <title>{{ proyecto.getProyecto() }}</title>
     <!-- Bootstrap Core CSS -->
     <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -48,10 +48,10 @@
      
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">{{ session['proyecto'].proyecto }}</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">{{ proyecto.getProyecto() }}</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/projects">Panel de proyectos</a></li>
-                            <li class="breadcrumb-item active">{{ session['proyecto'].proyecto }}</li>
+                            <li class="breadcrumb-item active">{{ proyecto.getProyecto() }}</li>
                         </ol>
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
@@ -86,16 +86,16 @@
 
 
                                 <small class="text-muted">Proyecto </small>
-                                <h6>{{ session['proyecto'].proyecto }}</h6> 
+                                <h6>{{ proyecto.getProyecto() }}</h6> 
 
                                 <small class="text-muted p-t-30 db">Descripcion</small>
-                                <h6>{{ session['proyecto'].descripcion }}</h6> 
+                                <h6>{{ proyecto.getDescripcion() }}</h6> 
 
                                 <small class="text-muted p-t-30 db">Criterios de inclusion</small>
-                                <h6>{{ session['proyecto'].inclusion }}</h6>
+                                <h6>{{ proyecto.getInclusion() }}</h6>
 
                                 <small class="text-muted p-t-30 db">Criterios de exclusion</small>
-                                <h6>{{ session['proyecto'].exclusion }}</h6>
+                                <h6>{{ proyecto.getExclusion() }}</h6>
 
                                 <br>
 
@@ -121,6 +121,11 @@
                                 <div class="tab-pane active" id="historial" role="tabpanel">
                                     <div class="card-body">
                                         <div class="profiletimeline">
+
+                                            {% for key in session['transacciones'] %}
+
+
+                                            
                                             <div class="sl-item">
                                                 <div class="sl-left"> 
                                                 <div class="user-img">
@@ -131,12 +136,16 @@
                                               </div>
                                                 </div>
                                                 <div class="sl-right">
-                                                    <div><a href="#" class="link">Andres Filoso</a> <span class="sl-date">Hace 2 dias</span>
-                                                        <p>Creo el proyecto <a href="#"> nombre del proyecto</a></p>
+                                                    <div><a href="#" class="link">{{ usuario }} </a> <span class="sl-date">{{ session['transacciones'][key].fechahora }} </span>
+                                                        <p>{{ session['transacciones'][key].transaccion }}</a></p>
                                                     </div>
                                                 </div>
                                             </div>
                                             <hr>
+                                     
+                                            {% endfor %}
+
+                                            <!--
                                             <div class="sl-item">
                                                 <div class="sl-left"> 
                                                 <div class="user-img">
@@ -177,6 +186,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                        -->
                                         </div>
                                     </div>
                                 </div>

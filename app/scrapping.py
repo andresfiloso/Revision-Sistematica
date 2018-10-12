@@ -23,7 +23,6 @@ def scrap_article(url, page,  pdf):
 ########################################################################
 
 def get_scrapping_full():
-	start = time.time()
 	urlScience = "https://www.sciencedirect.com/search?qs=" + session['keywords'] + "&show=10&sortBy=relevance"
 	req = requests.get(urlScience)
 	statusCode = req.status_code
@@ -70,14 +69,7 @@ def get_scrapping_full():
 
 			i = i+1
 
-	session['cantArticulos'] = i
 	data_ready = json.dumps(dataArray)
-
-	end = time.time()
-	tiempoTotal = end - start
-	print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
-	print "Tiempo por articulo: " + str(tiempoTotal / i) + " segundos"
-
 	return data_ready
 
 ######################################################################################################################################
@@ -85,7 +77,6 @@ def get_scrapping_full():
 ######################################################################################################################################
 
 def get_scrapping_sciencedirect():
-	start = time.time()
 	urlScience = "https://www.sciencedirect.com/search?qs=" + session['keywords'] + "&show=100&sortBy=relevance&offset=0"
 	req = requests.get(urlScience)
 	statusCode = req.status_code
@@ -134,17 +125,7 @@ def get_scrapping_sciencedirect():
 		dataArray[session['key']] = data
 		i += 1
 		session['key'] += 1
-
-	session['cantArticulos'] = i
-
-	end = time.time()
-	tiempoTotal = end - start
-	session['lookup_time'] = str(tiempoTotal) + " segundos"
-	print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
-	print "Tiempo por articulo: " + str(tiempoTotal / i) + " segundos"
-
-	print "DATA READY TYPE: SCIENCE DIRECT " + str(type(data_ready))
-
+		
 	return dataArray
 
 	############################################
@@ -152,8 +133,6 @@ def get_scrapping_sciencedirect():
 	############################################
 
 def scrap_article_sciencedirect(url, page, pdf):
-	start = time.time()
-
 	req = requests.get(url)
 	statusCode = req.status_code
 	html = BeautifulSoup(req.text, "html.parser")
@@ -195,10 +174,6 @@ def scrap_article_sciencedirect(url, page, pdf):
 
 	}
 
-	end = time.time()
-	tiempoTotal = end - start
-	print "Tiempo de scrapping de articulo: " + str(tiempoTotal) + " segundos"
-
 	return data
 
 ######################################################################################################################################
@@ -206,7 +181,6 @@ def scrap_article_sciencedirect(url, page, pdf):
 ######################################################################################################################################
 
 def get_scrapping_springer():
-	start = time.time()
 	url = 'https://link.springer.com/search?&query=' + session['keywords'] + '&facet-content-type="ConferencePaper"&showAll=true'
 	req = requests.get(url)
 	statusCode = req.status_code
@@ -263,16 +237,6 @@ def get_scrapping_springer():
 		i += 1
 		session['key'] += 1
 
-	session['cantArticulos'] = i
-
-	end = time.time()
-	tiempoTotal = end - start
-	session['lookup_time'] = str(tiempoTotal) + " segundos"
-	print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
-	print "Tiempo por articulo: " + str(tiempoTotal / i) + " segundos"
-
-	print "DATA READY TYPE: SPRINGER " + str(type(data_ready))
-
 	return dataArray
 
 	############################################
@@ -280,8 +244,6 @@ def get_scrapping_springer():
 	############################################
 
 def scrap_article_springer(url, page, pdf):
-	start = time.time()
-
 	req = requests.get(url)
 	statusCode = req.status_code
 	html = BeautifulSoup(req.text, "html.parser")
@@ -313,10 +275,6 @@ def scrap_article_springer(url, page, pdf):
 	    'pdf' : '0',
 	}
 
-	end = time.time()
-	tiempoTotal = end - start
-	print "Tiempo de scrapping de articulo: " + str(tiempoTotal) + " segundos"
-
 	return data
 
 
@@ -325,7 +283,6 @@ def scrap_article_springer(url, page, pdf):
 ######################################################################################################################################
 
 def get_scrapping_ieee():
-	start = time.time()
 	keywords = session['keywords']
 
 	search_request = {
@@ -396,16 +353,6 @@ def get_scrapping_ieee():
 		dataArray[session['key']] = data
 		session['key'] +=1
 
-	session['cantArticulos'] = cantidadArticulos
-		
-	end = time.time()
-	tiempoTotal = end - start
-	session['lookup_time'] = str(tiempoTotal) + " segundos"
-	print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
-	print "Tiempo por articulo: " + str(tiempoTotal / cantidadArticulos) + " segundos"
-
-	print "DATA READY TYPE IEEE: " + str(type(data_ready))
-
 	return dataArray
 
 	############################################
@@ -413,7 +360,6 @@ def get_scrapping_ieee():
 	############################################
 
 def scrap_article_ieee(articleNumber, page, pdf):
-	start = time.time()
 
 	headers = {
 				'User-Agent':'BeautifulSoup, contact me at andresfilosok@gmail.com', 
@@ -458,11 +404,5 @@ def scrap_article_ieee(articleNumber, page, pdf):
 	    'keywords' : "No hay palabras claves",
 	    'pdf' : '0',
 	}
-
-	end = time.time()
-	tiempoTotal = end - start
-	print "Tiempo de scrapping de articulo: " + str(tiempoTotal) + " segundos"
-	
-
 
 	return data

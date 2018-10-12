@@ -34,3 +34,20 @@ CREATE TABLE Articulo (
 		ON UPDATE RESTRICT
 ) ENGINE = InnoDB;
 
+CREATE TABLE Transaccion (
+	idTransaccion INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	transaccion VARCHAR(120) NOT NULL,
+    tipoTransaccion VARCHAR(20) NOT NULL,
+    fechahora DATETIME NULL,
+    idProyecto INT UNSIGNED NOT NULL,
+    CONSTRAINT `fk_transaccion_proyecto`
+		FOREIGN KEY (idProyecto) REFERENCES Proyecto (idProyecto)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT,
+    idUsuario INT UNSIGNED NOT NULL,
+    CONSTRAINT `fk_transaccion_usuario`
+		FOREIGN KEY (idUsuario) REFERENCES Usuario (idUsuario)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT    
+) ENGINE = InnoDB;
+

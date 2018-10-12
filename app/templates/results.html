@@ -197,6 +197,7 @@
 
             if(document.getElementById("checkbox-testeo" + numero ).disabled == true){
                 document.getElementById("checkbox-testeo"+ numero ).disabled = false;
+
             }
 
 
@@ -228,7 +229,9 @@
                     },
                     success: function (data) {
                         obj = JSON.parse(data);
-
+                        document.getElementById("cantArticulos").innerHTML = 'Cantidad de articulos: {{session['cantArticulos']}}';
+                        document.getElementById("tiempoBusqueda").innerHTML = 'Tiempo de busqueda: {{session['lookup_time']}}';
+                        
                         var tabla = '<div class="table-responsive m-t-40">'+
                                     '<table id="myTable" class="table">'+
                                     '<tbody>';
@@ -320,9 +323,7 @@
                         tabla+='</tbody></table></div>';
 
                         $('#resultados').append(tabla);
-
-                        document.getElementById("cantArticulos").innerHTML = 'Cantidad de articulos: {{session['cantArticulos']}}';
-                        document.getElementById("tiempoBusqueda").innerHTML = 'Cantidad de articulos: {{session['lookup_time']}}';
+                        
 
                     },
                     complete: function(){
@@ -337,6 +338,7 @@
             }
 
             cargarTarjetas();
+            
 
         });
 
@@ -378,6 +380,7 @@
     parseAbstract = parseAbstract.replace("Introduction","<h6>Introduction</h6>");
     parseAbstract = parseAbstract.replace("Introducción","<h6>Introduccion</h6>");
     res = parseAbstract.substring(0, 500) + "...";
+
 
     return res;
 }

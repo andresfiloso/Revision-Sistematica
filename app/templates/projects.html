@@ -35,15 +35,6 @@
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
 
-
-
-
-                
-
-        
-
-
-
     <div id="main-wrapper">
         
         {% include 'header.html' %}
@@ -114,8 +105,8 @@
                     <div class="col-md-5 col-8 align-self-center">
                         <h3 class="text-themecolor m-b-0 m-t-0">Panel de proyectos</h3>
                         <ol class="breadcrumb">
-                          {% if session['proyecto'] %}
-                            <li class="breadcrumb-item active"><i class="fa fa-check-circle"></i> {{ session['proyecto'].proyecto }}</li>
+                          {% if proyecto %}
+                            <li class="breadcrumb-item active"><i class="fa fa-check-circle"></i> {{ proyecto.getProyecto() }}</li>
                           {% else %}
                             <li class="breadcrumb-item active">No hay un ningún proyecto seleccionado</li>
                             {% endif %}
@@ -124,7 +115,7 @@
                     <div class="col-md-7 col-4 align-self-center">
                         <div class="d-flex m-t-10 justify-content-end">
                             <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                                {% if session['proyecto'] %}
+                                {% if proyecto %}
                                 <form action="/lookup">
                                 <button class="btn btn-info waves-effect waves-light" type="submit">Buscar articulos</button>
                                 </form>
@@ -137,8 +128,10 @@
 
                         </div>
                     </div>
-                </div>
-                          {% for key in session['proyectos'] %}
+                </div>  
+
+                    {%  if(proyectos) %}
+                          {% for key in proyectos %}
                                 <!-- Row -->
                         <div class="row">
                             <!-- Column -->
@@ -163,8 +156,8 @@
                                     <div class="col-md-10 col-lg-10">
                                         <div class="ribbon-wrapper card card-body"> 
 
-                                          {% if session['proyecto'] %}
-                                            {% if session['proyecto'].idProyecto == session['proyectos'][key].idProyecto %}
+                                          {% if proyecto %}
+                                            {% if proyecto.getIdProyecto() == proyectos[key].getIdProyecto() %}
 
                                             <div data-toggle="tooltip" data-placement="top" title="Proyecto seleccionado" class="ribbon ribbon-warning ribbon-vertical-r"><i class="fa fa-check-circle"></i></div>
 
@@ -179,9 +172,11 @@
                                                 <!-- Column -->
 
                                                 <div class="col p-r-0 align-self-center">
-                                                    <h2 class="font-light m-b-0"><a href="/project?project-id={{session['proyectos'][key].idProyecto}}">{{session['proyectos'][key].proyecto}}</a></h2>
+                                                    <h2 class="font-light m-b-0">
+                                                      <a href="/project?project-id={{ proyectos[key].getIdProyecto() }}">{{proyectos[key].getProyecto()}}</a>
+                                                    </h2>
                                                     <h6 class="text-muted">{{session['datosUsuario'].usuario}}</h6>
-                                                    <h6 class="text-muted">{{session['proyectos'][key].descripcion}}</h6>
+                                                    <h6 class="text-muted">{{proyectos[key].getDescripcion()}}</h6>
                                                 </div>
 
 
@@ -191,7 +186,7 @@
 
                                                 </div>
                                                 -->
-                                                <div class="ribbon ribbon-corner ribbon-info ribbon-right ribbon-bottom"><i class="editarProyecto fa fa-pencil" data-toggle="modal" data-id="{{session['proyectos'][key].idProyecto}}" data-proyecto="{{session['proyectos'][key].proyecto}}" data-descripcion="{{session['proyectos'][key].descripcion}}" data-inclusion="{{session['proyectos'][key].inclusion}}" data-exclusion="{{session['proyectos'][key].exclusion}}" data-target="#editarProyecto" class="model_img img-responsive"></i></div>
+                                                <div class="ribbon ribbon-corner ribbon-info ribbon-right ribbon-bottom"><i class="editarProyecto fa fa-pencil" data-toggle="modal" data-id="{{proyectos[key].getIdProyecto()}}" data-proyecto="{{proyectos[key].getProyecto()}}" data-descripcion="{{proyectos[key].getDescripcion()}}" data-inclusion="{{proyectos[key].getInclusion()}}" data-exclusion="{{proyectos[key].getExclusion()}}" data-target="#editarProyecto" class="model_img img-responsive"></i></div>
 
                                             </div>
 
@@ -200,7 +195,7 @@
                                     <div class="col-md-2 col-lg-2">
                                         <br>
                                         <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
-                                        <button class="eliminarProyecto btn btn-block btn-danger waves-effect waves-light" data-toggle="modal" data-id="{{session['proyectos'][key].idProyecto}}" data-proyecto="{{session['proyectos'][key].proyecto}}" data-target="#eliminarProyecto" class="model_img img-responsive" >Eliminar proyecto</button>
+                                        <button class="eliminarProyecto btn btn-block btn-danger waves-effect waves-light" data-toggle="modal" data-id="{{proyectos[key].getIdProyecto()}}" data-proyecto="{{proyectos[key].getProyecto()}}" data-target="#eliminarProyecto" class="model_img img-responsive" >Eliminar proyecto</button>
                                         <br><br>
                                     </div>
                                 </div>
@@ -211,11 +206,9 @@
 
                         {% endfor %}
 
-                        {% block body %}
-                              {% if not session['proyectos'] %}
+                        {% else %}
                                 <h2>No tienes proyectos. Crea uno para empezar a buscar articulos.</h2>
-                              {% endif %}
-                        {% endblock %}
+                        {% endif %}
            
 
             </div>

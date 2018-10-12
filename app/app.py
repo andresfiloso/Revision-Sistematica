@@ -7,6 +7,8 @@ from controller import *
 from models import *
 from scrapping import *
 
+
+import pickle
 import os
 import time
 
@@ -141,7 +143,6 @@ def scrapping():
             print "ABRI EL ARCHIVO BIEN"
             data = json.load(file)
             data_ready = json.dumps(data)
-            print data_ready
             return data_ready
     except:
 
@@ -159,13 +160,15 @@ def scrapping():
         allData.update(springer)
         allData.update(ieee)
 
+        
        
+        print "CANTIDAD DE ARTICULOS: " + str(session['cantArticulos'])
         data_ready = json.dumps(allData)
 
         with open('json/'+session['keywords']+'.json', 'w') as file:
             json.dump(allData, file)
 
-        print data_ready
+        session['cantArticulos'] = len(allData)
 
         return data_ready
 
@@ -192,34 +195,45 @@ def article():
     
 
 
-@app.route('/projects',methods = ['POST', 'GET'])
+@app.route('/projects', methods = ['POST', 'GET'])
 def projects():
     if session.get('datosUsuario') is not None:
-        if(get_projects()): session['noProject'] = False      
-        else: session['noProject'] = True    
-        return render_template('projects.html')
+        proyectos = get_projects()
+
+        print "APP:"
+        if(proyectos): # at least one project
+            print proyectos[0].getProyecto()
+        else: # no projects founded
+            return render_template('projects.html', **locals())   
+        if (session['proyecto']):
+            proyecto = get_project(str(session['proyecto']))
+
+        if (proyectos):  session['noProject'] = False
+        else: session['noProject'] = True
+        return render_template('projects.html', **locals())  
     else:
         return redirect(url_for('home'))
 
-@app.route('/project',methods = ['POST', 'GET'])
+@app.route('/project', methods = ['POST', 'GET']) # All use cases tested
 def project():
     if session.get('datosUsuario') is not None:
-
         idProyecto = request.args.get('project-id')
         print "IDPROYECTO: " + str(idProyecto)
-        if idProyecto != None: # se llama a classify con get
-            if(get_project(idProyecto)):
-                return render_template('project.html')
-            else: # no se encontro el idProyecto en la bd
-                session['error'] = "El proyecto no existe o fue eliminado"
+        if idProyecto != None: # Call project with GET
+            proyecto = get_project(idProyecto)
+            if(proyecto): # get_project returns 0 if there is no project with this id
+                session['proyecto'] = proyecto.getIdProyecto()
+                return render_template('project.html', **locals()) # **locals() takes all your local variables
+            else:
+                session['error'] = "El proyecto no existe o fue eliminado."
                 return redirect(url_for('projects'))
-        else: # se llama a project sin get
+        else: # Call project without GET
             if session.get('proyecto') is not None:
-                return render_template('project.html') 
-            else: # el proyecto no esta seleccionado
+                proyecto = get_project(str(session['proyecto'])) # Remember, session['proyecto'] is the ID of the selected project
+                return render_template('project.html', **locals()) 
+            else: # session['project'] is empty
                 session['error'] = "Vamos por paso. Primero, seleccciona un proyecto."
                 return redirect(url_for('projects'))
-
     else:
         return redirect(url_for('home'))
 
