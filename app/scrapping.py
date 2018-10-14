@@ -307,51 +307,54 @@ def get_scrapping_ieee():
 
 	dataArray = {}
 
-	cantidadArticulos = len(item_dict['records'])
-	for i in range(cantidadArticulos):
-		try:  url = "https://ieeexplore.ieee.org" + item_dict['records'][i]['documentLink']
-		except: url = "No url"
-		print "URL: " + url
+	try: 
+		cantidadArticulos = len(item_dict['records'])
+		for i in range(cantidadArticulos):
+			try:  url = "https://ieeexplore.ieee.org" + item_dict['records'][i]['documentLink']
+			except: url = "No url"
+			print "URL: " + url
 
-		try: title = item_dict['records'][i]['articleTitle']
-		except: title = "No title"
-		
-		try: articleNumber = item_dict['records'][i]['articleNumber']
-		except: articleNumber = "No articleNumber"
+			try: title = item_dict['records'][i]['articleTitle']
+			except: title = "No title"
+			
+			try: articleNumber = item_dict['records'][i]['articleNumber']
+			except: articleNumber = "No articleNumber"
 
-		try: publicationTitle = item_dict['records'][i]['publicationTitle']
-		except: publicationTitle = "No publicationTitle"
+			try: publicationTitle = item_dict['records'][i]['publicationTitle']
+			except: publicationTitle = "No publicationTitle"
 
-		try: publicationLink = "https://ieeexplore.ieee.org" + item_dict['records'][i]['publicationLink']
-		except: publicationLink = "No publicationLink"
+			try: publicationLink = "https://ieeexplore.ieee.org" + item_dict['records'][i]['publicationLink']
+			except: publicationLink = "No publicationLink"
 
-		try: abstract = item_dict['records'][i]['abstract']
-		except: abstract = "No abstract"
+			try: abstract = item_dict['records'][i]['abstract']
+			except: abstract = "No abstract"
 
-		try: 
-			cantidadAutores = len(item_dict['records'][i]['authors'])
-			print "Cantidad de autores: " + str(cantidadAutores)
-			for j in range(cantidadAutores):
-				authors = item_dict['records'][i]['authors'][j]['preferredName']
-				if j == 0:	
-					metadata = authors
-				else:
-					metadata = metadata + ", " + authors
-		except: 
-			cantidadAutores = "No authors"		
+			try: 
+				cantidadAutores = len(item_dict['records'][i]['authors'])
+				print "Cantidad de autores: " + str(cantidadAutores)
+				for j in range(cantidadAutores):
+					authors = item_dict['records'][i]['authors'][j]['preferredName']
+					if j == 0:	
+						metadata = authors
+					else:
+						metadata = metadata + ", " + authors
+			except: 
+				cantidadAutores = "No authors"		
 
-		data = {
-			'id' : "ie" + str(i),
-			'page' : "IEEE Xplore",
-			'title' : title,
-			'result' : url,
-			'articleNumber' : articleNumber,
-			'abstract' : abstract,
-			'metadata' : metadata,
-		}
-		
-		dataArray[session['key']] = data
-		session['key'] +=1
+			data = {
+				'id' : "ie" + str(i),
+				'page' : "IEEE Xplore",
+				'title' : title,
+				'result' : url,
+				'articleNumber' : articleNumber,
+				'abstract' : abstract,
+				'metadata' : metadata,
+			}
+			
+			dataArray[session['key']] = data
+			session['key'] +=1
+	except:
+		return dataArray
 
 	return dataArray
 
@@ -406,3 +409,81 @@ def scrap_article_ieee(articleNumber, page, pdf):
 	}
 
 	return data
+
+######################################################################################################################################
+########################################################## SHCOLAR ###################################################################
+######################################################################################################################################
+
+def get_scrapping_scholar():
+
+	page = 0
+
+	i = 0
+
+
+
+	headers = {
+			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', 
+			'Referer': 'https://scholar.google.com.ar/',
+			'Content-type': 'text/html; charset=UTF-8'
+	}
+
+
+
+	for e in range(10):
+
+		search_request = {
+				'start' : page,
+				'q' : session['keywords'],
+	            'hl': "en",
+	            'as_sdt': "0,5",
+	    }
+	    
+
+		payload = json.dumps(search_request)
+		req = requests.get('https://scholar.google.com.ar/scholar', data=payload, headers=headers)	
+
+		statusCode = req.status_code
+		html = BeautifulSoup(req.text, "html.parser")
+		div = html.findAll('div', {'class': 'gs_r gs_or gs_scl'})
+
+		data_ready = {}
+
+		dataArray = {}
+
+
+		print "++++++++++++++++++++++++++++++"
+		print "++++++++++++++++++++++++++++++"
+		print "++++++++++++++++++++++++++++++"
+		print "PAGEE: " + str(page)
+		print "++++++++++++++++++++++++++++++"
+		print "++++++++++++++++++++++++++++++"
+		print "++++++++++++++++++++++++++++++"
+
+		print div
+
+		for result in div:
+			title = ""
+			titleDiv = result.find('h3', {'class': 'gs_rt'})
+			url = titleDiv.find('a')
+			if url is not None:
+				url = titleDiv.find('a')['href']
+				title = titleDiv.a.text.encode('utf8')
+		
+		
+			print title
+			print url
+
+			i += 1
+
+		page += 10 #pasar a la siguiente pagina
+
+	print "++++++++++++++++++++++++++++++"
+	print "++++++++++++++++++++++++++++++"
+	print "++++++++++++++++++++++++++++++"
+	print "Cantidad de articulos encontrados: " + str(i)
+	print "++++++++++++++++++++++++++++++"
+	print "++++++++++++++++++++++++++++++"
+	print "++++++++++++++++++++++++++++++"
+
+	return dataArray

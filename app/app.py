@@ -7,8 +7,6 @@ from controller import *
 from models import *
 from scrapping import *
 
-
-import pickle
 import os
 import time
 
@@ -23,7 +21,7 @@ def default():
 
 @app.route('/home', methods = ['POST', 'GET'])
 def home():
-    if session.get('datosUsuario') is not None:
+    if session.get('usuario') is not None:
         return redirect(url_for('projects'))
     else:
         #error = "Session Timeout"
@@ -80,10 +78,12 @@ def registrarUsuario():
 
 @app.route('/lookup',methods = ['POST', 'GET'])
 def lookup():
-    if session.get('datosUsuario') is not None:
+    if session.get('usuario') is not None:
+        proyectos = get_projects()
+        usuario = getSession()
         if session.get('proyecto') is not None:
-
-            return render_template('lookup.html') 
+            proyecto = get_project()
+            return render_template('lookup.html', **locals()) 
         else:
             session['error'] = "Antes de buscar articulos tienes que seleccionar un proyecto"
             return redirect(url_for('projects'))
@@ -94,35 +94,44 @@ def lookup():
 
 @app.route('/micuenta',methods = ['POST', 'GET'])
 def micuenta():
-    if session.get('datosUsuario') is not None:
-        return render_template('micuenta.html',) 
+    if session.get('usuario') is not None:
+        if session.get('proyecto') is not None:
+            proyecto = get_project()
+        proyectos = get_projects()
+        usuario = getSession()
+        
+        return render_template('micuenta.html', **locals()) 
     else:
         return redirect(url_for('home'))
 
 @app.route('/firstProject',methods = ['POST', 'GET'])
 def firstProject():
-    if session.get('datosUsuario') is not None:
-    
+    if session.get('usuario') is not None:
+        usuario = getSession()
         nombre = request.form["nombre"]
         print nombre
 
         session['nombreProyecto'] = nombre
 
-        return render_template('firstProject.html')
+        return render_template('firstProject.html', **locals())
     else:
         return redirect(url_for('home'))
 
 
 @app.route('/results',methods = ['POST', 'GET'])
 def results():
-    if session.get('datosUsuario') is not None:
+    if session.get('usuario') is not None:
+        proyectos = get_projects()
+        usuario = getSession()
         if session.get('proyecto') is not None:
+            proyecto = get_project()
+
             keywords = request.args.get('keywords', default = '*', type = str)
             newKeyword = request.args.get('newKeyword', default = '*', type = str)
 
             session['keywords'] = keywords
 
-            return render_template('results.html', keywords = keywords)
+            return render_template('results.html', **locals())
         else:
             session['error'] = "Antes de buscar articulos tienes que seleccionar un proyecto"
             return redirect(url_for('projects'))
@@ -160,10 +169,9 @@ def scrapping():
         allData.update(springer)
         allData.update(ieee)
 
-        
-       
-        print "CANTIDAD DE ARTICULOS: " + str(session['cantArticulos'])
         data_ready = json.dumps(allData)
+
+        new_busqueda(session['keywords']);
 
         with open('json/'+session['keywords']+'.json', 'w') as file:
             json.dump(allData, file)
@@ -171,10 +179,15 @@ def scrapping():
         session['cantArticulos'] = len(allData)
 
         return data_ready
+ 
+
 
 @app.route('/article',methods = ['POST', 'GET'])
 def article():
-    if session.get('datosUsuario') is not None:
+    if session.get('usuario') is not None:
+        usuario = getSession()
+        proyectos = get_projects()
+        proyecto = get_project()
 
         print "ingreso a requestear el formulario"
         url = request.form["url"]
@@ -184,12 +197,11 @@ def article():
         pdf = request.form["pdf"]
         print pdf
  
-
         #abstract =  rawAbstract.replace('Abstract', '<h2 class="card-title">Abstract</h2>')
     
         session['article'] = scrap_article(url, page, pdf)
 
-        return render_template('article.html')
+        return render_template('article.html', **locals())
     else:
         return redirect(url_for('home'))
     
@@ -197,30 +209,32 @@ def article():
 
 @app.route('/projects', methods = ['POST', 'GET'])
 def projects():
-    if session.get('datosUsuario') is not None:
+    if session.get('usuario') is not None:
+        usuario = getSession()
         proyectos = get_projects()
 
-        print "APP:"
         if(proyectos): # at least one project
-            print proyectos[0].getProyecto()
+            session['noProject'] = False
+            if session.get('proyecto') is not None: # Verify if there is one selected project
+                proyecto = get_project()
         else: # no projects founded
-            return render_template('projects.html', **locals())   
-        if (session['proyecto']):
-            proyecto = get_project(str(session['proyecto']))
+            session['noProject'] = True
 
-        if (proyectos):  session['noProject'] = False
-        else: session['noProject'] = True
-        return render_template('projects.html', **locals())  
+        return render_template('projects.html', **locals())
     else:
         return redirect(url_for('home'))
 
 @app.route('/project', methods = ['POST', 'GET']) # All use cases tested
 def project():
-    if session.get('datosUsuario') is not None:
+    if session.get('usuario') is not None:
+        usuario = getSession()
+        proyectos = get_projects()
         idProyecto = request.args.get('project-id')
         print "IDPROYECTO: " + str(idProyecto)
         if idProyecto != None: # Call project with GET
             proyecto = get_project(idProyecto)
+            transacciones = get_transacciones()
+            busquedas = get_busquedas()
             if(proyecto): # get_project returns 0 if there is no project with this id
                 session['proyecto'] = proyecto.getIdProyecto()
                 return render_template('project.html', **locals()) # **locals() takes all your local variables
@@ -229,7 +243,9 @@ def project():
                 return redirect(url_for('projects'))
         else: # Call project without GET
             if session.get('proyecto') is not None:
-                proyecto = get_project(str(session['proyecto'])) # Remember, session['proyecto'] is the ID of the selected project
+                proyecto = get_project()
+                transacciones = get_transacciones()
+                busquedas = get_busquedas()
                 return render_template('project.html', **locals()) 
             else: # session['project'] is empty
                 session['error'] = "Vamos por paso. Primero, seleccciona un proyecto."
@@ -240,8 +256,11 @@ def project():
 
 @app.route('/newProyect',methods = ['POST', 'GET'])
 def newProyect():
-    if session.get('datosUsuario') is not None:
-        return render_template('newProyect.html')
+    if session.get('usuario') is not None:
+        usuario = getSession()
+        proyectos = get_projects()
+        proyecto = get_project()
+        return render_template('newProyect.html', **locals())
     else:
         return redirect(url_for('home'))
 
@@ -276,6 +295,20 @@ def deleteProject():
             return redirect(url_for('projects'))
 
 
+@app.route('/deleteTransaccion',methods = ['POST', 'GET'])
+def deleteTransaccion():
+    if request.method == 'POST':
+
+        idTransaccion = str(request.form["idTransaccionAEliminar"])
+        print "ID TRANSACCION A ELIMINAR: " + str(idTransaccion)
+        if(delete_transaccion(idTransaccion)):
+            session['status'] = "Transaccion eliminada correctamente"
+            return redirect(url_for('project'))
+        else:
+            session['error'] = "Hubo un error al eliminar la transaccion"
+            # Enviar aviso al admin
+            return redirect(url_for('project'))
+
 
 @app.route('/insertProyecto',methods = ['POST', 'GET'])
 def insertProyecto():
@@ -298,13 +331,14 @@ def insertProyecto():
 
 @app.route('/classify',methods = ['POST', 'GET'])
 def classify():
-    if session.get('datosUsuario') is not None:
+    if session.get('usuario') is not None:
+        usuario = getSession()
         idProyecto = request.args.get('project-id')
         print "IDPROYECTO: " + str(idProyecto)
 
         if idProyecto != None: # se llama a classify con get
             if(get_project(idProyecto)):
-                return render_template('classify.html')
+                return render_template('classify.html', **locals())
             else: # no se encontro el idProyecto en la bd
                 session['error'] = "El proyecto no existe o fue eliminado"
                 return redirect(url_for('projects'))
@@ -321,6 +355,8 @@ def classify():
 @app.route('/updateProject',methods = ['POST', 'GET'])
 def updateProject():
     if request.method == 'POST':
+        callback = request.args.get('callback')
+        print "CALLBACK: " + callback
         idProyecto = str(request.form["idProyectoAEditar"])
         print idProyecto
 
@@ -331,11 +367,11 @@ def updateProject():
 
         if(update_project(idProyecto, proyecto, descripcion, inclusion, exclusion)):
             session['status'] = "El proyecto fue actualizado correctamente"
-            return redirect(url_for('projects'))
+            return redirect(url_for(callback))
         else:
             session['error'] = "Hubo un error al actualizar el proyecto"
             # Enviar aviso al admin
-            return redirect(url_for('projects'))
+            return redirect(url_for(callback))
 
 
 if __name__ == "__main__":

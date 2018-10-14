@@ -51,3 +51,19 @@ CREATE TABLE Transaccion (
 		ON UPDATE RESTRICT    
 ) ENGINE = InnoDB;
 
+CREATE TABLE Busqueda (
+	idBusqueda INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	busqueda VARCHAR(120) NOT NULL,
+    fechahora DATETIME NULL,
+    idProyecto INT UNSIGNED NOT NULL,
+    CONSTRAINT `fk_busqueda_proyecto`
+		FOREIGN KEY (idProyecto) REFERENCES Proyecto (idProyecto)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT,
+    idUsuario INT UNSIGNED NOT NULL,
+    CONSTRAINT `fk_busqueda_usuario`
+		FOREIGN KEY (idUsuario) REFERENCES Usuario (idUsuario)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT    
+) ENGINE = InnoDB;
+

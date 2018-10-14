@@ -55,7 +55,7 @@
                     <div class="col-md-5 col-8 align-self-center">
                         <h3 class="text-themecolor m-b-0 m-t-0">Buscador</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/project">{{ session['proyecto'].proyecto }}</a></li>
+                            <li class="breadcrumb-item"><a href="/project">{{ proyecto.getProyecto() }}</a></li>
                             <li class="breadcrumb-item active">Buscador</li>
                         </ol>
                     </div>
@@ -176,11 +176,7 @@
     <script src="../static/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!--Custom JavaScript -->
     <script src="../static/js/custom.min.js"></script>
-    <!-- ============================================================== -->
-    <!-- Style switcher -->
-    <!-- ============================================================== -->
-    <script src="../static/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-
+    
     <script>
         $(document).ready(function() {
   $(window).keydown(function(event){

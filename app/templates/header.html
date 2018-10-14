@@ -24,7 +24,7 @@
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-                        {% if session['proyecto'] %}
+                        {% if proyecto %}
                         <li class="nav-item hidden-sm-down search-box">
                             <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
                             <form class="app-search" action="/results" method="GET">
@@ -44,7 +44,7 @@
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="user-img">
                                 <span class="round">
-                                  {{session['datosUsuario'].usuario[0:2].upper()}}
+                                  {{ usuario.getUsuario()[0:2].upper() }}
                                 </span>
                                 <span class="profile-status away pull-right"></span>
                               </div>
@@ -55,14 +55,14 @@
                                     <li>
                                         <div class="dw-user-box">
                                             <div class="u-text">
-                                                <h4>  {{session['datosUsuario'].usuario}}</h4>
-                                                <p class="text-muted">{{session['datosUsuario'].email}}</p></div>
+                                                <h4>  {{usuario.getUsuario()}}</h4>
+                                                <p class="text-muted">{{ usuario.getEmail()}}</p></div>
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/micuenta"><i class="ti-user"></i> Mi cuenta</a></li>
 
-                                    {% if session['proyecto'] %}
+                                    {% if proyecto %}
                                     <li><a href="/projects"><i class="ti-search"></i> Mis proyectos</a></li>
 
                                     <li role="separator" class="divider"></li>
@@ -92,19 +92,31 @@
                     <ul id="sidebarnav">
                         <li class="nav-small-cap">Revision Sistematica</li>
 
+                         {% if proyectos %}
                         
                         <li>
                             <a class="has-arrow waves-effect waves-dark" href="/projects" aria-expanded="false"><i class="fa fa-cubes"></i><span class="hide-menu"> Mis proyectos </span></a>
                             <ul aria-expanded="true" class="collapse">
-                                {% for key in session['proyectos'] %}
-                                    <li><a href="/project?project-id={{session['proyectos'][key].idProyecto}}">{{session['proyectos'][key].proyecto}}</a></li>
+                               
+                                {% for key in proyectos %}
+                                    {% if proyecto %}
+                                         {% if (proyectos[key].getIdProyecto() == proyecto.getIdProyecto())%}
+                                            <li><a href="/project?project-id={{proyectos[key].getIdProyecto()}}"><i class="fa fa-check-circle"></i> {{proyectos[key].getProyecto()}} </a></li>
 
+                                             {% endif %}
+                                    {% else %}
+
+                                            <li><a href="/project?project-id={{proyectos[key].getIdProyecto()}}">{{proyectos[key].getProyecto()}} </a></li>
                                      
+                                    {% endif %}
+
                                  {% endfor %}
+                                 
                             </ul>
                         </li>
 
-                        {% if session['proyecto'] %}
+                        {% endif %}
+                        {% if proyecto %}
                         
                         <li>
                             <a class="has-arrow waves-effect waves-dark" href="/classify" aria-expanded="false"><i class="fa fa-check-square-o"></i><span class="hide-menu">Clasificar articulos </span></a>

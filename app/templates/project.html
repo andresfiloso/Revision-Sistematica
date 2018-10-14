@@ -107,37 +107,109 @@
                     <!-- Column -->
                     <!-- Column -->
                     <div class="col-lg-8 col-xlg-9 col-md-7">
+                        {% if session['error'] %}
+                               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error! </strong> {{session.pop('error')}} 
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              {% endif %}
+                              {% if session['status'] %}
+                               <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                {{session.pop('status')}} 
+                                <button type="button" class="close" data-dismiss="alert" id="success-alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              {% endif %}
+
+
                         <div class="card">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs profile-tab" role="tablist">
-                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#historial" role="tab">Historial</a> </li>
+                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#busquedas" role="tab">Busquedas</a> </li>
+                                <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#historial" role="tab">Historial</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#discusion" role="tab">Discusion</a> </li>
-                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#busquedas" role="tab">Busquedas</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#participantes" role="tab">Participantes</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#configuracion" role="tab">Configuracion</a> </li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div class="tab-pane active" id="historial" role="tabpanel">
+                                <div class="tab-pane active" id="busquedas" role="tabpanel">
                                     <div class="card-body">
+
                                         <div class="profiletimeline">
 
-                                            {% for key in session['transacciones'] %}
 
+                                             {% for key in busquedas %}
 
-                                            
                                             <div class="sl-item">
                                                 <div class="sl-left"> 
                                                 <div class="user-img">
                                                 <span class="round">
-                                                  AF
+                                                  {{ busquedas[key].getUsuario()[0:2].upper() }}
                                                 </span>
                                                 <span class="profile-status away pull-right"></span>
                                               </div>
                                                 </div>
                                                 <div class="sl-right">
-                                                    <div><a href="#" class="link">{{ usuario }} </a> <span class="sl-date">{{ session['transacciones'][key].fechahora }} </span>
-                                                        <p>{{ session['transacciones'][key].transaccion }}</a></p>
+                                                    <div><a href="#" class="link">{{ busquedas[key].getUsuario() }}</a> <span class="sl-date" data-toggle="tooltip" data-placement="top" title="{{ busquedas[key].getFechahoraFull() }}" >{{ busquedas[key].getFechahoraFormat() }} </span>
+
+
+                                                        <p></p>
+                                                        <blockquote >
+                                                            
+                                                            {{ busquedas[key].getBusqueda() }}
+                                        
+                                                        </blockquote>
+
+                                                        <a href="/results?keywords={{ busquedas[key].getBusqueda() }}"><button type="button" class="btn btn-info waves-effect waves-light">Ver resultados </button></a>
+                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#editarBusqueda"> Editar</button>
+                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-id="" data-target="#borrarBusqueda"> Borrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+
+                                             {% endfor %}
+
+                                    
+                                        </div>
+
+                                    
+                                    </div>
+                                </div>
+
+
+
+                            
+                                <div class="tab-pane" id="historial" role="tabpanel">
+                                    <div class="card-body">
+
+                                        <div class="profiletimeline">
+
+                                            {% for key in transacciones %}
+
+                                            <i class="eliminarTransaccion fa fa-times pull-right" data-id=" {{ transacciones[key].getIdTransaccion() }}" data-toggle="modal" data-target="#eliminarTransaccion" class="model_img img-responsive"></i>
+                                            
+                                            <div class="sl-item">
+                                                <div class="sl-left"> 
+                                                <div class="user-img">
+                                                <span class="round">
+                                                  {{ transacciones[key].getUsuario()[0:2].upper() }}
+                                                </span>
+                                                <span class="profile-status away pull-right"></span>
+                                              </div>
+                                                </div>
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">{{ transacciones[key].getUsuario() }} </a> 
+                                                        <span class="sl-date" data-toggle="tooltip" data-placement="top" title="{{ busquedas[key].getFechahoraFull() }}">  
+                                  
+                                                                {{ transacciones[key].getFechahoraFormat() }}
+                                                   
+                                                        </span>
+                                                        <p>{{ transacciones[key].getTransaccion() }}</a></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,6 +260,7 @@
                                             </div>
 
                                         -->
+                               
                                         </div>
                                     </div>
                                 </div>
@@ -263,93 +336,6 @@
                             <!-- /.chat-row -->
                                     </div>
                                 </div>
-
-                                <div class="tab-pane" id="busquedas" role="tabpanel">
-                                    <div class="card-body">
-
-                                        <div class="profiletimeline">
-                                            <div class="sl-item">
-                                                <div class="sl-left"> 
-                                                <div class="user-img">
-                                                <span class="round">
-                                                  AF
-                                                </span>
-                                                <span class="profile-status away pull-right"></span>
-                                              </div>
-                                                </div>
-                                                <div class="sl-right">
-                                                    <div><a href="#" class="link">Andres Filoso</a>
-                                                          <p></p>  
-                                                        <blockquote >
-                                                            
-                                                            Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang AND Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang OR Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang 
-                                        
-                                                        </blockquote>
-
-                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#verBusqueda">  Ver resultados </button>
-                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#editarBusqueda"> Editar</button>
-                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-id="" data-target="#borrarBusqueda"> Borrar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="sl-item">
-                                                <div class="sl-left"> 
-                                                <div class="user-img">
-                                                <span class="round">
-                                                  SM
-                                                </span>
-                                                <span class="profile-status away pull-right"></span>
-                                              </div>
-                                                </div>
-                                                <div class="sl-right">
-                                                    <div><a href="#" class="link">Sebastian Martins</a>
-                                                           <p></p>  
-                                                        <blockquote >
-                                                            
-                                                            Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang
-                                        
-                                                        </blockquote>
-
-                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#verBusqueda">  Ver resultados </button>
-                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#editarBusqueda"> Editar</button>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="sl-item">
-                                                <div class="sl-left"> 
-                                                  <div class="user-img">
-                                                <span class="round">
-                                                  SM
-                                                </span>
-                                                <span class="profile-status away pull-right"></span>
-                                              </div>
-                                                </div>
-                                                <div class="sl-right">
-                                                    <div><a href="#" class="link">Sebastian Martins</a>
-                                                         <p></p>  
-                                                        <blockquote >
-                                                            
-                                                            Big Data AND Origin OR Data Science AND Origin AND NOT Big Bang
-                                        
-                                                        </blockquote>
-
-                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#verBusqueda">  Ver resultados </button>
-                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#editarBusqueda"> Editar</button>
-           
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    
-                                    </div>
-                                </div>
-
 
 
                                 <div class="tab-pane" id="participantes" role="tabpanel">
@@ -460,8 +446,7 @@
                 <div id="editarProyecto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                    <div class="modal-content">
-              <form action="/updateProject" method="POST">
-                <input type="hidden" id="idProyectoAEditar" name="idProyectoAEditar" value="">
+              <form action="/updateProject?callback=project" method="POST">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title">Editar proyecto</h4>
@@ -469,31 +454,31 @@
                 <div class="modal-body">
                   <div class="form-group">
 
-                    <input type="hidden" name="idProyectoAEditar" value="{{ session['proyecto'].idProyecto}}"> <!-- esto esta fallando. revisar -->
+                    <input type="hidden" name="idProyectoAEditar" value="{{ proyecto.getIdProyecto() }}"> <!-- esto esta fallando. revisar -->
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <input id="nombre" name="nombre" type="text" class="form-control" value="{{ session['proyecto'].proyecto }}" placeholder="Nombre del proyecto">
+                            <input id="nombre" name="nombre" type="text" class="form-control" value="{{ proyecto.getProyecto() }}" placeholder="Nombre del proyecto">
                         </div>
                     </div>
                     <br>
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <textarea id="descripcion" name="descripcion" class="form-control" rows="3" placeholder="Descripcion">{{ session['proyecto'].descripcion }}</textarea>
+                            <textarea id="descripcion" name="descripcion" class="form-control" rows="3" placeholder="Descripcion">{{ proyecto.getDescripcion() }}</textarea>
                         </div>
                     </div>
                     <br>
 
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <textarea id="inclusion" name="inclusion" class="form-control" rows="3" placeholder="Criterios de inclusion" required>{{ session['proyecto'].inclusion }}</textarea>
+                            <textarea id="inclusion" name="inclusion" class="form-control" rows="3" placeholder="Criterios de inclusion" required>{{ proyecto.getInclusion() }}</textarea>
                         </div>
                     </div>
                     <br>
                     <div class="col-lg-12">
                         <div class="input-group">
-                            <textarea id="exclusion" name="exclusion" class="form-control" rows="3" placeholder="Criterios de exclusion" required>{{ session['proyecto'].exclusion }}</textarea>
+                            <textarea id="exclusion" name="exclusion" class="form-control" rows="3" placeholder="Criterios de exclusion" required>{{ proyecto.getExclusion() }}</textarea>
                         </div>
                     </div>
 
@@ -509,6 +494,33 @@
                 <!-- /.modal-dialog -->
             </div>
           </div>
+
+
+          <div id="eliminarTransaccion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                  <div class="modal-dialog">
+                     <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                  <h4 class="modal-title">Eliminar Historial</h4>
+                              </div>
+                              <div class="modal-body text-center">
+
+                                <form action="deleteTransaccion" method="POST" >
+                                <input type="hidden" id="idTransaccionAEliminar" name="idTransaccionAEliminar" value="">
+                                    
+                                  <h4 class="modal-title">¿Seguro quieres eliminar esta transaccion?</h4>
+                                  <span id="modal-idProyecto"></span>
+                                  <br><br>
+                                  <div class="modal-footer">
+                                        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Volver</button>
+                                        <button type="submit" class="btn btn-danger waves-effect waves-light">Eliminar</button>
+                                  </div>
+                                  </form>
+                              </div>
+                          </div>
+                  <!-- /.modal-dialog -->
+              </div>
+            </div>
 
 
                 
@@ -530,6 +542,14 @@
     <!-- End Wrapper -->
     <!-- ============================================================== -->
 
+    <script type="text/javascript">
+        $('.eliminarTransaccion').on('click', function() {
+            var dataId = $(this).attr("data-id");
+              $("#modal-idProyecto").html(dataId);
+            $("input[name='idTransaccionAEliminar']").val(dataId);
+        });
+
+    </script>
 
 
     <!-- ============================================================== -->
@@ -606,6 +626,15 @@
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
+    </script>
+
+
+    <script>
+        function formathora(fechahora) { 
+            format = "Hola"
+
+            return format;
+        }
     </script>
 
 </body>

@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
-    <title>{{session['article'].title}}</title>
+    <title>{{ session['article'].title }}</title>
     <!-- Bootstrap Core CSS -->
     <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -55,7 +55,7 @@
                     <div class="col-md-12 col-12 align-self-center">
                         <h3 class="text-themecolor m-b-0 m-t-0">{{session['article'].title}}</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/classify?project-id={{session['proyecto'].idProyecto}}">{{ session['proyecto'].proyecto }}</a></li>
+                            <li class="breadcrumb-item"><a href="/project">{{ proyecto.getProyecto() }}</a></li>
                             <li class="breadcrumb-item "><a href="/lookup">Buscador</a></li>
                             <li class="breadcrumb-item "><a href="javascript:history.back()">Resultados</a></li>
                             <li class="breadcrumb-item active">{{session['article'].title}}</li>
@@ -108,7 +108,11 @@
 
                                 {% if session['article'].pdf != '0' %}
 
-                                <a href="{{session['article'].pdf}}" target="_blank" class="btn btn-outline-danger waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>Descargar PDF</a>
+                                <a href="{{session['article'].pdf}}" target="_blank" >
+
+                                    <button class="btn btn-outline-danger waves-effect waves-light"><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>Descargar PDF</button>
+
+                                </a>
 
                                 {% endif %}
 

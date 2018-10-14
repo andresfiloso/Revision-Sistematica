@@ -10,18 +10,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
     <title>Panel de proyectos</title>
     <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
-    <link href="../static/assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
-    <link href="../static/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
-    <link href="../static/assets/plugins/css-chart/css-chart.css" rel="stylesheet">
     <link href="../static/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <link href="../static/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <link href="../static/assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
-    <link href="../static/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
-    <link href="../static/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
     <link href="../static/assets/plugins/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
-    <link href="../static/assets/plugins/typeahead.js-master/dist/typehead-min.css" rel="stylesheet">
-    <link href="../static/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
     <link href="../static/css/style.css" rel="stylesheet">
     <link href="../static/css/colors/blue-dark.css" id="theme" rel="stylesheet">
 </head>
@@ -138,7 +129,7 @@
                             <div class="col-md-12 col-lg-12">
                               {% if session['error'] %}
                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>No estas trabajando sobre ningún proyecto! </strong> {{session.pop('error')}} 
+                                <strong>Error! </strong> {{session.pop('error')}} 
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -175,7 +166,7 @@
                                                     <h2 class="font-light m-b-0">
                                                       <a href="/project?project-id={{ proyectos[key].getIdProyecto() }}">{{proyectos[key].getProyecto()}}</a>
                                                     </h2>
-                                                    <h6 class="text-muted">{{session['datosUsuario'].usuario}}</h6>
+                                                    <h6 class="text-muted">{{usuario.getUsuario()}}</h6>
                                                     <h6 class="text-muted">{{proyectos[key].getDescripcion()}}</h6>
                                                 </div>
 
@@ -194,7 +185,8 @@
                                     </div>
                                     <div class="col-md-2 col-lg-2">
                                         <br>
-                                        <button class="btn btn-block btn-info waves-effect waves-light" data-toggle="modal" data-target=".querysProject1" class="model_img img-responsive" >Ver busquedas</button>
+                                        <a href="/project"><button class="btn btn-block btn-info waves-effect waves-light" >Ver busquedas</button></a>
+                                        <br><br>
                                         <button class="eliminarProyecto btn btn-block btn-danger waves-effect waves-light" data-toggle="modal" data-id="{{proyectos[key].getIdProyecto()}}" data-proyecto="{{proyectos[key].getProyecto()}}" data-target="#eliminarProyecto" class="model_img img-responsive" >Eliminar proyecto</button>
                                         <br><br>
                                     </div>
@@ -326,7 +318,7 @@
           <div id="editarProyecto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                    <div class="modal-content">
-              <form action="/updateProject" method="POST">
+              <form action="/updateProject?callback=projects" method="POST">
                 <input type="hidden" id="idProyectoAEditar" name="idProyectoAEditar" value="">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -430,9 +422,6 @@
     <script src="../static/js/custom.min.js"></script>
     
     <script src="../static/assets/plugins/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
-    <script src="../static/assets/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
-    <script src="../static/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
-    <script src="../static/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="../static/assets/plugins/multiselect/js/jquery.multi-select.js"></script>
     <!-- This is data table -->
     <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
