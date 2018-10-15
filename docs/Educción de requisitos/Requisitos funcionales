@@ -23,6 +23,7 @@ Dueño: Guido Contento
 /projects
 * El usuario podrá acceder a un panel de proyectos donde obtendrá informacion de los proyectos en donde participa.
 * El usuario podrá buscar un proyecto existente propio o de otro usuario.
+* El usuario podrá permitir a otros ser colaboradores en su proyecto, otorgándoles los mismos privilegios.
 * El usuario podrá crear un proyecto de revision sistematica.
 * El usuario no podrá ver detalles de proyectos donde: no sea colaborador o creador.
 * El usuario podrá ver la lista de busquedas que se realizaron de cada proyecto, modificarlas y eliminarlas.
