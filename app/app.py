@@ -7,6 +7,7 @@ from controller import *
 from models import *
 from scrapping import *
 
+import jsonpickle
 import os
 import time
 
@@ -76,6 +77,19 @@ def registrarUsuario():
         session['error'] = "Error al registrar usuario"
 
 
+@app.route('/micuenta',methods = ['POST', 'GET'])
+def micuenta():
+    if session.get('usuario') is not None:
+        if session.get('proyecto') is not None:
+            proyecto = get_project()
+        proyectos = get_projects()
+        usuario = getSession()
+        
+        return render_template('micuenta.html', **locals()) 
+    else:
+        return redirect(url_for('home'))
+
+
 @app.route('/lookup',methods = ['POST', 'GET'])
 def lookup():
     if session.get('usuario') is not None:
@@ -88,19 +102,6 @@ def lookup():
             session['error'] = "Antes de buscar articulos tienes que seleccionar un proyecto"
             return redirect(url_for('projects'))
 
-    else:
-        return redirect(url_for('home'))
-
-
-@app.route('/micuenta',methods = ['POST', 'GET'])
-def micuenta():
-    if session.get('usuario') is not None:
-        if session.get('proyecto') is not None:
-            proyecto = get_project()
-        proyectos = get_projects()
-        usuario = getSession()
-        
-        return render_template('micuenta.html', **locals()) 
     else:
         return redirect(url_for('home'))
 
@@ -126,10 +127,6 @@ def results():
         if session.get('proyecto') is not None:
             proyecto = get_project()
 
-            keywords = request.args.get('keywords', default = '*', type = str)
-            newKeyword = request.args.get('newKeyword', default = '*', type = str)
-
-            session['keywords'] = keywords
 
             return render_template('results.html', **locals())
         else:
@@ -139,47 +136,66 @@ def results():
         return redirect(url_for('home'))
 
 
+
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
-    start = time.time()
     session['key'] = 0
+    if session.get('usuario') is not None:
+        
+        usuario = getSession()
+        proyectos = get_projects()
+        proyecto = get_project()
 
-    try:
-        print "INTENTANDO BUSCAR JSON"
-        print "EL ARCHIVO A LLAMAR SE VA A LLAMAR: " + 'json/'+session['keywords']+'.json'
+        keywords = request.args.get('keywords', default = '*', type = str)
+        newKeyword = request.args.get('newKeyword', default = '*', type = str)
 
-        with open('json/'+session['keywords']+'.json', 'r') as file:
-            print "ABRI EL ARCHIVO BIEN"
-            data = json.load(file)
-            data_ready = json.dumps(data)
-            return data_ready
-    except:
+        session['keywords'] = keywords
 
-        science = get_scrapping_sciencedirect()
-        springer = get_scrapping_springer()
-        ieee = get_scrapping_ieee()
+        start = time.time()
 
-        end = time.time()
-        tiempoTotal = end - start
-        session['lookup_time'] = str(tiempoTotal) + " segundos"
-        print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
+        try:
+            print "INTENTANDO BUSCAR JSON"
+            print "EL ARCHIVO A LLAMAR SE VA A LLAMAR: " + 'json/'+session['keywords']+'.json'
+            
+            with open('json/'+session['keywords']+'.json', 'r') as file:
+                print "ABRI EL ARCHIVO BIEN"
+                data = json.load(file)
+                resultados = jsonpickle.decode(data)
+                tiempoTotal = ""
+                print "decodifique el archivo"
+                return render_template('results.html', **locals())
+            
+        except:
+            print "VOY A EMPEZAR A SCRAPPEAR: "
+            science = get_scrapping_sciencedirect()
+            springer = get_scrapping_springer()
+            ieee = get_scrapping_ieee()
 
-        allData = {}
-        allData.update(science)
-        allData.update(springer)
-        allData.update(ieee)
+            end = time.time()
+            tiempoTotal = end - start
+            tiempoTotal = str(tiempoTotal)
+            print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
 
-        data_ready = json.dumps(allData)
+            resultados = {}
+            resultados.update(science)
+            resultados.update(springer)
+            resultados.update(ieee)
 
-        new_busqueda(session['keywords']);
+            serialized = jsonpickle.encode(resultados)
 
-        with open('json/'+session['keywords']+'.json', 'w') as file:
-            json.dump(allData, file)
+            print "Cantidad de resultados: " + str(len(resultados))  
 
-        session['cantArticulos'] = len(allData)
+            new_busqueda(session['keywords']);
 
-        return data_ready
- 
+
+            with open('json/'+session['keywords']+'.json', 'w') as file:
+                json.dump(serialized, file)
+            
+            session['cantArticulos'] = len(resultados)
+
+            return render_template('results.html', **locals())
+    else:
+        return redirect(url_for('home'))
 
 
 @app.route('/article',methods = ['POST', 'GET'])
@@ -192,20 +208,41 @@ def article():
         print "ingreso a requestear el formulario"
         url = request.form["url"]
         print url
-        page = request.form["page"]
-        print page
-        pdf = request.form["pdf"]
-        print pdf
- 
+
         #abstract =  rawAbstract.replace('Abstract', '<h2 class="card-title">Abstract</h2>')
     
-        session['article'] = scrap_article(url, page, pdf)
+        articulo = scrap_article(url)
 
         return render_template('article.html', **locals())
     else:
         return redirect(url_for('home'))
     
+@app.route('/addArticle',methods = ['POST', 'GET'])
+def addArticle():
+    if session.get('usuario') is not None:
+        usuario = getSession()
+        proyectos = get_projects()
+        proyecto = get_project()
 
+        print "ingreso a requestear el formulario"
+        idArticulo = request.form["idArticulo"]
+        print idArticulo
+        title = request.form["title"]
+        print title
+        url = request.form["url"]
+        print url
+        print "SE VA A AGREGAR AL SIGUIENTE ARTICULO: " +  str(idArticulo)
+        print title
+        print url
+
+        if(add_article(title, url)):
+            session['status'] = "Articulo agregado correctamente"
+        else:
+            session['error'] = "Error al agregar articulo"
+
+        return render_template('results.html', **locals())
+    else:
+        return redirect(url_for('home'))
 
 @app.route('/projects', methods = ['POST', 'GET'])
 def projects():
@@ -235,6 +272,7 @@ def project():
             proyecto = get_project(idProyecto)
             transacciones = get_transacciones()
             busquedas = get_busquedas()
+            colaboradores = get_colaboradores()
             if(proyecto): # get_project returns 0 if there is no project with this id
                 session['proyecto'] = proyecto.getIdProyecto()
                 return render_template('project.html', **locals()) # **locals() takes all your local variables
@@ -246,6 +284,7 @@ def project():
                 proyecto = get_project()
                 transacciones = get_transacciones()
                 busquedas = get_busquedas()
+                colaboradores = get_colaboradores()
                 return render_template('project.html', **locals()) 
             else: # session['project'] is empty
                 session['error'] = "Vamos por paso. Primero, seleccciona un proyecto."

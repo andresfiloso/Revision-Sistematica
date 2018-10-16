@@ -3,21 +3,37 @@ from flask import session, json
 from bs4 import BeautifulSoup
 import requests
 import re
+from models import *
 
 import time
 
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 ########################################################################
 # Switcher: selecciona el articulo y lo parsea dependiendo de la fuente
 ########################################################################
 
-def scrap_article(url, page,  pdf):
+def scrap_article(url):
+
+	if "www.sciencedirect.com" in url:
+		page = "ScienceDirect"
+	elif "link.springer.com" in url:
+		page = "Springer"
+	elif "ieeexplore.ieee.org" in url:
+		page = "IEEE Xplore"
+
+
+	print "ESTE ARTICULO ES DE ESTA PAGINA: " + page
+	print "URL: " + url
 	if(page == "ScienceDirect"):
-		return scrap_article_sciencedirect(url, page, pdf)
+		return scrap_article_sciencedirect(url)
 	if(page == "Springer"):
-		return scrap_article_springer(url, page, pdf)
+		return scrap_article_springer(url)
 	if(page == "IEEE Xplore"):
-		return scrap_article_ieee(url, page, pdf)
+		return scrap_article_ieee(url)
 
 ########################################################################
 ########################################################################
@@ -112,17 +128,11 @@ def get_scrapping_sciencedirect():
 		else:
 			pdf = str(0)
 
-		data = {
-		    'id' : "sd" + str(i),
-		    'page' : "ScienceDirect",
-		    'title' : title,
-		    'result' : url,
-		    'info' : info,
-		    'authors' : authors,
-		    'pdf' : pdf,
-		}
+		resultado = Resultado(session['key'], title, url, pdf, info, authors)
 
-		dataArray[session['key']] = data
+		#print "TITULO EN SCRAPPING.PY: " + title.encode('utf8')
+
+		dataArray[session['key']] = resultado
 		i += 1
 		session['key'] += 1
 		
@@ -132,7 +142,7 @@ def get_scrapping_sciencedirect():
 	######## ARTICLE SCIENCE DIRECT ############
 	############################################
 
-def scrap_article_sciencedirect(url, page, pdf):
+def scrap_article_sciencedirect(url):
 	req = requests.get(url)
 	statusCode = req.status_code
 	html = BeautifulSoup(req.text, "html.parser")
@@ -163,18 +173,23 @@ def scrap_article_sciencedirect(url, page, pdf):
 	    keywords = "El articulo no tiene palabras claves"
 
 	print keywords
+
+	print "ESTE ES EL HTML completo: "
+	print str(html)
+	pdf = html.find('div', {'class': 'u-margin-s-ver'})
+
+	print "ESTO ES LO QUE ENCONTRO DE u-margin-s-ver: " + str(pdf)
+
+	if (pdf != None):
+		pdf = "https://www.sciencedirect.com" + pdf.a['href']
+		print "asi va a a quedar el link de pdf " + pdf
+	else:
+		pdf = str(0) 
+	
  
-	data = {
-		'title' : title,
-		'page' : page,
-		'url' : url,
-		'abstract' : abstract,
-		'keywords' : keywords,
-		'pdf' : pdf,
+	resultado = Resultado(0, title, url, pdf, abstract, keywords)
 
-	}
-
-	return data
+	return resultado
 
 ######################################################################################################################################
 ########################################################## SPRINGER ##################################################################
@@ -195,9 +210,8 @@ def get_scrapping_springer():
 
 	i = 0
 
-
-
 	for result in li:
+		pdf = str(0) # springer no tiene pdfs
 		link = result.find('a', {'class': 'title'})
 		url = "https://link.springer.com" + link['href']
 		title = link.text.encode('utf8')
@@ -219,20 +233,13 @@ def get_scrapping_springer():
 				linkReady = '<a href="' + rawlink + '" target="_blank">' + rawText + '</a>'
 				metadata = metadata + linkReady + ", "
 			metadata = metadata[:-2] #quito la ultima coma de los autores
-			metadata = metadata.encode('utf8') + " in " + enumerationReady.encode('utf8')
+			metadata = metadata + " in " + enumerationReady
 		else:
-			metadata = enumerationReady.encode('utf8')
+			metadata = enumerationReady
 
-		data = {
-			'id' : "sp" + str(i),
-			'page' : "Springer",
-			'title' : title,
-			'result' : url,
-			'abstract' : abstract,
-			'metadata' : metadata,
-		}
+		resultado = Resultado(session['key'], title, url, pdf, abstract, metadata)
 		
-		dataArray[session['key']] = data
+		dataArray[session['key']] = resultado
 
 		i += 1
 		session['key'] += 1
@@ -243,7 +250,9 @@ def get_scrapping_springer():
 	######## ARTICLE SPRINGER ##################
 	############################################
 
-def scrap_article_springer(url, page, pdf):
+def scrap_article_springer(url):
+
+	pdf = str(0) # springer no tiene pdfs
 	req = requests.get(url)
 	statusCode = req.status_code
 	html = BeautifulSoup(req.text, "html.parser")
@@ -265,17 +274,11 @@ def scrap_article_springer(url, page, pdf):
 	    keywords = keywords.text
 	else:
 	    keywords = "Springer no tiene palabras claves"
- 
-	data = {
-	    'title' : title,
-		'page' : page,
-	    'url' : url,
-	    'abstract' : abstract,
-	    'keywords' : keywords,
-	    'pdf' : '0',
-	}
 
-	return data
+
+	resultado = Resultado(0, title, url, pdf, abstract, keywords)
+
+	return resultado
 
 
 ######################################################################################################################################
@@ -306,13 +309,13 @@ def get_scrapping_ieee():
 	data_ready = {}
 
 	dataArray = {}
-
+	pdf = str(0) #ieee no tiene pdfs
 	try: 
 		cantidadArticulos = len(item_dict['records'])
 		for i in range(cantidadArticulos):
 			try:  url = "https://ieeexplore.ieee.org" + item_dict['records'][i]['documentLink']
 			except: url = "No url"
-			print "URL: " + url
+			#print "URL: " + url
 
 			try: title = item_dict['records'][i]['articleTitle']
 			except: title = "No title"
@@ -331,7 +334,7 @@ def get_scrapping_ieee():
 
 			try: 
 				cantidadAutores = len(item_dict['records'][i]['authors'])
-				print "Cantidad de autores: " + str(cantidadAutores)
+				#print "Cantidad de autores: " + str(cantidadAutores)
 				for j in range(cantidadAutores):
 					authors = item_dict['records'][i]['authors'][j]['preferredName']
 					if j == 0:	
@@ -339,8 +342,9 @@ def get_scrapping_ieee():
 					else:
 						metadata = metadata + ", " + authors
 			except: 
-				cantidadAutores = "No authors"		
+				cantidadAutores = "No authors"	
 
+			"""
 			data = {
 				'id' : "ie" + str(i),
 				'page' : "IEEE Xplore",
@@ -350,8 +354,11 @@ def get_scrapping_ieee():
 				'abstract' : abstract,
 				'metadata' : metadata,
 			}
+			"""
+
+			resultado = Resultado(session['key'], title, url, pdf, abstract, metadata)
 			
-			dataArray[session['key']] = data
+			dataArray[session['key']] = resultado
 			session['key'] +=1
 	except:
 		return dataArray
@@ -362,7 +369,10 @@ def get_scrapping_ieee():
 	############ ARTICLE IEEE ##################
 	############################################
 
-def scrap_article_ieee(articleNumber, page, pdf):
+def scrap_article_ieee(url):
+
+	pdf = str(0)
+	articleNumber = url.split("/")[4] # el elemento en la posicion 4 del link si se splitea en / es el articleNumber 
 
 	headers = {
 				'User-Agent':'BeautifulSoup, contact me at andresfilosok@gmail.com', 
@@ -370,6 +380,7 @@ def scrap_article_ieee(articleNumber, page, pdf):
 				'Content-type': 'application/json'
 	}
 
+	
 	urlSnippet = "https://ieeexplore.ieee.org/rest/document/" + articleNumber + "/snippet"
 	req = requests.get(urlSnippet, headers=headers)
 	statusCode = req.status_code
@@ -398,17 +409,12 @@ def scrap_article_ieee(articleNumber, page, pdf):
 	title = item_dict['title']
 
 	url = "https://ieeexplore.ieee.org/document/" + articleNumber
- 	
-	data = {
-	    'title' : title,
-		'page' : page,
-	    'url' : url,
-	    'abstract' : snippet,
-	    'keywords' : "No hay palabras claves",
-	    'pdf' : '0',
-	}
 
-	return data
+	metadata = "No hay metadata" # issue
+ 	
+	resultado = Resultado(0, title, url, pdf, snippet, metadata)
+
+	return resultado
 
 ######################################################################################################################################
 ########################################################## SHCOLAR ###################################################################

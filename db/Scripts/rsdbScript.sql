@@ -21,19 +21,6 @@ CREATE TABLE Proyecto (
 		ON UPDATE RESTRICT
 ) ENGINE = InnoDB;
 
-CREATE TABLE Articulo (
-	idArticulo INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	titulo VARCHAR(120) NOT NULL,
-    url VARCHAR(120) NOT NULL,
-    pdf_link VARCHAR(120) NOT NULL,
-    abstract TEXT NOT NULL,
-    idProyecto INT UNSIGNED NOT NULL,
-    CONSTRAINT `fk_articulo_proyecto`
-		FOREIGN KEY (idProyecto) REFERENCES Proyecto (idProyecto)
-		ON DELETE CASCADE
-		ON UPDATE RESTRICT
-) ENGINE = InnoDB;
-
 CREATE TABLE Transaccion (
 	idTransaccion INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	transaccion VARCHAR(120) NOT NULL,
@@ -67,3 +54,27 @@ CREATE TABLE Busqueda (
 		ON UPDATE RESTRICT    
 ) ENGINE = InnoDB;
 
+CREATE TABLE Articulo (
+	idArticulo INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	articulo VARCHAR(120) NOT NULL,
+    url VARCHAR(120) NOT NULL,
+    idProyecto INT UNSIGNED NOT NULL,
+    CONSTRAINT `fk_articulo_proyecto`
+		FOREIGN KEY (idProyecto) REFERENCES Proyecto (idProyecto)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT,
+    idUsuario INT UNSIGNED NOT NULL,
+    CONSTRAINT `fk_articulo_usuario`
+		FOREIGN KEY (idUsuario) REFERENCES Usuario (idUsuario)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT    
+) ENGINE = InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS Colaborador (
+  idProyecto INT UNSIGNED NOT NULL,
+  idUsuario INT UNSIGNED NOT NULL,
+  PRIMARY KEY (idProyecto, idUsuario),
+  FOREIGN KEY (idProyecto) REFERENCES Proyecto (idProyecto) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (idUsuario)  REFERENCES usuario (idUsuario) ON DELETE RESTRICT ON UPDATE CASCADE)
+ENGINE = InnoDB;

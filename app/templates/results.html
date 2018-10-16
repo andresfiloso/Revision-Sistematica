@@ -15,12 +15,10 @@
     <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="../static/css/style.css" rel="stylesheet">
-     <!-- toast CSS -->
-    <link href="../static/assets/plugins/toast-master/css/jquery.toast.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="../static/css/colors/blue-dark.css" id="theme" rel="stylesheet">
 
-     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 </head>
 
@@ -61,17 +59,34 @@
                             <li class="breadcrumb-item"><a href="/lookup">Buscador</a></li>
                             <li class="breadcrumb-item active">{{ keywords }}</li>
                         </ol>
+                        {% if tiempoTotal != "" %}
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item active"><div id="cantArticulos"></div></li>
+                            <li class="breadcrumb-item active">{{ resultados|length }} resultados en {{ tiempoTotal[:4] }} segundos</li>
                         </ol>
+                         {% else %}
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item active"><div id="tiempoBusqueda"></div></li>
+                            <li class="breadcrumb-item active">{{ resultados|length }} resultados. Estos resultados son de una busqueda anterior</li>
                         </ol>
-
+                         {% endif %}
                         
                     </div>
                     <div class="col-md-3 col-3 align-self-right">
-                        
+                        {% if session['error'] %}
+                               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error! </strong> {{session.pop('error')}} 
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              {% endif %}
+                              {% if session['status'] %}
+                               <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                {{session.pop('status')}} 
+                                <button type="button" class="close" data-dismiss="alert" id="success-alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              {% endif %}
                     </div>
                 </div>
 
@@ -85,11 +100,84 @@
                 <!-- ============================================================== -->
 
                 <div id="resultados">
-                    <div class="ajax-loader">
-                            <img src="static/img/loading.gif" class="img-responsive center" height="10" width="10"  />
-                            <p>Buscando articulos...</p>
-                        </div>
+                    <div class="table-responsive m-t-40">
+                        <table id="myTable" class="table">
+                            <thead>
+                            <tr>
+                                <th >Ordenar</th>
 
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for key in resultados %}
+                                <tr>
+                                <td>
+
+                                    
+                                    <input type="hidden" name="url" value="{{ resultados[key].getURL() }}">
+                                    <input type="hidden" name="pdf" value="{{ resultados[key].getPDF() }}">
+                       
+
+                                    <div class="row">
+                                        <div class="card col-md-10 col-lg-10">
+                                            <div class="card-body">
+                                                <form id="redirigir{{ resultados[key].getIdResultado() }}" action="article" method="POST">
+                                                    <input type="hidden" name="url" value="{{ resultados[key].getURL() }}">
+                                                    <h4 class="card-title" onClick="redirigir({{ resultados[key].getIdResultado() }})">
+                                                    <a href="#">{{ resultados[key].getTitle() }}</a>
+                                                    </h4>
+                                                </form>
+
+                                                <h6 class="card-subtitle mb-2 text-muted">
+                                                    <a href="{{ resultados[key].getURL() }}" target="_blank">{{ resultados[key].getURL() }}</a>
+                                                </h6>
+                                                <p class="card-text">{{ resultados[key].getAbstract() }}</p>
+                                                <p class="card-text"><small class="text-muted">{{ resultados[key].getMetadata() }}</small></p>
+
+                                                {% if resultados[key].getPDF() != "0" %}
+
+                                                    <a href="{{ resultados[key].getPDF() }}" target="_blank" class="ribbon ribbon-vertical-r ribbon-default">
+                                                    <i class="fa fa-file-pdf-o"></i></a>
+
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-lg-2">
+                                            <form name="formRes{{ resultados[key].getIdResultado() }}">
+                                                <div class="checkbox checkbox-primary pull-left p-t-0">
+                                                    <input onClick="enableTest({{ resultados[key].getIdResultado() }})" id="checkbox-select{{ resultados[key].getIdResultado() }}" type="checkbox">
+                                                    <label for="checkbox-select{{ resultados[key].getIdResultado() }}"> Seleccionar </label>
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <div class="checkbox checkbox-primary pull-left p-t-0">
+                                                    <input id="checkbox-testeo{{ resultados[key].getIdResultado() }}" type="checkbox" disabled>
+                                                    <label for="checkbox-testeo{{ resultados[key].getIdResultado() }}"> Testeo </label>
+                                                </div>
+                                            </form>
+                                            <br>
+                                            <form id="agregar{{ resultados[key].getIdResultado() }}" action="addArticle" method="POST">
+                                                <input type="hidden" name="idArticulo" value="{{ resultados[key].getIdResultado() }}">
+                                                <input type="hidden" name="title" value="{{ resultados[key].getTitle() }}">
+                                                <input type="hidden" name="url" value="{{ resultados[key].getURL() }}">
+                                                <button type="submit" class="btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
+                                            </form>
+                                            <br>
+                                            <form id="eliminar{{ resultados[key].getIdResultado() }}" action="addArticle" method="POST"> 
+                                                <input type="hidden" name="idArticulo" value="{{ resultados[key].getIdResultado() }}">  
+                                                <button class="btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
+                                            </form>
+                                            <br>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
 
@@ -111,6 +199,8 @@
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
+
+  
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
@@ -134,13 +224,11 @@
     <script src="../static/js/custom.min.js"></script>
     <script src="../static/assets/plugins/toast-master/js/jquery.toast.js"></script>
     <script src="../static/js/toastr.js"></script>
-    <!-- ============================================================== -->
-    <!-- Style switcher -->
-    <!-- ============================================================== -->
-    <script src="../static/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+
     <!-- This is data table -->
     <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
 
+    
     <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
@@ -170,25 +258,17 @@
                     });
                 }
             });
-            // Order by the grouping
-            $('#example tbody').on('click', 'tr.group', function() {
-                var currentOrder = table.order()[0];
-                if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
-                    table.order([2, 'desc']).draw();
-                } else {
-                    table.order([2, 'asc']).draw();
-                }
-            });
+
         });
-    });
-    $('#example23').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
     });
     </script>
 
+     <script>
+        function redirigir(numero) {
+        document.getElementById("redirigir" + numero ).submit()
+        }
+
+    </script>
 
     <script type="text/javascript">
 
@@ -209,216 +289,6 @@
         }
 
 </script>
-
-<script>
-
-    
-        $(document).ready(function(){
-
-            function cargarTarjetas(){
-
-                var urlString = window.location.href;
-                var urlParams = parseURLParams(urlString);
-                $.ajax({
-                    method:"GET",
-                    url: "scrapping",
-                    data: {"urlParams" : parseURLParams(urlString)},
-                    async: true,
-                    beforeSend: function(){
-                      $('.ajax-loader').css("visibility", "visible");
-                    },
-                    success: function (data) {
-                        obj = JSON.parse(data);
-                        document.getElementById("cantArticulos").innerHTML = 'Cantidad de articulos: {{session['cantArticulos']}}';
-                        document.getElementById("tiempoBusqueda").innerHTML = 'Tiempo de busqueda: {{session['lookup_time']}}';
-                        
-                        var tabla = '<div class="table-responsive m-t-40">'+
-                                    '<table id="myTable" class="table">'+
-                                    '<tbody>';
-
-                        for (var i = 0; i < Object.keys(obj).length; i++) {
-                            tabla+='<tr><td>'+
-                            '<form id="form'+i+'" action="article" method="POST">';
-
-                            if(obj[i].page == "IEEE Xplore"){
-                            tabla+='<input type="hidden" name="url" value="'+obj[i].articleNumber+'">'+
-                                   '<input type="hidden" name="page" value="'+obj[i].page+'">'+
-                                   '<input type="hidden" name="pdf" value="'+obj[i].pdf+'">';
-                            } 
-
-                            if(obj[i].page == "ScienceDirect"){
-                            tabla+='<form id="form'+i+'" action="article" method="POST">' +
-                                   '<input type="hidden" name="url" value="'+obj[i].result+'">'+
-                                   '<input type="hidden" name="page" value="'+obj[i].page+'">'+
-                                   '<input type="hidden" name="pdf" value="'+obj[i].pdf+'">';
-                            }
-
-                            if(obj[i].page == "Springer"){
-                            tabla+='<input type="hidden" name="url" value="'+obj[i].result+'">'+
-                                   '<input type="hidden" name="page" value="'+obj[i].page+'">'+
-                                   '<input type="hidden" name="pdf" value="'+obj[i].pdf+'">';
-                            }
-
-                            tabla+='<div class="row">'+
-                            '<div class="card col-md-10 col-lg-10">'+
-                            '<div class="card-body" >'+
-                            '<h4 class="card-title">'+
-                            '<a onClick="redirigir('+i+')" href="#">'+obj[i].title + '&nbsp;<span class="label label-info">'+obj[i].page+'</span> </a>'+
-                            '</h4>'+
-                            '<h6 class="card-subtitle mb-2 text-muted">';
-
-
-                            if(obj[i].page == "IEEE Xplore"){
-
-                            tabla+='<a href="'+obj[i].result+'" target="_blank">'+obj[i].result+'</a></h6>'+
-                            '<p class="card-text">'+obj[i].abstract+'</p>' +
-                            '<p class="card-text"><small class="text-muted">'+obj[i].metadata+'</small></p>';
-                            }
-
-                            if(obj[i].page == "ScienceDirect" ){
-                            tabla+='<a href="'+obj[i].result+'" target="_blank">'+obj[i].result+'</a></h6>'+
-                            '<p class="card-text"><small class="text-muted">'+obj[i].info+'</small></p>' +
-                            '<p class="card-text"><small class="text-muted">'+obj[i].authors+'</small></p>';
-
-                            if(obj[i].pdf != 0){
-                            tabla+='<a href="'+obj[i].pdf+'" target="_blank" class="ribbon ribbon-vertical-r ribbon-default">'+
-                                '<i class="fa fa-file-pdf-o"></i></a>';
-                            }
-
-                            }
-
-                            if(obj[i].page == "Springer"){
-
-                            tabla+='<a href="'+obj[i].result+'" target="_blank">'+obj[i].result+'</a></h6>'+
-                            '<p class="card-text">'+obj[i].abstract+'</p>' +
-                            '<p class="card-text"><small class="text-muted">'+obj[i].metadata+'</small></p>';
-                            }
-
-
-
-                            tabla+='</div >'+
-                            '</div>'+
-                            '<div class="col-md-2 col-lg-2">'+
-                            '<form name="formRes'+i+'">'+
-                            '<div class="checkbox checkbox-primary pull-left p-t-0">'+
-                            '<input onClick="enableTest('+i+')" id="checkbox-select'+i+'" type="checkbox">'+
-                            '<label for="checkbox-select'+i+'"> Seleccionar </label>'+
-                            '</div>'+
-                            '<br><br>'+
-                            '<div class="checkbox checkbox-primary pull-left p-t-0">'+
-                            '<input id="checkbox-testeo'+i+'" type="checkbox" disabled>'+
-                            '<label for="checkbox-testeo'+i+'"> Testeo </label>'+
-                            '</div>'+
-                            '</form>'+
-                            '<br><br>'+
-                            '<button id="saveArticle" class="saveArticle btn btn-block btn-info waves-effect waves-light" data-title="'+obj[i].title+'">Agregar a proyecto</button>'+
-                            '<button class="btn btn-block btn-danger waves-effect waves-light">Eliminar</button>'+
-                            '<br><br>'+
-                            '</div>'+
-                            '</div>'+
-                            '</form>'
-                            '</td></tr>';
-                        }
-
-                        tabla+='</tbody></table></div>';
-
-                        $('#resultados').append(tabla);
-                        
-
-                    },
-                    complete: function(){
-                      $('.ajax-loader').css("visibility", "hidden");
-                    },
-                    error : function (xhr, ajaxOptions, thrownError){  
-                      console.log(xhr.status);          
-                      console.log(thrownError);
-                    }
-                });//fin ajax
-
-            }
-
-            cargarTarjetas();
-            
-
-        });
-
-
-</script>
-
-
-<script type="text/javascript">
-        $('.saveArticle').on('click', function() {
-            var title = $(this).attr("data-title");
-            //$("#title").html(title);
-
-            alert(title)
-            
-        });
-
-    </script>
-
-
-<script>
-    function redirigir(numero) {
-    document.getElementById("form" + numero ).submit()
-    }
-
-</script>
-
-<script>
-    function parseAbstract(abstract) { // Hay que cambiar la logica de esto porque no es viable a largo plazo
-    var parseAbstract = abstract;
-    parseAbstract = parseAbstract.replace("Abstract","<h6>Abstract</h6>");
-    parseAbstract = parseAbstract.replace("ABSTRACT","<h6>Abstract</h6>");
-    parseAbstract = parseAbstract.replace("Summary","<h6>Summary</h6>");
-    parseAbstract = parseAbstract.replace("Resumen","<h6>Resumen</h6>");
-    parseAbstract = parseAbstract.replace("Material","<h6>Material</h6>");
-    parseAbstract = parseAbstract.replace("Método","<h6>Método</h6>");
-    parseAbstract = parseAbstract.replace("Resultados","<h6>Resultados</h6>");
-    parseAbstract = parseAbstract.replace("Conclusión","<h6>Conclusion</h6>");
-    parseAbstract = parseAbstract.replace("Objetivo","<h6>Objetivo</h6>");
-    parseAbstract = parseAbstract.replace("Introduction","<h6>Introduction</h6>");
-    parseAbstract = parseAbstract.replace("Introducción","<h6>Introduccion</h6>");
-    res = parseAbstract.substring(0, 500) + "...";
-
-
-    return res;
-}
-</script>
-
-<script>
-    function parseKeywords(keywords) { // Hay que cambiar la logica de esto porque no es viable a largo plazo
-    var parseKeyWords = keywords;
-    parseKeyWords = parseKeyWords.replace("Keywords","<h6>Keywords</h6>");
-    parseKeyWords = parseKeyWords.replace("Palabras clave","<h6>Palabras Clave</h6>");
-    parseKeyWords = parseKeyWords.replace("Key words","<h6>Keywords</h6>");
-    parseKeyWords = parseKeyWords.split(/(?=[A-Z])/).join(" ");
-    return parseKeyWords;
-}
-</script>
-
-<script>
-    function parseURLParams(url) {
-    var queryStart = url.indexOf("?") + 1,
-        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
-        query = url.slice(queryStart, queryEnd - 1),
-        pairs = query.replace(/\+/g, " ").split("&"),
-        parms = {}, i, n, v, nv;
-
-    if (query === url || query === "") return;
-
-    for (i = 0; i < pairs.length; i++) {
-        nv = pairs[i].split("=", 2);
-        n = decodeURIComponent(nv[0]);
-        v = decodeURIComponent(nv[1]);
-
-        if (!parms.hasOwnProperty(n)) parms[n] = [];
-        parms[n].push(nv.length === 2 ? v : null);
-    }
-    return parms;
-}
-</script>
-
 </body>
 
 </html>

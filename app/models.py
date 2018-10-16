@@ -5,12 +5,13 @@ from datetime import datetime
 #######################
 
 class Proyecto:
-  def __init__(self, idProyecto, proyecto, descripcion, inclusion, exclusion):
+  def __init__(self, idProyecto, proyecto, descripcion, inclusion, exclusion, idUsuario):
     self.idProyecto = idProyecto
     self.proyecto = proyecto
     self.descripcion = descripcion
     self.inclusion = inclusion
     self.exclusion = exclusion
+    self.idUsuario = idUsuario
 
   def getIdProyecto(self):
     return self.idProyecto
@@ -41,6 +42,9 @@ class Proyecto:
 
   def setExlcusion(self, exclusion):
     self.exclusion = exclusion
+
+  def getIdUsuario(self):
+    return self.idUsuario
 
   def __repr__(self):
     return "Esto seria un proyecto"
@@ -110,13 +114,7 @@ class Transaccion:
   def getFechahoraFormat(self):
     
     datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M:%S')
-
-    #print self.fechaHora.month
-
     now = datetime.now()
-    ahora = now.strftime('%d/%m/%Y %H:%M')
-
-    formatDate = datetime_object.strftime('%d/%m/%Y %H:%M')
 
     difYear = now.year - datetime_object.year
     difMonth = now.month - datetime_object.month
@@ -268,3 +266,73 @@ class Busqueda:
     return "Esto seria una busqueda"
   def __str__(self):
     return "[" + str(self.busqueda()) + ", " + self.fechahora() + "]"
+
+
+#######################
+#### Resultado.py #####
+#######################
+
+class Resultado:
+  def __init__(self, idResultado, title, url, pdfLink, abstract, metadata):
+    self.idResultado = idResultado
+    self.title = title
+    self.url = url
+    self.pdfLink = pdfLink
+    self.abstract = abstract
+    self.metadata = metadata
+
+  def getIdResultado(self):
+    return self.idResultado
+
+  def getTitle(self):
+    return self.title
+
+  def getURL(self):
+    return self.url
+
+  def getPDF(self):
+    return self.pdfLink
+
+  def getAbstract(self):
+    return self.abstract
+
+  def getMetadata(self):
+    return self.metadata
+
+  def __repr__(self):
+    return "Esto seria un resultado"
+  def __str__(self):
+    return "[" + str(self.getTitle()) + ", " + self.getURL() + "]"
+
+
+#######################
+##### Articulo.py #####
+#######################
+
+class Articulo:
+  def __init__(self, idArticulo, articulo, url, idProyecto, idUsuario):
+    self.idArticulo = idArticulo
+    self.articulo = articulo
+    self.url = url
+    self.idProyecto = idProyecto
+    self.idUsuario = idUsuario
+
+  def getIdArticulo(self):
+    return self.idArticulo
+
+  def getArticulo(self):
+    return self.articulo
+
+  def getURL(self):
+    return self.url
+
+  def getIdProyecto(self):
+    return self.idProyecto
+
+  def getIdUsuario(self):
+    return self.idUsuario
+
+  def __repr__(self):
+    return "Esto seria un articulo"
+  def __str__(self):
+    return "[" + str(self.getArticulo()) + ", " + self.getURL() + "]"

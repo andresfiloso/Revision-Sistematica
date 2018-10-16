@@ -158,15 +158,16 @@
                                             <!-- Row -->
                                             <div class="row">
 
-
+                                                {% if proyectos[key].getIdUsuario() == usuario.getUsuario() %}
                                                 <div class="ribbon ribbon-default">Propietario</div>
-                                                <!-- Column -->
-
+                                                {% else %}
+                                                <div class="ribbon ribbon-default">Colaborador</div>
+                                                {% endif %}
                                                 <div class="col p-r-0 align-self-center">
                                                     <h2 class="font-light m-b-0">
                                                       <a href="/project?project-id={{ proyectos[key].getIdProyecto() }}">{{proyectos[key].getProyecto()}}</a>
                                                     </h2>
-                                                    <h6 class="text-muted">{{usuario.getUsuario()}}</h6>
+                                                    <h6 class="text-muted">{{proyectos[key].getIdUsuario()}}</h6>
                                                     <h6 class="text-muted">{{proyectos[key].getDescripcion()}}</h6>
                                                 </div>
 

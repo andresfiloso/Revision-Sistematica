@@ -141,6 +141,7 @@
 
                                         <div class="profiletimeline">
 
+                                           {% if busquedas %}
 
                                              {% for key in busquedas %}
 
@@ -164,7 +165,7 @@
                                         
                                                         </blockquote>
 
-                                                        <a href="/results?keywords={{ busquedas[key].getBusqueda() }}"><button type="button" class="btn btn-info waves-effect waves-light">Ver resultados </button></a>
+                                                        <a href="/scrapping?keywords={{ busquedas[key].getBusqueda() }}"><button type="button" class="btn btn-info waves-effect waves-light">Ver resultados </button></a>
                                                         <button type="button" class="btn btn-info waves-effect waves-light" data-id="" data-target="#editarBusqueda"> Editar</button>
                                                         <button type="button" class="btn btn-danger waves-effect waves-light" data-id="" data-target="#borrarBusqueda"> Borrar</button>
                                                     </div>
@@ -174,7 +175,13 @@
 
                                              {% endfor %}
 
-                                    
+                                             {% else %}
+                                                    
+                                                    <h3>Acá vas a encontrar todas las busquedas que se realicen en el proyecto. Por ahora, no hay ninguna.</h3>
+                                                    <form action="/lookup">
+                                                    <button class="btn btn-info waves-effect waves-light" type="submit">Buscar articulos</button>
+                                                    </form>
+                                             {% endif %}
                                         </div>
 
                                     
@@ -188,6 +195,8 @@
                                     <div class="card-body">
 
                                         <div class="profiletimeline">
+
+                                            {% if transacciones %}
 
                                             {% for key in transacciones %}
 
@@ -217,6 +226,7 @@
                                      
                                             {% endfor %}
 
+                                            {% endif %}
                                             <!--
                                             <div class="sl-item">
                                                 <div class="sl-left"> 
@@ -346,55 +356,41 @@
                                                 <div class="sl-left"> 
                                                 <div class="user-img">
                                                 <span class="round">
-                                                  AF
+                                                   {{ proyecto.getIdUsuario()[0:2].upper() }}
                                                 </span>
                                                 <span class="profile-status away pull-right"></span>
                                               </div>
                                                 </div>
                                                 <div class="sl-right">
-                                                    <div><a href="#" class="link">Andres Filoso</a>
+                                                    <div><a href="#" class="link">{{ proyecto.getIdUsuario() }}</a>
                                                           <p>Autor</p>  
                                                 
                                                     </div>
                                                 </div>
                                             </div>
                                             <hr>
+
+                                            {% for key in colaboradores %}
+
                                             <div class="sl-item">
                                                 <div class="sl-left"> 
                                                 <div class="user-img">
                                                 <span class="round">
-                                                  SM
+                                                  {{ colaboradores[key].getUsuario()[0:2].upper() }}
                                                 </span>
                                                 <span class="profile-status away pull-right"></span>
                                               </div>
                                                 </div>
                                                 <div class="sl-right">
-                                                    <div><a href="#" class="link">Sebastian Martins</a>
-                                                           <p>Invitado</p>  
-                                                    
-
+                                                    <div><a href="#" class="link">{{ colaboradores[key].getUsuario() }}</a>
+                                                           <p>Colaborador</p>  
                                                     </div>
                                                 </div>
                                             </div>
                                             <hr>
-                                            <div class="sl-item">
-                                                <div class="sl-left"> 
-                                                  <div class="user-img">
-                                                <span class="round">
-                                                  SM
-                                                </span>
-                                                <span class="profile-status away pull-right"></span>
-                                              </div>
-                                                </div>
-                                                <div class="sl-right">
-                                                    <div><a href="#" class="link">Guido Contento</a>
-                                                         <p>Invitado</p>  
-                                                       
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <hr>
+                                            {% endfor %}
+                                            
                                             <div class="sl-item">
                                                 <div class="sl-left"> 
                                                   <div class="user-img">

@@ -1,3 +1,22 @@
-############
-#SQLScripts#
-############
+Insert usuario:
+
+INSERT INTO `rsdb`.`usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES ('1', 'admin', 'admin', 'admin@localhost.com.ar');
+
+INSERT INTO `rsdb`.`usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES ('2', 'root', 'root', 'root@localhost.com.ar');
+
+INSERT INTO `rsdb`.`usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES ('3', 'afiloso', '123456', 'afiloso@localhost.com.ar');
+
+INSERT INTO `rsdb`.`usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES ('4', 'smartins', '123456', 'smartins@unla.edu.ar');
+
+INSERT INTO `rsdb`.`usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES ('5', 'dcesarano', '123456', 'dcesarano@localhost.com.ar');
+
+INSERT INTO `rsdb`.`usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES ('6', 'gcontento', '123456', 'gcontento@localhost.com.ar');
+
+INSERT INTO `rsdb`.`usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES ('7', 'gcerbelli', '123456', 'gcerbelli@localhost.com.ar');
+
+
+
+Insert colaborador
+
+INSERT INTO `rsdb`.`colaborador` (`idProyecto`, `idUsuario`) VALUES ('1', '5');
+INSERT INTO `rsdb`.`colaborador` (`idProyecto`, `idUsuario`) VALUES ('1', '6');

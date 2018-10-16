@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
-    <title>{{ session['article'].title }}</title>
+    <title>{{ articulo.getTitle() }}</title>
     <!-- Bootstrap Core CSS -->
     <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -53,12 +53,12 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-12 col-12 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">{{session['article'].title}}</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">{{ articulo.getTitle() }}</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/project">{{ proyecto.getProyecto() }}</a></li>
                             <li class="breadcrumb-item "><a href="/lookup">Buscador</a></li>
                             <li class="breadcrumb-item "><a href="javascript:history.back()">Resultados</a></li>
-                            <li class="breadcrumb-item active">{{session['article'].title}}</li>
+                            <li class="breadcrumb-item active">{{ articulo.getTitle() }}</li>
                         </ol>
                         <p class="card-text">
                             <small class="text-muted" id="keywords">
@@ -77,8 +77,8 @@
                     <div class="row">
                         <div class="card col-md-10 col-lg-10">
                             <div class="card-body">
-                                <h1 class="card-title"><a href="{{session['article'].url}}" target="_blank">{{session['article'].title}}</a></h1>
-                                <h5 class="card-subtitle mb-2 text-muted"><a href="{{session['article'].url}}" target="_blank">{{session['article'].url}} &nbsp; <span class="badge badge-info"> {{session['article'].page}} </span></a></h5>
+                                <h1 class="card-title"><a href="{{ articulo.getURL() }}" target="_blank">{{ articulo.getTitle() }}</a></h1>
+                                <h5 class="card-subtitle mb-2 text-muted"><a href="{{ articulo.getURL() }}" target="_blank">{{ articulo.getURL() }} &nbsp; </a></h5>
 
                                 <div id="abstract">
 
@@ -101,14 +101,15 @@
 
                                 <br><br>
 
-                                {% if session['article'].pdf == '0' %}
+                                {% if articulo.getPDF() == '0' %}
 
                                 <button class="btn btn-outline-danger waves-effect waves-light" type="button" disabled><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>PDF no disponible</button>
+
                                 {% endif %}
 
-                                {% if session['article'].pdf != '0' %}
+                                {% if articulo.getPDF() != '0' %}
 
-                                <a href="{{session['article'].pdf}}" target="_blank" >
+                                <a href="{{ articulo.getPDF() }}" target="_blank" >
 
                                     <button class="btn btn-outline-danger waves-effect waves-light"><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>Descargar PDF</button>
 
@@ -120,15 +121,10 @@
                                 
                                 <br>
                                 <br>
-                                <form name="formRes1">
+                                <form name="formRes">
                                     <div class="checkbox checkbox-primary pull-left p-t-0">
-                                            <input onClick="enableTest(1)" id="checkbox-select1" type="checkbox">
-                                            <label for="checkbox-select1"> Seleccionar </label>
-                                    </div>
-                                    <br><br>
-                                    <div class="checkbox checkbox-primary pull-left p-t-0">
-                                            <input id="checkbox-testeo1" type="checkbox" disabled>
-                                            <label for="checkbox-testeo1"> Testeo </label>
+                                            <input id="checkbox-testeo" type="checkbox">
+                                            <label for="checkbox-testeo"> Testeo </label>
                                     </div>
                                 </form>
 
@@ -140,9 +136,11 @@
                                 <br>
                                 <div class="form-group">
                                         <label>Descripcion</label>
-                                        <textarea class="form-control" rows="15"></textarea>
+                                        <textarea class="form-control" rows="10"></textarea>
+                                        <button class="btn btn-block btn-info waves-effect waves-light">Guardar</button>
+                                        <br>
                                 </div>
-                                <button class="btn btn-block btn-info waves-effect waves-light">Guardar</button>
+                                
                             </div>
 
 
@@ -195,28 +193,13 @@
     <script type="text/javascript">
 
 
-        function enableTest(numero) {
-
-            if(document.getElementById("checkbox-testeo" + numero ).disabled == true){
-                document.getElementById("checkbox-testeo"+ numero ).disabled = false;
-            }
-
-
-            if(document.getElementById("checkbox-select"+ numero ).checked == false){
-                document.getElementById("checkbox-testeo"+ numero ).disabled = true;
-                document.getElementById("checkbox-testeo"+ numero ).checked = false;
-            }
-
-        }
-
-        
-
+    
 </script>
 
 
 <script>
         $(document).ready(function() {  // Hay que cambiar la logica de esto porque no es viable a largo plazo
-            var returnAbstract = '{{session['article'].abstract}}';
+            var returnAbstract = '{{ articulo.getAbstract() }}';
 
             returnAbstract = returnAbstract.replace('Abstract','<h2 class="card-title">Abstract</h2>');
             returnAbstract = returnAbstract.replace('Summary','<h4 class="card-title">Summary</h4>');
@@ -239,7 +222,7 @@
 
 <script>
         $(document).ready(function() {  // Hay que cambiar la logica de esto porque no es viable a largo plazo
-            var returnKeywords = '{{session['article'].keywords}}';
+            var returnKeywords = '{{ articulo.getMetadata() }}';
 
             returnKeywords = returnKeywords.split(/(?=[A-Z])/).join(" ");
             returnKeywords = returnKeywords.replace('Keywords','</b>Keywords:</b>');
@@ -248,31 +231,6 @@
         }); 
 </script>
 
-
-
-
-
-<script>
-    /* Se intenta parsear el string para que muestre estilos en el div
-        $(document).ready(function() {
-            var string = '{{session['article'].abstract}}';
-            alert (string);
-
-            var parser, xmlDoc;
-            var text = "<bookstore><book>" +
-            "<title>Everyday Italian</title>" +
-            "<author>Giada De Laurentiis</author>" +
-            "<year>2005</year>" +
-            "</book></bookstore>";
-
-            parser = new DOMParser();
-            xmlDoc = parser.parseFromString(string,"text/xml");
-
-            document.getElementById("abstract").innerHTML =
-            xmlDoc.getElementsByTagName("h2")[0].childNodes[0].nodeValue;
-        }); 
-        */
-</script>
 
 </body>
 

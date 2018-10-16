@@ -59,22 +59,39 @@ def signup_user(usuario, email, password, password2):
 
 def get_projects():
 	proyectos = {}
+
+	# Proyectos donde se es autor
 	cur = get_cur(datasource)
 	sql = ("SELECT * FROM Proyecto where idUsuario = " + str(session['usuario']))
-	rows = cur.execute(sql)
+	rows1 = cur.execute(sql)
 
-	print "ROWS: " + str(rows)
-	if (rows): # At least, there is one project
-		i = 0
+	print "ROWS1: " + str(rows1)
 
+	i = 0
+	if (rows1): # At least, there is one project
 		for r in cur.fetchall():
 
-			objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4])
+			objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
 			print objetoProyecto
 			proyectos[i] = objetoProyecto
 			i += 1
-	else:
-		return rows
+
+	# Proyectos donde se es colaborador
+	cur = get_cur(datasource)
+	sql = ("SELECT p.* FROM proyecto p inner join colaborador c where c.idUsuario = " + str(session['usuario']) + " and c.idProyecto = p.idProyecto")
+	rows2 = cur.execute(sql)	
+
+	print "ROWS2: " + str(rows2)
+	if (rows2): # At least, there is one project
+		for r in cur.fetchall():
+
+			objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
+			print objetoProyecto
+			proyectos[i] = objetoProyecto
+			i += 1
+
+	if(rows1 == 0 and rows2 == 0):
+		return 0
 
 	return proyectos
 
@@ -89,8 +106,7 @@ def get_project(*args): # sobrecarga de metodo
 		if(rows): # There should be something in rows
 			for r in cur.fetchall():
 
-				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4])
-
+				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
 		else: # Return 0, there is no project with this id
 			return rows
 
@@ -104,7 +120,7 @@ def get_project(*args): # sobrecarga de metodo
 		if(rows): # There should be something in rows
 			for r in cur.fetchall():
 
-				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4])
+				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
 
 			session['proyecto'] = objetoProyecto.getIdProyecto()
 		else: # Return 0, there is no project with this id
@@ -120,7 +136,7 @@ def get_project(*args): # sobrecarga de metodo
 
 			for r in cur.fetchall():
 
-				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4])
+				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
 
 			return objetoProyecto
 
@@ -162,6 +178,25 @@ def get_busquedas():
 
 	return busquedas
 
+
+def get_colaboradores():
+	cur = get_cur(datasource)
+	sql = ("SELECT u.* FROM usuario u inner join colaborador c WHERE c.idProyecto =" + str(session['proyecto']) + " and c.idUsuario = u.idUsuario")
+	print "SQL A EJECUTAR: " + sql
+	rows = cur.execute(sql)
+
+	colaboradores = {}
+
+	i = 0
+	for r in cur.fetchall():
+
+		colaborador = Usuario(r[0], r[1], r[3])
+		print "COLABORADOR ENCONTRADO: " + str(colaborador)
+		colaboradores[i] = colaborador
+		i +=1
+
+	return colaboradores
+
 def new_busqueda(query):
 	usuario = getSession()
 
@@ -171,6 +206,16 @@ def new_busqueda(query):
 	sql = ("INSERT INTO `busqueda` (`busqueda`, `fechahora`, `idProyecto`, `idUsuario`) VALUES ('" + query + "', '" + str(fechahora) + "', '"+str(session['proyecto'])+"', '"+str(usuario.getIdUsuario())+"');")
 	rows = get_cur(datasource).execute(sql)
 	get_db(datasource).commit()
+
+
+def add_article(title, url):
+	usuario = getSession()
+
+	sql = ("INSERT INTO `articulo` ( `articulo`, `url`, `idProyecto`, `idUsuario`) VALUES ('" + title + "', '" + url + "', '"+str(session['proyecto'])+"', '"+str(usuario.getIdUsuario())+"');")
+	rows = get_cur(datasource).execute(sql)
+	get_db(datasource).commit()
+
+	return rows
 
 def update_user(usuario, email):
 	idUsuario = str(session['usuario'])
