@@ -413,6 +413,38 @@ def updateProject():
             return redirect(url_for(callback))
 
 
+@app.route('/deleteArticle',methods = ['POST', 'GET'])
+def deleteArticle():
+    if session.get('usuario') is not None:
+        usuario = getSession()
+        proyectos = get_projects()
+        if session.get('proyecto') is not None:
+            proyecto = get_project()
+
+    tiempoTotal = ""
+    resultadoAEliminar = int(request.args.get('data'))
+
+    print "ESULTADO A ELIMINAR: "  + str(resultadoAEliminar)
+
+
+    with open('json/'+session['keywords']+'.json', 'r') as file:
+                print "ABRI EL ARCHIVO BIEN"
+                data = json.load(file)
+                resultados = jsonpickle.decode(data)
+
+    for i in resultados.keys():
+        if resultadoAEliminar == resultados[i].getIdResultado():
+            resultados.pop(i)
+
+    serialized = jsonpickle.encode(resultados)
+
+    with open('json/'+session['keywords']+'.json', 'w') as file:
+        json.dump(serialized, file)
+
+    session['status'] = "Articulo borrado correctamente"
+
+    return "0"
+
 if __name__ == "__main__":
     app.debug = True
     app.run()

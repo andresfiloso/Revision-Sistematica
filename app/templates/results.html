@@ -110,7 +110,7 @@
                             </thead>
                             <tbody>
                                 {% for key in resultados %}
-                                <tr>
+                                <tr class="fila{{ resultados[key].getIdResultado() }}">
                                 <td>
 
                                     
@@ -164,10 +164,9 @@
                                                 <button type="submit" class="btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
                                             </form>
                                             <br>
-                                            <form id="eliminar{{ resultados[key].getIdResultado() }}" action="addArticle" method="POST"> 
-                                                <input type="hidden" name="idArticulo" value="{{ resultados[key].getIdResultado() }}">  
-                                                <button class="btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
-                                            </form>
+
+                                            <span onClick="borrarArticulo({{ resultados[key].getIdResultado() }})" ><button id="borrarArticulo" class="btn btn-block btn-danger waves-effect waves-light">Eliminar</button></span>
+
                                             <br>
                                             <br>
                                         </div>
@@ -263,9 +262,60 @@
     });
     </script>
 
+
+    <script>
+        /*
+        $(document).ready(function(){
+           $("#borrarArticulo").click(function(){
+                $.ajax({
+                    url: "deleteArticle",
+                    success: function (data) {
+                       
+                        
+                    },
+                    error : function (xhr, ajaxOptions, thrownError){  
+                      console.log(xhr.status);          
+                      console.log(thrownError);
+                    }
+                });//fin ajax
+            }
+         
+            
+        });
+</script>
+
+
+
+
      <script>
         function redirigir(numero) {
         document.getElementById("redirigir" + numero ).submit()
+        }
+
+    </script>
+
+    <script>
+        
+        function borrarArticulo(numero) {
+            $.ajax({
+                    type: "GET",
+                    url: "deleteArticle",
+                    contentType: 'application/json;charset=UTF-8',
+                    data: {'data': numero},
+
+                    success: function (data) {
+                    $( "tr" ).remove( ".fila"+numero ).draw();
+                        
+                    },
+
+                    error : function (xhr, ajaxOptions, thrownError){  
+                      console.log(xhr.status);          
+                      console.log(thrownError);
+                    }
+                });//fin ajax
+
+
+            //
         }
 
     </script>
