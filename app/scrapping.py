@@ -25,9 +25,6 @@ def scrap_article(url):
 	elif "ieeexplore.ieee.org" in url:
 		page = "IEEE Xplore"
 
-
-	print "ESTE ARTICULO ES DE ESTA PAGINA: " + page
-	print "URL: " + url
 	if(page == "ScienceDirect"):
 		return scrap_article_sciencedirect(url)
 	if(page == "Springer"):
@@ -172,17 +169,13 @@ def scrap_article_sciencedirect(url):
 	else:
 	    keywords = "El articulo no tiene palabras claves"
 
-	print keywords
-
-	print "ESTE ES EL HTML completo: "
-	print str(html)
+	
 	pdf = html.find('div', {'class': 'u-margin-s-ver'})
 
-	print "ESTO ES LO QUE ENCONTRO DE u-margin-s-ver: " + str(pdf)
 
 	if (pdf != None):
 		pdf = "https://www.sciencedirect.com" + pdf.a['href']
-		print "asi va a a quedar el link de pdf " + pdf
+		#print "asi va a a quedar el link de pdf " + pdf
 	else:
 		pdf = str(0) 
 	
@@ -458,16 +451,6 @@ def get_scrapping_scholar():
 		dataArray = {}
 
 
-		print "++++++++++++++++++++++++++++++"
-		print "++++++++++++++++++++++++++++++"
-		print "++++++++++++++++++++++++++++++"
-		print "PAGEE: " + str(page)
-		print "++++++++++++++++++++++++++++++"
-		print "++++++++++++++++++++++++++++++"
-		print "++++++++++++++++++++++++++++++"
-
-		print div
-
 		for result in div:
 			title = ""
 			titleDiv = result.find('h3', {'class': 'gs_rt'})
@@ -475,21 +458,10 @@ def get_scrapping_scholar():
 			if url is not None:
 				url = titleDiv.find('a')['href']
 				title = titleDiv.a.text.encode('utf8')
-		
-		
-			print title
-			print url
+	
 
 			i += 1
 
 		page += 10 #pasar a la siguiente pagina
-
-	print "++++++++++++++++++++++++++++++"
-	print "++++++++++++++++++++++++++++++"
-	print "++++++++++++++++++++++++++++++"
-	print "Cantidad de articulos encontrados: " + str(i)
-	print "++++++++++++++++++++++++++++++"
-	print "++++++++++++++++++++++++++++++"
-	print "++++++++++++++++++++++++++++++"
 
 	return dataArray

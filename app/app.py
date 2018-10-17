@@ -110,7 +110,6 @@ def firstProject():
     if session.get('usuario') is not None:
         usuario = getSession()
         nombre = request.form["nombre"]
-        print nombre
 
         session['nombreProyecto'] = nombre
 
@@ -205,9 +204,7 @@ def article():
         proyectos = get_projects()
         proyecto = get_project()
 
-        print "ingreso a requestear el formulario"
         url = request.form["url"]
-        print url
 
         #abstract =  rawAbstract.replace('Abstract', '<h2 class="card-title">Abstract</h2>')
     
@@ -392,22 +389,43 @@ def addArticle():
         url = request.args.get('url').encode('utf8')
         test = request.args.get('test').encode('utf8')
 
-        if(add_article(title, url)):
+        if(add_article(title, url, test)):
             session['status'] = "Articulo agregado correctamente"
         else:
             session['error'] = "Error al agregar articulo"
 
         with open('json/'+session['keywords']+'.json', 'r') as file:
-                print "ABRI EL ARCHIVO BIEN"
                 data = json.load(file)
                 resultados = jsonpickle.decode(data)
 
-        for i in resultados.keys():
-            if idResultado == resultados[i].getIdResultado():
-                resultados[i].enProyecto = True
-                if(test == str(1)):
-                    resultados[i].test = True
+        resultado = Resultado(True, True, True, True, True, True, True, True)
 
+        for i in resultados.keys(): # recorrer con un while para bajar las interaciones
+            if idResultado == resultados[i].getIdResultado():
+                resultado = resultados[i]
+                resultados.pop(i)
+                print "Se borro el resultado de la lista provisoriamente"
+
+        print "igualmente lo rescate aca>"
+        print str(resultado)
+        resultado.enProyecto = True
+        if(test == str(1)):
+            resultado.test = True
+
+        print "Aca le seteo los atributos bien para agregarlos devuelta al FINAL"
+        print str(resultado)
+
+        print "LARGO DE LA LISTA: " + str(len(resultados))
+
+        print str(resultados)
+        print "++++++++++++++++++++++++++"
+        resultados[len(resultados) + 1] = resultado
+
+        print "aca lo agregue al final (?"
+
+        print str(resultados)
+
+        
         serialized = jsonpickle.encode(resultados)
 
         with open('json/'+session['keywords']+'.json', 'w') as file:
@@ -430,7 +448,6 @@ def deleteArticle():
 
 
     with open('json/'+session['keywords']+'.json', 'r') as file:
-                print "ABRI EL ARCHIVO BIEN"
                 data = json.load(file)
                 resultados = jsonpickle.decode(data)
 

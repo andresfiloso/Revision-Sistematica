@@ -58,6 +58,7 @@ CREATE TABLE Articulo (
 	idArticulo INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	articulo VARCHAR(120) NOT NULL,
     url VARCHAR(120) NOT NULL,
+    test TINYINT(1) NOT NULL,
     idProyecto INT UNSIGNED NOT NULL,
     CONSTRAINT `fk_articulo_proyecto`
 		FOREIGN KEY (idProyecto) REFERENCES Proyecto (idProyecto)

@@ -150,7 +150,7 @@ def get_articles():
 	i = 0
 	for r in cur.fetchall():
 
-		articulo = Articulo(r[0], r[1], r[2], get_project().getProyecto(), get_user(r[4]))
+		articulo = Articulo(r[0], r[1], r[2], r[3], get_project().getProyecto(), get_user(r[5]))
 
 		articulos[i] = articulo
 		i +=1
@@ -223,10 +223,10 @@ def new_busqueda(query):
 	get_db(datasource).commit()
 
 
-def add_article(title, url):
+def add_article(title, url, test):
 	usuario = getSession()
 
-	sql = ("INSERT INTO `articulo` ( `articulo`, `url`, `idProyecto`, `idUsuario`) VALUES ('" + title + "', '" + url + "', '"+str(session['proyecto'])+"', '"+str(usuario.getIdUsuario())+"');")
+	sql = ("INSERT INTO `articulo` ( `articulo`, `url`, `test`, `idProyecto`, `idUsuario`) VALUES ('" + title + "', '" + url + "', '" + test + "', '"+str(session['proyecto'])+"', '"+str(usuario.getIdUsuario())+"');")
 	rows = get_cur(datasource).execute(sql)
 	get_db(datasource).commit()
 

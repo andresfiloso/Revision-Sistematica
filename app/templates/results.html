@@ -104,8 +104,8 @@
                         <table id="myTable" class="table">
                             <thead>
                             <tr>
-                                <th >Ordenar</th>
-
+                                <th></th>
+                                <th>Ordenar</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -119,7 +119,7 @@
                        
 
                                     <div class="row">
-                                        <div class="card col-md-10 col-lg-10">
+                                        <div class="card col-md-12 col-lg-12">
                                             <div class="card-body">
                                                 {% if resultados[key].getPDF() != "0" %}
 
@@ -167,9 +167,11 @@
 
                                             </div>
                                         </div>
-
-
-                                        <div class="col-md-2 col-lg-2">
+                                    </div>
+                                        </td>
+                                        <td>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12">
 
                                              {% if resultados[key].getEnProyecto() != True %}
 
@@ -252,8 +254,6 @@
     <!-- Bootstrap tether Core JavaScript -->
     <script src="../static/assets/plugins/bootstrap/js/popper.min.js"></script>
     <script src="../static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="../static/js/jquery.slimscroll.js"></script>
     <!--Wave Effects -->
     <script src="../static/js/waves.js"></script>
     <!--Menu sidebar -->
@@ -267,39 +267,16 @@
     <!-- This is data table -->
     <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
 
-    
-    <script>
-    $(document).ready(function() {
-        $('#myTable').DataTable();
-        $(document).ready(function() {
-            var table = $('#example').DataTable({
-                "columnDefs": [{
-                    "visible": false,
-                    "targets": 2
-                }],
-                "order": [
-                    [2, 'asc']
-                ],
-                "displayLength": 25,
-                "drawCallback": function(settings) {
-                    var api = this.api();
-                    var rows = api.rows({
-                        page: 'current'
-                    }).nodes();
-                    var last = null;
-                    api.column(2, {
-                        page: 'current'
-                    }).data().each(function(group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
-                            last = group;
-                        }
-                    });
-                }
-            });
 
-        });
-    });
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable( {
+                "order": [[ 1, "asc" ]],
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": 0 }]
+            } );
+        } );
     </script>
 
 
@@ -333,7 +310,6 @@
 
     <script>
         function agregarArticulo(numero, title, url) {
-
             var test = "0"
             if(document.getElementById("checkbox-testeo" + numero ).checked == true){
                 test = "1" 

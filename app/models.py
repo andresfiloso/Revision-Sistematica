@@ -310,7 +310,7 @@ class Resultado:
   def __repr__(self):
     return "Esto seria un resultado"
   def __str__(self):
-    return "[" + str(self.getTitle()) + ", " + self.getURL() + "]"
+    return "[" + str(self.getTitle()) + ", TEST: " + str(self.getTest()) + ", enproyecto: " + str(self.getEnProyecto()) + "]"
 
 
 #######################
@@ -318,10 +318,11 @@ class Resultado:
 #######################
 
 class Articulo:
-  def __init__(self, idArticulo, articulo, url, idProyecto, idUsuario):
+  def __init__(self, idArticulo, articulo, url, test, idProyecto, idUsuario):
     self.idArticulo = idArticulo
     self.articulo = articulo
     self.url = url
+    self.test = test
     self.idProyecto = idProyecto
     self.idUsuario = idUsuario
 
@@ -333,6 +334,9 @@ class Articulo:
 
   def getURL(self):
     return self.url
+
+  def getTest(self):
+    return self.test
 
   def getIdProyecto(self):
     return self.idProyecto
