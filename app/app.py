@@ -168,8 +168,8 @@ def scrapping():
         except:
             print "VOY A EMPEZAR A SCRAPPEAR: "
             science = get_scrapping_sciencedirect()
-            springer = get_scrapping_springer()
-            ieee = get_scrapping_ieee()
+            #springer = get_scrapping_springer()
+            #ieee = get_scrapping_ieee()
 
             end = time.time()
             tiempoTotal = end - start
@@ -178,8 +178,8 @@ def scrapping():
 
             resultados = {}
             resultados.update(science)
-            resultados.update(springer)
-            resultados.update(ieee)
+            #resultados.update(springer)
+            #resultados.update(ieee)
 
             serialized = jsonpickle.encode(resultados)
 
@@ -214,33 +214,6 @@ def article():
         articulo = scrap_article(url)
 
         return render_template('article.html', **locals())
-    else:
-        return redirect(url_for('home'))
-    
-@app.route('/addArticle',methods = ['POST', 'GET'])
-def addArticle():
-    if session.get('usuario') is not None:
-        usuario = getSession()
-        proyectos = get_projects()
-        proyecto = get_project()
-
-        print "ingreso a requestear el formulario"
-        idArticulo = request.form["idArticulo"]
-        print idArticulo
-        title = request.form["title"]
-        print title
-        url = request.form["url"]
-        print url
-        print "SE VA A AGREGAR AL SIGUIENTE ARTICULO: " +  str(idArticulo)
-        print title
-        print url
-
-        if(add_article(title, url)):
-            session['status'] = "Articulo agregado correctamente"
-        else:
-            session['error'] = "Error al agregar articulo"
-
-        return render_template('results.html', **locals())
     else:
         return redirect(url_for('home'))
 
@@ -372,21 +345,16 @@ def insertProyecto():
 def classify():
     if session.get('usuario') is not None:
         usuario = getSession()
-        idProyecto = request.args.get('project-id')
-        print "IDPROYECTO: " + str(idProyecto)
+        proyectos = get_projects()
+        proyecto = get_project()
 
-        if idProyecto != None: # se llama a classify con get
-            if(get_project(idProyecto)):
-                return render_template('classify.html', **locals())
-            else: # no se encontro el idProyecto en la bd
-                session['error'] = "El proyecto no existe o fue eliminado"
-                return redirect(url_for('projects'))
-        else: # se llama a classify sin get
-            if session.get('proyecto') is not None:
-                return render_template('classify.html') 
-            else: # el proyecto no esta seleccionado
-                session['error'] = "Antes de clasificar articulos tienes que seleccionar un proyecto"
-                return redirect(url_for('projects'))
+        articulos = get_articles()
+
+        if session.get('proyecto') is not None:
+            return render_template('classify.html', **locals()) 
+        else: # el proyecto no esta seleccionado
+            session['error'] = "Antes de clasificar articulos tienes que seleccionar un proyecto"
+            return redirect(url_for('projects'))
     else:
         return redirect(url_for('home'))
 
@@ -412,7 +380,41 @@ def updateProject():
             # Enviar aviso al admin
             return redirect(url_for(callback))
 
+@app.route('/addArticle',methods = ['POST', 'GET'])
+def addArticle():
+    if session.get('usuario') is not None:
+        usuario = getSession()
+        proyectos = get_projects()
+        proyecto = get_project()
+        tiempoTotal = ""
+        idResultado = int(request.args.get('data'))
+        title = request.args.get('title').encode('utf8')
+        url = request.args.get('url').encode('utf8')
+        test = request.args.get('test').encode('utf8')
 
+        if(add_article(title, url)):
+            session['status'] = "Articulo agregado correctamente"
+        else:
+            session['error'] = "Error al agregar articulo"
+
+        with open('json/'+session['keywords']+'.json', 'r') as file:
+                print "ABRI EL ARCHIVO BIEN"
+                data = json.load(file)
+                resultados = jsonpickle.decode(data)
+
+        for i in resultados.keys():
+            if idResultado == resultados[i].getIdResultado():
+                resultados[i].enProyecto = True
+                if(test == str(1)):
+                    resultados[i].test = True
+
+        serialized = jsonpickle.encode(resultados)
+
+        with open('json/'+session['keywords']+'.json', 'w') as file:
+            json.dump(serialized, file)
+
+        return "0"
+    
 @app.route('/deleteArticle',methods = ['POST', 'GET'])
 def deleteArticle():
     if session.get('usuario') is not None:

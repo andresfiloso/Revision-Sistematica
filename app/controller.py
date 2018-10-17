@@ -140,7 +140,22 @@ def get_project(*args): # sobrecarga de metodo
 
 			return objetoProyecto
 
+def get_articles():
+	cur = get_cur(datasource)
+	sql = ("SELECT * FROM Articulo where idProyecto = " + str(session['proyecto']))
+	rows = cur.execute(sql)
 
+	articulos = {}
+
+	i = 0
+	for r in cur.fetchall():
+
+		articulo = Articulo(r[0], r[1], r[2], get_project().getProyecto(), get_user(r[4]))
+
+		articulos[i] = articulo
+		i +=1
+
+	return articulos
 
 
 def get_transacciones():

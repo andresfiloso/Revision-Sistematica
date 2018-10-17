@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicon.png">
-    <title>Nombre del proyecto</title>
+    <title>{{ proyecto.getProyecto() }}</title>
     <!-- Bootstrap Core CSS -->
     <link href="../static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -53,10 +53,10 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">{{ session['proyecto'].proyecto }}</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">{{ proyecto.getProyecto() }}</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/projects">Panel de proyectos</a></li>
-                            <li class="breadcrumb-item"><a href="/project">{{ session['proyecto'].proyecto }}</a></li>
+                            <li class="breadcrumb-item"><a href="/project">{{ proyecto.getProyecto() }}</a></li>
                             <li class="breadcrumb-item active">Clasificacion</li>
                         </ol>
                     </div>
@@ -91,6 +91,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for key in articulos %}
                           <tr>
                             <td>
                               <div class="row">
@@ -98,11 +99,14 @@
                                       <div class="row">
                                       <div class="card col-md-4 col-lg-10">
                                           <div class="card-body" >
-                                              <h4 class="card-title"><a href="article.html">Ejemplo de toaster</a></h4>
-                                              <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-                                              <p class="card-text">Two key elements of modern software development are collaboration and teamwork...</p>
-                                              <p class="ribbon ribbon-right ribbon-warning"><i class="fa fa-check-circle"></i> Testeado</p>
-                                              <div data-toggle="tooltip" data-placement="top" title="Todavía falta que clasifiques el articulo!" class="ribbon ribbon-corner ribbon-danger ribbon-right ribbon-bottom"><i class="fa fa-exclamation-circle"></i></div>
+
+                                            <h1><span data-toggle="tooltip" data-placement="top" title="Testeado" class="pull-right label label-light-warning"><i class="fa fa-star"></i></span></h1>
+
+                                              <h4 class="card-title"><a href="article.html">{{ articulos[key].getArticulo() }}</a></h4>
+                                              <h6 class="card-subtitle mb-2 text-muted"><a href="{{ articulos[key].getURL() }}">{{ articulos[key
+                                              ].getURL() }}</a></h6>
+
+                                              <h1><span data-toggle="tooltip" data-placement="top" title="Todavia falta que clasifiques el articulo" class="pull-right label label-light-danger">&nbsp;<i class="fa fa-exclamation">&nbsp;</i></span></h1>
                                           </div >
                                       </div>
                                           <div class="col-md-2 col-lg-2">
@@ -123,119 +127,11 @@
                               </div>
                             </td>
                           </tr>
-
-                            <tr>
-                              <td>
-                                <div class="row">
-                                    <div class="col-md-5 col-lg-12">
-                                        <div class="row">
-                                        <div class="card col-md-4 col-lg-10">
-                                            <div class="card-body" >
-                                                <h4 class="card-title"><a href="article.html">A systematic literature review of software visualization evaluation</a>
-                                                  <a href="edit.html"><label class="label label-rounded label-success">Big data <i class="fa fa-pencil"></i></label></a>
-                                                </h4>
-
-                                                <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-                                                <p class="card-text">Two key elements of modern software development are collaboration and teamwork...</p>
-
-                                                  <p class="ribbon ribbon-right ribbon-warning"><i class="fa fa-check-circle"></i> Testeado</p>
-                                                  <div data-toggle="tooltip" data-placement="top" title="No hay mas trabajo por hacer!" class="ribbon ribbon-corner ribbon-success ribbon-right ribbon-bottom"><i class="fa fa-check-circle"></i></div>
-                                            </div >
-                                        </div>
-                                            <div class="col-md-2 col-lg-2">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td>
-                                <div class="row">
-                                    <div class="col-md-5 col-lg-12">
-                                        <div class="row">
-                                        <div class="card col-md-4 col-lg-10">
-                                            <div class="card-body" >
-                                                <h4 class="card-title"><a href="article.html">A systematic literature review of software visualization evaluation</a></h4>
-                                                <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-                                                <p class="card-text">Two key elements of modern software development are collaboration and teamwork...</p>
-                                                <p class="ribbon ribbon-right ribbon-warning"><i class="fa fa-check-circle"></i> Testeado</p>
-                                                <div data-toggle="tooltip" data-placement="top" title="Todavía falta que clasifiques el articulo!" class="ribbon ribbon-corner ribbon-danger ribbon-right ribbon-bottom"><i class="fa fa-exclamation-circle"></i></div>
-                                            </div >
-                                        </div>
-                                            <div class="col-md-2 col-lg-2">
-                                              <br>
-
-                                                <form name="formRes1">
-                                                  <div id="the-basics">
-                                                      <input class="typeahead form-control" type="text" placeholder="Clasificar">
-                                                  </div>
-                                                </form>
-
-                                                <br>
-                                                <button class="btn btn-block btn-info waves-effect waves-light">Guardar</button>
-                                                <br><br>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="row">
-                                    <div class="col-md-5 col-lg-12">
-                                        <div class="row">
-                                        <div class="card col-md-4 col-lg-10">
-                                            <div class="card-body" >
-                                                <h4 class="card-title"><a href="article.html">A systematic literature review of software visualization evaluation </a>
-
-                                                </h4>
-                                                <h6 class="card-subtitle mb-2 text-muted"><a href="https://www.sciencedirect.com/science/article/pii/S1001841717300323">https://www.sciencedirect.com/science/article/pii/S1001841717300323</a></h6>
-
-                                                <p class="card-text">Two key elements of modern software development are collaboration and teamwork
-                                                  wo key elements of modern software development are collaboration and teamwork
-                                                  wo key elements of modern software development are collaboration and teamwork
-                                                </p>
-                                                <div data-toggle="tooltip" data-placement="top" title="Todavía falta que clasifiques el articulo!" class="ribbon ribbon-corner ribbon-danger ribbon-right ribbon-bottom"><i class="fa fa-exclamation-circle"></i></div>
-
-                                            </div >
-                                        </div>
-                                            <div class="col-md-2 col-lg-2">
-                                              <br>
-
-                                                <form name="formRes1">
-                                                  <div id="the-basics">
-                                                      <input class="typeahead form-control" type="text" placeholder="Clasificar">
-                                                  </div>
-                                                </form>
-
-                                                <br>
-                                                <button class="btn btn-block btn-info waves-effect waves-light">Guardar</button>
-                                                <br><br>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              </td>
-                            </tr>
-
-
-
+                          {% endfor %}
+                            
                         </tbody>
                     </table>
                 </div>
-
-
-
-
-
-
-
-
-
 
 
                 <!-- ============================================================== -->

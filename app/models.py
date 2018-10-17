@@ -273,13 +273,15 @@ class Busqueda:
 #######################
 
 class Resultado:
-  def __init__(self, idResultado, title, url, pdfLink, abstract, metadata):
+  def __init__(self, idResultado, title, url, pdfLink, abstract, metadata, test,  enProyecto):
     self.idResultado = idResultado
     self.title = title
     self.url = url
     self.pdfLink = pdfLink
     self.abstract = abstract
     self.metadata = metadata
+    self.test = test
+    self.enProyecto = enProyecto
 
   def getIdResultado(self):
     return self.idResultado
@@ -298,6 +300,12 @@ class Resultado:
 
   def getMetadata(self):
     return self.metadata
+
+  def getTest(self):
+    return self.test
+
+  def getEnProyecto(self):
+    return self.enProyecto
 
   def __repr__(self):
     return "Esto seria un resultado"

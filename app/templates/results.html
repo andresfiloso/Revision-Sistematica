@@ -121,6 +121,14 @@
                                     <div class="row">
                                         <div class="card col-md-10 col-lg-10">
                                             <div class="card-body">
+                                                {% if resultados[key].getPDF() != "0" %}
+
+                                                <h1><span class="pull-right label label-danger">
+                                                    <a href="{{ resultados[key].getPDF() }}" target="_blank">
+                                                    <i class="fa fa-file-pdf-o fa-inverse"></i></a></span></h1>
+
+                                                {% endif %}
+                                                
                                                 <form id="redirigir{{ resultados[key].getIdResultado() }}" action="article" method="POST">
                                                     <input type="hidden" name="url" value="{{ resultados[key].getURL() }}">
                                                     <h4 class="card-title" onClick="redirigir({{ resultados[key].getIdResultado() }})">
@@ -131,19 +139,42 @@
                                                 <h6 class="card-subtitle mb-2 text-muted">
                                                     <a href="{{ resultados[key].getURL() }}" target="_blank">{{ resultados[key].getURL() }}</a>
                                                 </h6>
-                                                <p class="card-text">{{ resultados[key].getAbstract() }}</p>
-                                                <p class="card-text"><small class="text-muted">{{ resultados[key].getMetadata() }}</small></p>
 
-                                                {% if resultados[key].getPDF() != "0" %}
+                                                {% if resultados[key].getEnProyecto() == True %}
+                                                    {% if resultados[key].getTest() == True %}
 
-                                                    <a href="{{ resultados[key].getPDF() }}" target="_blank" class="ribbon ribbon-vertical-r ribbon-default">
-                                                    <i class="fa fa-file-pdf-o"></i></a>
+                                                        <h1><span data-toggle="tooltip" data-placement="top" title="Testeado" class="pull-right label label-light-warning"><i class="fa fa-star"></i></span></h1>
+
+                                                        {% else %}
+
+                                                        <h1><span data-toggle="tooltip" data-placement="top" title="No testeado" class="pull-right label label-light-inverse"><i class="fa fa-star-half-empty"></i></span></h1>
+
+                                                    {% endif %}
+                                                {% endif %}
+
+                                                <p class="card-text">{{ resultados[key].getAbstract() }}</p>  
+
+                                                {% if resultados[key].getEnProyecto() == True %}
+
+                                                <h1><span data-toggle="tooltip" data-placement="top" title="Agregado al proyecto!" class="pull-right label label-light-info"><i class="fa fa-check"></i></span></h1>
 
                                                 {% endif %}
+                                                <p class="card-text"><small class="text-muted">{{ resultados[key].getMetadata() }}</small></p>
+                                            
+
+
+
 
                                             </div>
                                         </div>
+
+
                                         <div class="col-md-2 col-lg-2">
+
+                                             {% if resultados[key].getEnProyecto() != True %}
+
+                                             <span style="display: none;">:no</span>
+
                                             <form name="formRes{{ resultados[key].getIdResultado() }}">
                                                 <div class="checkbox checkbox-primary pull-left p-t-0">
                                                     <input onClick="enableTest({{ resultados[key].getIdResultado() }})" id="checkbox-select{{ resultados[key].getIdResultado() }}" type="checkbox">
@@ -157,18 +188,29 @@
                                                 </div>
                                             </form>
                                             <br>
-                                            <form id="agregar{{ resultados[key].getIdResultado() }}" action="addArticle" method="POST">
-                                                <input type="hidden" name="idArticulo" value="{{ resultados[key].getIdResultado() }}">
-                                                <input type="hidden" name="title" value="{{ resultados[key].getTitle() }}">
-                                                <input type="hidden" name="url" value="{{ resultados[key].getURL() }}">
-                                                <button type="submit" class="btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
-                                            </form>
+                                            
+                                            <span onClick="agregarArticulo({{ resultados[key].getIdResultado() }}, '{{ resultados[key].getTitle() }}', '{{ resultados[key].getURL() }}' )">
+                                            <button type="submit" class="btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
+                                            </span>
+                                                
+                                            <br>
                                             <br>
 
                                             <span onClick="borrarArticulo({{ resultados[key].getIdResultado() }})" ><button id="borrarArticulo" class="btn btn-block btn-danger waves-effect waves-light">Eliminar</button></span>
 
                                             <br>
                                             <br>
+
+
+                                            {% else %}
+
+                                            <span style="display: none;">:yes</span>
+                                            <br><br>
+                                            <a href="classify">
+                                            <button type="button" class="btn btn-block btn-info waves-effect waves-light">Clasificar articulos</button>
+                                            </a>
+
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </td>
@@ -221,8 +263,6 @@
     <script src="../static/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!--Custom JavaScript -->
     <script src="../static/js/custom.min.js"></script>
-    <script src="../static/assets/plugins/toast-master/js/jquery.toast.js"></script>
-    <script src="../static/js/toastr.js"></script>
 
     <!-- This is data table -->
     <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -264,81 +304,74 @@
 
 
     <script>
-        /*
-        $(document).ready(function(){
-           $("#borrarArticulo").click(function(){
-                $.ajax({
-                    url: "deleteArticle",
-                    success: function (data) {
-                       
-                        
-                    },
-                    error : function (xhr, ajaxOptions, thrownError){  
-                      console.log(xhr.status);          
-                      console.log(thrownError);
-                    }
-                });//fin ajax
-            }
-         
-            
-        });
-</script>
 
-
-
-
-     <script>
         function redirigir(numero) {
-        document.getElementById("redirigir" + numero ).submit()
+            document.getElementById("redirigir" + numero ).submit()
         }
 
     </script>
 
     <script>
-        
         function borrarArticulo(numero) {
             $.ajax({
-                    type: "GET",
-                    url: "deleteArticle",
-                    contentType: 'application/json;charset=UTF-8',
-                    data: {'data': numero},
+                type: "GET",
+                url: "deleteArticle",
+                contentType: 'application/json;charset=UTF-8',
+                data: {'data': numero},
+                success: function (data) {
 
-                    success: function (data) {
                     $( "tr" ).remove( ".fila"+numero ).draw();
-                        
-                    },
-
-                    error : function (xhr, ajaxOptions, thrownError){  
-                      console.log(xhr.status);          
-                      console.log(thrownError);
-                    }
-                });//fin ajax
-
-
-            //
+                    
+                },
+                error : function (xhr, ajaxOptions, thrownError){  
+                  console.log(xhr.status);          
+                  console.log(thrownError);
+                }
+            });
         }
+    </script>
 
+    <script>
+        function agregarArticulo(numero, title, url) {
+
+            var test = "0"
+            if(document.getElementById("checkbox-testeo" + numero ).checked == true){
+                test = "1" 
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "addArticle",
+                contentType: 'application/json;charset=UTF-8',
+                data: {'data': numero, 'title': title, 'url': url, 'test': test},
+                success: function (data) {
+
+                    $( "tr" ).remove( ".fila"+numero ).draw();
+                    
+                },
+                error : function (xhr, ajaxOptions, thrownError){  
+                  console.log(xhr.status);          
+                  console.log(thrownError);
+                }
+            });
+        }
     </script>
 
     <script type="text/javascript">
-
 
         function enableTest(numero) {
 
             if(document.getElementById("checkbox-testeo" + numero ).disabled == true){
                 document.getElementById("checkbox-testeo"+ numero ).disabled = false;
-
             }
-
-
             if(document.getElementById("checkbox-select"+ numero ).checked == false){
                 document.getElementById("checkbox-testeo"+ numero ).disabled = true;
                 document.getElementById("checkbox-testeo"+ numero ).checked = false;
             }
+        }   
 
-        }
+    </script>
 
-</script>
 </body>
 
 </html>

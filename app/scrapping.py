@@ -128,7 +128,7 @@ def get_scrapping_sciencedirect():
 		else:
 			pdf = str(0)
 
-		resultado = Resultado(session['key'], title, url, pdf, info, authors)
+		resultado = Resultado(session['key'], title, url, pdf, info, authors, False, False)
 
 		#print "TITULO EN SCRAPPING.PY: " + title.encode('utf8')
 
@@ -187,7 +187,7 @@ def scrap_article_sciencedirect(url):
 		pdf = str(0) 
 	
  
-	resultado = Resultado(0, title, url, pdf, abstract, keywords)
+	resultado = Resultado(0, title, url, pdf, abstract, keywords, False, False)
 
 	return resultado
 
@@ -237,7 +237,7 @@ def get_scrapping_springer():
 		else:
 			metadata = enumerationReady
 
-		resultado = Resultado(session['key'], title, url, pdf, abstract, metadata)
+		resultado = Resultado(session['key'], title, url, pdf, abstract, metadata, False, False)
 		
 		dataArray[session['key']] = resultado
 
@@ -276,7 +276,7 @@ def scrap_article_springer(url):
 	    keywords = "Springer no tiene palabras claves"
 
 
-	resultado = Resultado(0, title, url, pdf, abstract, keywords)
+	resultado = Resultado(0, title, url, pdf, abstract, keywords, False, False)
 
 	return resultado
 
@@ -356,7 +356,7 @@ def get_scrapping_ieee():
 			}
 			"""
 
-			resultado = Resultado(session['key'], title, url, pdf, abstract, metadata)
+			resultado = Resultado(session['key'], title, url, pdf, abstract, metadata, False, False)
 			
 			dataArray[session['key']] = resultado
 			session['key'] +=1
@@ -412,7 +412,7 @@ def scrap_article_ieee(url):
 
 	metadata = "No hay metadata" # issue
  	
-	resultado = Resultado(0, title, url, pdf, snippet, metadata)
+	resultado = Resultado(0, title, url, pdf, snippet, metadata, False, False)
 
 	return resultado
 
