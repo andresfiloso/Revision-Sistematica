@@ -404,28 +404,12 @@ def addArticle():
             if idResultado == resultados[i].getIdResultado():
                 resultado = resultados[i]
                 resultados.pop(i)
-                print "Se borro el resultado de la lista provisoriamente"
 
-        print "igualmente lo rescate aca>"
-        print str(resultado)
         resultado.enProyecto = True
         if(test == str(1)):
             resultado.test = True
-
-        print "Aca le seteo los atributos bien para agregarlos devuelta al FINAL"
-        print str(resultado)
-
-        print "LARGO DE LA LISTA: " + str(len(resultados))
-
-        print str(resultados)
-        print "++++++++++++++++++++++++++"
         resultados[len(resultados) + 1] = resultado
 
-        print "aca lo agregue al final (?"
-
-        print str(resultados)
-
-        
         serialized = jsonpickle.encode(resultados)
 
         with open('json/'+session['keywords']+'.json', 'w') as file:
@@ -444,7 +428,7 @@ def deleteArticle():
     tiempoTotal = ""
     resultadoAEliminar = int(request.args.get('data'))
 
-    print "ESULTADO A ELIMINAR: "  + str(resultadoAEliminar)
+    print "RESULTADO A ELIMINAR: "  + str(resultadoAEliminar)
 
 
     with open('json/'+session['keywords']+'.json', 'r') as file:
@@ -461,6 +445,30 @@ def deleteArticle():
         json.dump(serialized, file)
 
     session['status'] = "Articulo borrado correctamente"
+
+    return "0"
+
+@app.route('/classifyArticle',methods = ['POST', 'GET'])
+def classifyArticle():
+    print "ESTOY EN PYTHON>>>>>"
+    if session.get('usuario') is not None:
+        usuario = getSession()
+        proyectos = get_projects()
+        if session.get('proyecto') is not None:
+            proyecto = get_project()
+
+  
+    idArticulo = int(request.args.get('data'))
+    clasificacion = request.args.get('clasificacion')
+
+    print "articulo a clasificar: "  + str(idArticulo)
+    print "clasificacion: "  + clasificacion
+
+    classify_article(idArticulo, clasificacion)
+
+
+
+
 
     return "0"
 

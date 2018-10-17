@@ -150,13 +150,34 @@ def get_articles():
 	i = 0
 	for r in cur.fetchall():
 
-		articulo = Articulo(r[0], r[1], r[2], r[3], get_project().getProyecto(), get_user(r[5]))
+		articulo = Articulo(r[0], r[1], r[2], r[3], r[4], r[5], get_project().getProyecto(), get_user(r[7]))
 
 		articulos[i] = articulo
 		i +=1
 
 	return articulos
 
+
+def get_article(idArticulo):
+	cur = get_cur(datasource)
+
+	sql = ("SELECT * FROM Article where idArticulo = '" + str(idArticulo) + "'")
+	rows = cur.execute(sql)
+
+	for r in cur.fetchall():
+
+		articulo = Articulo(r[0], r[1], r[2], r[3], r[4], r[5], get_project().getProyecto(), get_user(r[7])) 
+
+	return articulo
+
+
+def classify_article(idArticulo, clasificacion):
+	idUsuario = str(session['usuario'])
+	sql = ("UPDATE `articulo` SET `clasificacion` = '" + clasificacion + "' WHERE `articulo`.`idArticulo` = " + str(idArticulo) + ";")
+	rows = get_cur(datasource).execute(sql)
+	get_db(datasource).commit()
+
+	return rows
 
 def get_transacciones():
 	cur = get_cur(datasource)
@@ -226,7 +247,7 @@ def new_busqueda(query):
 def add_article(title, url, test):
 	usuario = getSession()
 
-	sql = ("INSERT INTO `articulo` ( `articulo`, `url`, `test`, `idProyecto`, `idUsuario`) VALUES ('" + title + "', '" + url + "', '" + test + "', '"+str(session['proyecto'])+"', '"+str(usuario.getIdUsuario())+"');")
+	sql = ("INSERT INTO `articulo` ( `articulo`, `url`, `test`, `clasificacion`, `keywords`, `idProyecto`, `idUsuario`) VALUES ('" + title + "', '" + url + "', '" + test + "', '0', '" + session['keywords'] + "', '"+str(session['proyecto'])+"', '"+str(usuario.getIdUsuario())+"');")
 	rows = get_cur(datasource).execute(sql)
 	get_db(datasource).commit()
 

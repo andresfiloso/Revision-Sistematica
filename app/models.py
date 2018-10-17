@@ -318,11 +318,13 @@ class Resultado:
 #######################
 
 class Articulo:
-  def __init__(self, idArticulo, articulo, url, test, idProyecto, idUsuario):
+  def __init__(self, idArticulo, articulo, url, test, clasificacion, keywords, idProyecto, idUsuario):
     self.idArticulo = idArticulo
     self.articulo = articulo
     self.url = url
     self.test = test
+    self.clasificacion = clasificacion
+    self.keywords = keywords
     self.idProyecto = idProyecto
     self.idUsuario = idUsuario
 
@@ -337,6 +339,12 @@ class Articulo:
 
   def getTest(self):
     return self.test
+
+  def getKeywords(self):
+    return self.keywords
+
+  def getClasificacion(self):
+    return self.clasificacion
 
   def getIdProyecto(self):
     return self.idProyecto

@@ -92,7 +92,7 @@
                         </thead>
                         <tbody>
                             {% for key in articulos %}
-                          <tr>
+                          <tr class="fila{{ articulos[key].getIdArticulo() }}">
                             <td>
                               <div class="row">
                                   <div class="col-md-12 col-lg-12">
@@ -102,33 +102,56 @@
 
                                              {% if articulos[key].getTest() == 1 %}
                                             <h1><span data-toggle="tooltip" data-placement="top" title="Testeado" class="pull-right label label-light-warning"><i class="fa fa-star"></i></span></h1>
-                                            {% endif %}
-                                              <h4 class="card-title"><a href="article.html">{{ articulos[key].getArticulo() }}</a></h4>
-                                              <h6 class="card-subtitle mb-2 text-muted"><a href="{{ articulos[key].getURL() }}">{{ articulos[key
-                                              ].getURL() }}</a></h6>
 
+                                            {% else %}
+
+                                            <h1><span data-toggle="tooltip" data-placement="top" title="No testeado" class="pull-right label label-light-inverse"><i class="fa fa-star-half-empty"></i></span></h1>
+
+                                            {% endif %}
+
+                                              <h4 class="card-title"><a href="article.html">{{ articulos[key].getArticulo() }}</a>
+
+                                                {% if articulos[key].getClasificacion() != "0" %}
+                                                <span class="label label-rounded label-info">{{ articulos[key].getClasificacion() }}</span>
+                                                {% endif %}
+
+                                              </h4>
+
+                                              {% if articulos[key].getClasificacion() == "0" %}
                                               <h1><span data-toggle="tooltip" data-placement="top" title="Todavia falta que clasifiques el articulo" class="pull-right label label-light-danger">&nbsp;<i class="fa fa-exclamation">&nbsp;</i></span></h1>
+
+                                              {% else %}
+
+                                              <h1><span data-toggle="tooltip" data-placement="top" title="Listo! No hay mas trabajo por hacer" class="pull-right label label-light-info"><i class="fa fa-check"></i></span></h1>
+
+                                              {% endif %}
+
                                               <br>
-                                              <h6 class="card-subtitle mb-2 text-muted">Guardar aca la query que genero este articulo</h6>
+                                              <h6 class="card-subtitle mb-2 text-muted">{{ articulos[key].getKeywords() }}</h6>
                                           </div >
                                       </div>
                                       </td>
                                       <td>
+
+                                        {% if articulos[key].getClasificacion() == "0" %}
+
                                       <div class="row">
                                           <div class="col-md-12 col-lg-12">
                                             <br>
 
                                               <form name="formRes1">
                                                 <div id="the-basics">
-                                                    <input class="typeahead form-control" type="text" placeholder="Clasificar">
+                                                    <input id="clasificacion{{ articulos[key].getIdArticulo() }}" class="form-control" type="text" placeholder="Clasificar">
                                                 </div>
                                               </form>
 
                                               <br>
-                                              <button class="saveClassify btn btn-block btn-info waves-effect waves-light ">Guardar</button>
+                                              <span onClick="clasificar({{ articulos[key].getIdArticulo() }})" ><button class="btn btn-block btn-info waves-effect waves-light">Guardar</button></span>
                                               <br><br>
                                           </div>
                                       </div>
+
+                                      {% endif %}
                                   </div>
                               </div>
                             </td>
@@ -185,12 +208,34 @@
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable( {
-                "order": [[ 1, "asc" ]],
+                "order": [[ 1, "desc" ]],
                 "columnDefs": [{
                     "orderable": false,
                     "targets": 0 }]
             } );
         } );
+    </script>
+
+    <script>
+        function clasificar(idArticulo) {
+
+            clasificacion = $('#clasificacion'+ idArticulo).val(); 
+            clasificacion = String(clasificacion)
+            $.ajax({
+                type: "GET",
+                url: "classifyArticle",
+                contentType: 'application/json;charset=UTF-8',
+                data: {'data': idArticulo, 'clasificacion': clasificacion},
+                success: function (data) {
+                     $( "tr" ).remove( ".fila"+idArticulo ).draw();
+                    
+                },
+                error : function (xhr, ajaxOptions, thrownError){  
+                  console.log(xhr.status);          
+                  console.log(thrownError);
+                }
+            });
+        }
     </script>
 
 </body>

@@ -59,6 +59,8 @@ CREATE TABLE Articulo (
 	articulo VARCHAR(120) NOT NULL,
     url VARCHAR(120) NOT NULL,
     test TINYINT(1) NOT NULL,
+    clasificacion VARCHAR(50) NOT NULL,
+    keywords VARCHAR(120) NOT NULL,
     idProyecto INT UNSIGNED NOT NULL,
     CONSTRAINT `fk_articulo_proyecto`
 		FOREIGN KEY (idProyecto) REFERENCES Proyecto (idProyecto)
