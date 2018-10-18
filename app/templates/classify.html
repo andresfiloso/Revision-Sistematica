@@ -109,13 +109,17 @@
 
                                             {% endif %}
 
-                                              <h4 class="card-title"><a href="article.html">{{ articulos[key].getArticulo() }}</a>
+                                             <h4 class="card-title"><a href="article">{{ articulos[key].getArticulo() }}</a>
+                                                 
 
                                                 {% if articulos[key].getClasificacion() != "0" %}
-                                                <span class="label label-rounded label-info">{{ articulos[key].getClasificacion() }}</span>
+                                                <span data-toggle="modal" data-target="#editarClasificacion" class="label label-rounded label-info">{{ articulos[key].getClasificacion() }}&nbsp;&nbsp;<i class="fa fa-pencil"></i></span>
                                                 {% endif %}
 
                                               </h4>
+                                               <h6 class="card-subtitle mb-2 text-muted">
+                                                    <a href="{{ articulos[key].getURL() }}" target="_blank">{{ articulos[key].getURL() }}</a>
+                                                </h6>
 
                                               {% if articulos[key].getClasificacion() == "0" %}
                                               <h1><span data-toggle="tooltip" data-placement="top" title="Todavia falta que clasifiques el articulo" class="pull-right label label-light-danger">&nbsp;<i class="fa fa-exclamation">&nbsp;</i></span></h1>
@@ -139,14 +143,14 @@
                                           <div class="col-md-12 col-lg-12">
                                             <br>
 
-                                              <form name="formRes1">
+                                              <form name="formRes1" onsubmit="clasificar('{{ articulos[key].getIdArticulo() }}');return false">
                                                 <div id="the-basics">
                                                     <input id="clasificacion{{ articulos[key].getIdArticulo() }}" class="form-control" type="text" placeholder="Clasificar">
                                                 </div>
-                                              </form>
-
+                                              
                                               <br>
-                                              <span onClick="clasificar({{ articulos[key].getIdArticulo() }})" ><button class="btn btn-block btn-info waves-effect waves-light">Guardar</button></span>
+                                              <button class="btn btn-block btn-info waves-effect waves-light" type="submit">Guardar</button>
+                                              </form>
                                               <br><br>
                                           </div>
                                       </div>
@@ -161,6 +165,41 @@
                         </tbody>
                     </table>
                 </div>
+
+
+                <div id="editarClasificacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                   <div class="modal-content">
+              <form action="/updateClasificacion" method="POST">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Editar clasificacion</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+
+                    <input type="hidden" name="idArticuloClasificar" value="">
+
+                    <div class="col-lg-12">
+                        <p>Titulo del articulo. Modificar esto</p>
+                        <div class="input-group">
+                            <input id="clasificacion" name="clasificacion" type="text" class="form-control" value="clasifacionArticuloSeleccionado" placeholder="Clasificacion">
+                        </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-info waves-effect waves-light">Editar</button>
+                </div>
+                </form>
+            </div>
+                <!-- /.modal-dialog -->
+            </div>
+          </div>
+
+
 
 
                 <!-- ============================================================== -->
@@ -207,6 +246,17 @@
 
     <script>
         $(document).ready(function() {
+            $(document).on('submit', '#my-form', function() {
+
+
+              // do your things
+              return false;
+             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
             $('#myTable').DataTable( {
                 "order": [[ 1, "desc" ]],
                 "columnDefs": [{
@@ -221,6 +271,8 @@
 
             clasificacion = $('#clasificacion'+ idArticulo).val(); 
             clasificacion = String(clasificacion)
+            siguiente = idArticulo + 1
+            siguiente = String(siguiente)
             $.ajax({
                 type: "GET",
                 url: "classifyArticle",
@@ -228,7 +280,7 @@
                 data: {'data': idArticulo, 'clasificacion': clasificacion},
                 success: function (data) {
                      $( "tr" ).remove( ".fila"+idArticulo ).draw();
-                    
+                    $( "#clasificacion"+siguiente ).focus();
                 },
                 error : function (xhr, ajaxOptions, thrownError){  
                   console.log(xhr.status);          
