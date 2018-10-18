@@ -12,6 +12,7 @@ mysql-connector-python==8.0.12
 MySQL-python==1.2.5
 request==1.0.2
 requests==2.19.1
+jsonpickle==1.0
 ```
 
 ## Built With
