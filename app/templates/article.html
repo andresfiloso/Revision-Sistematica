@@ -56,8 +56,13 @@
                         <h3 class="text-themecolor m-b-0 m-t-0">{{ articulo.getTitle() }}</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/project">{{ proyecto.getProyecto() }}</a></li>
+                            {% if callback == "results" %}
                             <li class="breadcrumb-item "><a href="/lookup">Buscador</a></li>
-                            <li class="breadcrumb-item "><a href="javascript:history.back()">Resultados</a></li>
+                            <li class="breadcrumb-item "><a href="/results">Resultados</a></li>
+                            {% endif %}
+                            {% if callback == "classify" %}
+                            <li class="breadcrumb-item "><a href="/classify">Clasificacion</a></li>
+                            {% endif %}
                             <li class="breadcrumb-item active">{{ articulo.getTitle() }}</li>
                         </ol>
                         <p class="card-text">
@@ -117,30 +122,39 @@
 
                                 {% endif %}
 
-
-                                
-                                <br>
-                                <br>
-                                <form name="formRes">
-                                    <div class="checkbox checkbox-primary pull-left p-t-0">
-                                            <input id="checkbox-testeo" type="checkbox">
-                                            <label for="checkbox-testeo"> Testeo </label>
-                                    </div>
-                                </form>
-
-                                <br>
-                                <br>
-                                <button class="btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
-                                <button class="btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
-                                <br>
-                                <br>
-                                <div class="form-group">
-                                        <label>Descripcion</label>
-                                        <textarea class="form-control" rows="10"></textarea>
-                                        <button class="btn btn-block btn-info waves-effect waves-light">Guardar</button>
+                                {% if callback == "results" %}
+                                    {% if enProyecto == "False" %}
                                         <br>
-                                </div>
-                                
+                                        <br>
+
+                                        <form name="formRes">
+                                            <div class="checkbox checkbox-primary pull-left p-t-0">
+                                                    <input id="checkbox-testeo" type="checkbox">
+                                                    <label for="checkbox-testeo"> Testeo </label>
+                                            </div>
+                                        </form>
+
+                                        <br>
+                                        <br>
+                                        <button class="btn btn-block btn-info waves-effect waves-light">Agregar a proyecto</button>
+                                        <button class="btn btn-block btn-danger waves-effect waves-light">Eliminar</button>
+                                        <br>
+                                        <br>
+                                        <div class="form-group">
+                                                <label>Descripcion</label>
+                                                <textarea class="form-control" rows="10"></textarea>
+                                                <button class="btn btn-block btn-info waves-effect waves-light">Guardar</button>
+                                                <br>
+                                        </div>
+                                    {% else %}
+                                        <br><br>
+                                        <h4>Agregado a proyecto <a href="project">{{ proyecto.getProyecto() }}</a></h4>
+                                        <br>
+
+                                    {% endif %}
+                                {% endif %}
+
+
                             </div>
 
 

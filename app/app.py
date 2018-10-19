@@ -125,8 +125,6 @@ def results():
         usuario = getSession()
         if session.get('proyecto') is not None:
             proyecto = get_project()
-
-
             return render_template('results.html', **locals())
         else:
             session['error'] = "Antes de buscar articulos tienes que seleccionar un proyecto"
@@ -205,6 +203,12 @@ def article():
         proyecto = get_project()
 
         url = request.form["url"]
+        callback = request.form["callback"]
+        enProyecto = request.form["enProyecto"]
+
+        print "El articulo esta en proyecto: " + enProyecto
+
+        print "Voy a scrapear el articulo a pedido de: " + callback
 
         #abstract =  rawAbstract.replace('Abstract', '<h2 class="card-title">Abstract</h2>')
     
@@ -439,6 +443,55 @@ def addArticle():
             json.dump(serialized, file)
 
         return "0"
+
+@app.route('/prepararSeleccionados',methods = ['POST', 'GET'])
+def prepararSeleccionados():
+    if session.get('usuario') is not None:
+        usuario = getSession()
+        proyectos = get_projects()
+        proyecto = get_project()
+        tiempoTotal = ""
+        idResultado = int(request.args.get('data'))
+        title = request.args.get('title').encode('utf8')
+        url = request.args.get('url').encode('utf8')
+        test = request.args.get('test').encode('utf8')
+        add = str(request.args.get('add'))
+        cantidadSeleccionados = int(request.args.get('cantidadSeleccionados'))
+
+        print "Cantidad de seleccionados e INDICE: " + str(cantidadSeleccionados)
+
+        if session.get('seleccionados') is None:
+            session['seleccionados'] = {}
+        
+
+        if (add == "1"):
+
+            articulo = {
+                    'idResultado' : idResultado,
+                    'title': title,
+                    'url': url,
+                    'test': test,
+            }
+
+            print "Este es el articulo que voy a agregar -> " + str(articulo)
+
+            print "len de seleccionados antes de appendear -> " + str(len(session['seleccionados']))
+
+            session['seleccionados'][cantidadSeleccionados] = articulo
+
+            print "len de seleccionadosdespues de appendear -> " + str(len(session['seleccionados']))
+
+        if (add == "0"):
+            for key in session['seleccionados']:
+                print session['seleccionados'][key]
+                #if(session['seleccionados'][key].idResultado == idResultado):
+                    #session['seleccionados'].pop(cantidadSeleccionados)
+
+
+        print "Articulos que tengo hasta ahora para agregar: "
+        print str(session['seleccionados'])
+
+        return str(len(session['seleccionados']))
     
 @app.route('/deleteArticle',methods = ['POST', 'GET'])
 def deleteArticle():

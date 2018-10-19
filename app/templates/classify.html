@@ -125,6 +125,8 @@
 
                                             {% endif %}
                                             <form id="redirigir{{ articulos[key].getIdArticulo() }}" action="article" method="POST">
+                                                <input type="hidden" name="callback" value="classify">
+                                                <input type="hidden" name="enProyecto" value="True">
                                                 <input type="hidden" name="url" value="{{ articulos[key].getURL() }}">
                                              <h4 class="card-title" onClick="redirigir({{ articulos[key].getIdArticulo() }})"><a href="#">{{ articulos[key].getArticulo() }}</a>
                                             </form>

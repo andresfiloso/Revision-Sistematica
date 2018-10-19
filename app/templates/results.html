@@ -131,6 +131,8 @@
                                                 
                                                 <form id="redirigir{{ resultados[key].getIdResultado() }}" action="article" method="POST">
                                                     <input type="hidden" name="url" value="{{ resultados[key].getURL() }}">
+                                                    <input type="hidden" name="enProyecto" value="{{ resultados[key].getEnProyecto() }}">
+                                                    <input type="hidden" name="callback" value="results">
                                                     <h4 class="card-title" onClick="redirigir({{ resultados[key].getIdResultado() }})">
                                                     <a href="#">{{ resultados[key].getTitle() }}</a>
                                                     </h4>
@@ -179,13 +181,13 @@
 
                                             <form name="formRes{{ resultados[key].getIdResultado() }}">
                                                 <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input onClick="enableTest({{ resultados[key].getIdResultado() }})" id="checkbox-select{{ resultados[key].getIdResultado() }}" type="checkbox">
+                                                    <input onClick="enableTest({{ resultados[key].getIdResultado() }}, '{{ resultados[key].getTitle()}}', '{{ resultados[key].getURL() }}')" id="checkbox-select{{ resultados[key].getIdResultado() }}" type="checkbox">
                                                     <label for="checkbox-select{{ resultados[key].getIdResultado() }}"> Seleccionar </label>
                                                 </div>
                                                 <br>
                                                 <br>
                                                 <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input id="checkbox-testeo{{ resultados[key].getIdResultado() }}" type="checkbox" disabled>
+                                                    <input onClick="checkTest({{ resultados[key].getIdResultado() }}, '{{ resultados[key].getTitle()}}', '{{ resultados[key].getURL() }}')" id="checkbox-testeo{{ resultados[key].getIdResultado() }}" type="checkbox" disabled>
                                                     <label for="checkbox-testeo{{ resultados[key].getIdResultado() }}"> Testeo </label>
                                                 </div>
                                             </form>
@@ -334,17 +336,82 @@
     </script>
 
     <script type="text/javascript">
+            cantidadSeleccionados = 0
 
-        function enableTest(numero) {
-
+        function enableTest(numero, title, url) {
+            test = 0
+            add = 0 // variable para saber si se selecciono o se deselecciono un checkbox
             if(document.getElementById("checkbox-testeo" + numero ).disabled == true){
-                document.getElementById("checkbox-testeo"+ numero ).disabled = false;
+            document.getElementById("checkbox-testeo"+ numero ).disabled = false;
             }
+
             if(document.getElementById("checkbox-select"+ numero ).checked == false){
+                cantidadSeleccionados --;
+                add = 0;
                 document.getElementById("checkbox-testeo"+ numero ).disabled = true;
                 document.getElementById("checkbox-testeo"+ numero ).checked = false;
             }
+
+            if(document.getElementById("checkbox-select"+ numero ).checked == true){
+                cantidadSeleccionados ++;
+                add = 1;
+            }
+
+
+            if(document.getElementById("checkbox-testeo"+ numero ).checked == true){
+                test = 1;
+            }
+            else{
+                test = 0;
+            }
+
+            if(cantidadSeleccionados > 0){
+                document.getElementById("agregarEnLote").style.display = "inline";
+            }
+
+            if(cantidadSeleccionados <= 0){
+                document.getElementById("agregarEnLote").style.display = "none";
+            }
+
+            actualizarSeleccionado(numero, title, url, test, add, cantidadSeleccionados)
+
         }   
+
+        function checkTest(numero, title, url) {
+            add = "1"
+
+            if(document.getElementById("checkbox-testeo"+ numero ).checked == true){
+                test = 1;
+            }
+            else{
+                test = 0;
+            }
+
+            actualizarSeleccionado(numero, title, url, test, add, cantidadSeleccionados)
+
+        }   
+
+
+
+        function actualizarSeleccionado(numero, title, url, test, add, cantidadSeleccionados) {
+            
+            $.ajax({
+                type: "GET",
+                url: "prepararSeleccionados",
+                contentType: 'application/json;charset=UTF-8',
+                data: {'data': numero, 'title': title, 'url': url, 'test': test, 'add': add, 'cantidadSeleccionados': cantidadSeleccionados},
+                success: function (data) {
+
+                    console.log(data)
+                    //$( "tr" ).remove( ".fila"+numero ).draw();
+                    
+                },
+                error : function (xhr, ajaxOptions, thrownError){  
+                  console.log(xhr.status);          
+                  console.log(thrownError);
+                }
+            });
+        }
 
     </script>
 
