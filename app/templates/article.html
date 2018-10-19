@@ -203,17 +203,18 @@
 
             returnAbstract = returnAbstract.replace('Abstract','<h2 class="card-title">Abstract</h2>');
             returnAbstract = returnAbstract.replace('Summary','<h4 class="card-title">Summary</h4>');
-            returnAbstract = returnAbstract.replace('Resumen','<h4 class="card-title">Resumen</h4>');
-            returnAbstract = returnAbstract.replace('Methods','<h4 class="card-title">Method</h4>');
+            returnAbstract = returnAbstract.replace('Resumen','<br><h4 class="card-title">Resumen</h4>');
+            returnAbstract = returnAbstract.replace('Methods','<br><br><h4 class="card-title">Method</h4>');
+            returnAbstract = returnAbstract.replace('Objectives','<h4 class="card-title">Objectives</h4>');
             returnAbstract = returnAbstract.replace('Introduction','<h4 class="card-title">Introduction</h4>');
-            returnAbstract = returnAbstract.replace('Results','<h4 class="card-title">Results</h4>');
-            returnAbstract = returnAbstract.replace('Conclusion','<h4 class="card-title">Conclusion</h4>');
+            returnAbstract = returnAbstract.replace('Results','<br><br><h4 class="card-title">Results</h4>');
+            returnAbstract = returnAbstract.replace('Conclusions','<br><br><h4 class="card-title">Conclusions</h4>');
 
 
             returnAbstract = returnAbstract.replace('Introducción','<h4 class="card-title">Introducción</h4>');
-            returnAbstract = returnAbstract.replace('Material y métodos','<h4 class="card-title">Material y métodos</h4>');
-            returnAbstract = returnAbstract.replace('Resultados','<h4 class="card-title">Resultados</h4>');
-            returnAbstract = returnAbstract.replace('Conclusión','<h4 class="card-title">Conclusión</h4>');
+            returnAbstract = returnAbstract.replace('Material y métodos','<br><br><h4 class="card-title">Material y métodos</h4>');
+            returnAbstract = returnAbstract.replace('Resultados','<br><br><h4 class="card-title">Resultados</h4>');
+            returnAbstract = returnAbstract.replace('Conclusión','<br><br><h4 class="card-title">Conclusión</h4>');
 
 
             document.getElementById("abstract").innerHTML = returnAbstract;

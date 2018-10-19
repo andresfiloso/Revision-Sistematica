@@ -132,7 +132,7 @@
                                 <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#historial" role="tab">Historial</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#discusion" role="tab">Discusion</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#participantes" role="tab">Participantes</a> </li>
-                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#configuracion" role="tab">Configuracion</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#progreso" role="tab">Progreso</a> </li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -418,11 +418,26 @@
                                 </div>
 
 
-                                <div class="tab-pane" id="configuracion" role="tabpanel">
+                                <div class="tab-pane" id="progreso" role="tabpanel">
                                     <div class="card-body">
 
-                                      
-                                    
+                                        {% if articulos %}
+
+                                            <h2>Progreso del proyecto </h2>
+                                            <h4>Cantidad de busquedas: {{ busquedas|length }}</h4>
+                                            <h4>Cantidad de articulos: {{ articulos|length }}</h4>
+                                            <h4>Cantidad de articulos clasificados: {{ session["cantidadClasificados"] }}</h4>
+                                            <h4>Cantidad de articulos testeados: {{ session["cantidadTesteados"] }}</h4>
+                                            <h4>Productividad de busquedas: {{ (((session["cantidadTesteados"]*100)/articulos|length)|string())[:4] }}%</h4>
+
+                                        {% else %}
+
+                                            <div class="p-20">
+                                            <h3>El proyecto todavia no tiene articulos. Los articulos que agregues al proyecto van a aparecer acá!</h3>
+                                            
+                                            </div>  
+
+                                        {% endif %}
                                     </div>
                                 </div>
 

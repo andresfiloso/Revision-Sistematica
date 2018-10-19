@@ -81,6 +81,22 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
 
+                {% if session['error'] %}
+               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error! </strong> {{session.pop('error')}} 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endif %}
+              {% if session['status'] %}
+               <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {{session.pop('status')}} 
+                <button type="button" class="close" data-dismiss="alert" id="success-alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endif %}
 
                 <div class="table-responsive m-t-40">
                     <table id="myTable" class="table">
@@ -108,13 +124,17 @@
                                             <h1><span data-toggle="tooltip" data-placement="top" title="No testeado" class="pull-right label label-light-inverse"><i class="fa fa-star-half-empty"></i></span></h1>
 
                                             {% endif %}
-
-                                             <h4 class="card-title"><a href="article">{{ articulos[key].getArticulo() }}</a>
-                                                 
+                                            <form id="redirigir{{ articulos[key].getIdArticulo() }}" action="article" method="POST">
+                                                <input type="hidden" name="url" value="{{ articulos[key].getURL() }}">
+                                             <h4 class="card-title" onClick="redirigir({{ articulos[key].getIdArticulo() }})"><a href="#">{{ articulos[key].getArticulo() }}</a>
+                                            </form>
 
                                                 {% if articulos[key].getClasificacion() != "0" %}
-                                                <span data-toggle="modal" data-target="#editarClasificacion" class="label label-rounded label-info">{{ articulos[key].getClasificacion() }}&nbsp;&nbsp;<i class="fa fa-pencil"></i></span>
+                                                <span class="editarClasificacion label label-rounded label-info" data-toggle="modal" data-id="{{ articulos[key].getIdArticulo() }}" data-clasificacion="{{ articulos[key].getClasificacion() }}" data-title="{{ articulos[key].getArticulo() }}" data-target="#editarClasificacion">{{ articulos[key].getClasificacion() }}&nbsp;&nbsp;<i class="fa fa-pencil"></i></span>
+
+
                                                 {% endif %}
+
 
                                               </h4>
                                                <h6 class="card-subtitle mb-2 text-muted">
@@ -170,7 +190,7 @@
                 <div id="editarClasificacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                    <div class="modal-content">
-              <form action="/updateClasificacion" method="POST">
+              <form action="/updateClasificacion" method="POST" >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title">Editar clasificacion</h4>
@@ -178,13 +198,17 @@
                 <div class="modal-body">
                   <div class="form-group">
 
-                    <input type="hidden" name="idArticuloClasificar" value="">
+                    <input type="hidden" id="idArticuloClasificar" name="idArticuloClasificar" value="">
 
                     <div class="col-lg-12">
-                        <p>Titulo del articulo. Modificar esto</p>
+                        <h4><span id="modal-title"></span></h4>
                         <div class="input-group">
-                            <input id="clasificacion" name="clasificacion" type="text" class="form-control" value="clasifacionArticuloSeleccionado" placeholder="Clasificacion">
+                            <input id="nuevaClasificacion" name="nuevaClasificacion" type="text" class="form-control" value="" placeholder="Clasificacion">
+                            
+
                         </div>
+
+
                     </div>
 
                   </div>
@@ -197,10 +221,11 @@
             </div>
                 <!-- /.modal-dialog -->
             </div>
-          </div>
+          </div>    
 
-
-
+          
+    
+    
 
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
@@ -243,6 +268,29 @@
 
     <!-- This is data table -->
     <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+
+        $('.editarClasificacion').on('click', function() {
+            var dataId = $(this).attr("data-id");
+            var clasificacion = $(this).attr("data-clasificacion");
+            var title = $(this).attr("data-title");
+            $("#modal-title").html(title);
+
+            $("#idArticuloClasificar").val(dataId);
+            $("#nuevaClasificacion").val(clasificacion);
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        function redirigir(numero) {
+            document.getElementById("redirigir" + numero ).submit()
+        }
+
+    </script>
+
 
     <script>
         $(document).ready(function() {

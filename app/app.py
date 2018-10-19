@@ -237,12 +237,15 @@ def project():
         usuario = getSession()
         proyectos = get_projects()
         idProyecto = request.args.get('project-id')
+
         print "IDPROYECTO: " + str(idProyecto)
         if idProyecto != None: # Call project with GET
             proyecto = get_project(idProyecto)
             transacciones = get_transacciones()
             busquedas = get_busquedas()
             colaboradores = get_colaboradores()
+            articulos = get_articles()
+            getVariablesArticles(articulos) # setea en session cantidad de clasificados, testeados, etc
             if(proyecto): # get_project returns 0 if there is no project with this id
                 session['proyecto'] = proyecto.getIdProyecto()
                 return render_template('project.html', **locals()) # **locals() takes all your local variables
@@ -255,6 +258,9 @@ def project():
                 transacciones = get_transacciones()
                 busquedas = get_busquedas()
                 colaboradores = get_colaboradores()
+                articulos = get_articles()
+                getVariablesArticles(articulos) # setea en session cantidad de clasificados, testeados, etc
+
                 return render_template('project.html', **locals()) 
             else: # session['project'] is empty
                 session['error'] = "Vamos por paso. Primero, seleccciona un proyecto."
@@ -376,6 +382,23 @@ def updateProject():
             session['error'] = "Hubo un error al actualizar el proyecto"
             # Enviar aviso al admin
             return redirect(url_for(callback))
+
+@app.route('/updateClasificacion',methods = ['POST', 'GET'])
+def updateClasificacion():
+    if request.method == 'POST':
+        idArticulo = str(request.form["idArticuloClasificar"])
+        print idArticulo
+
+        nuevaClasificacion = request.form["nuevaClasificacion"]
+        print nuevaClasificacion
+
+        if(update_clasificacion(idArticulo, nuevaClasificacion)):
+            session['status'] = "El articulo fue actualizado correctamente"
+            return redirect(url_for('classify'))
+        else:
+            session['error'] = "Hubo un error al actualizar el articulo"
+            # Enviar aviso al admin
+            return redirect(url_for('classify'))
 
 @app.route('/addArticle',methods = ['POST', 'GET'])
 def addArticle():

@@ -158,6 +158,23 @@ def get_articles():
 	return articulos
 
 
+def getVariablesArticles(articulos):
+	print "GoLA"
+	cantidadClasificados = 0
+	cantidadTesteados = 0
+	for key in articulos:
+		print articulos[key].getClasificacion()
+		if (articulos[key].getClasificacion() != "0"):
+			cantidadClasificados += 1
+			print "Clasificados hasta ahora: " + str(cantidadClasificados)
+		if (articulos[key].getTest()):
+			cantidadTesteados += 1
+
+	session["cantidadClasificados"]  = cantidadClasificados
+	session["cantidadTesteados"] = cantidadTesteados
+
+	return "0"
+
 def get_article(idArticulo):
 	cur = get_cur(datasource)
 
@@ -265,6 +282,13 @@ def update_user(usuario, email):
 		'email' : email
 	}
 	usuario = usuario
+	return rows
+
+def update_clasificacion(idArticulo, clasificacion):
+	sql = ("UPDATE `articulo` SET `clasificacion` = '"+clasificacion+"' WHERE `articulo`.`idArticulo` = "+str(idArticulo)+";")
+	rows = get_cur(datasource).execute(sql)
+	get_db(datasource).commit()
+
 	return rows
 
 def update_project(idProyecto, proyecto, descripcion, inclusion, exclusion):
