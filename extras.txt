@@ -1,2 +1,6 @@
 install no oficial de mysql python 64 bits
 MySQL_python-1.2.5-cp27-none-win_amd64.whl
+
+
+set FLASK_DEBUG=1
+flask run

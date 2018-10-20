@@ -443,55 +443,6 @@ def addArticle():
             json.dump(serialized, file)
 
         return "0"
-
-@app.route('/prepararSeleccionados',methods = ['POST', 'GET'])
-def prepararSeleccionados():
-    if session.get('usuario') is not None:
-        usuario = getSession()
-        proyectos = get_projects()
-        proyecto = get_project()
-        tiempoTotal = ""
-        idResultado = int(request.args.get('data'))
-        title = request.args.get('title').encode('utf8')
-        url = request.args.get('url').encode('utf8')
-        test = request.args.get('test').encode('utf8')
-        add = str(request.args.get('add'))
-        cantidadSeleccionados = int(request.args.get('cantidadSeleccionados'))
-
-        print "Cantidad de seleccionados e INDICE: " + str(cantidadSeleccionados)
-
-        if session.get('seleccionados') is None:
-            session['seleccionados'] = {}
-        
-
-        if (add == "1"):
-
-            articulo = {
-                    'idResultado' : idResultado,
-                    'title': title,
-                    'url': url,
-                    'test': test,
-            }
-
-            print "Este es el articulo que voy a agregar -> " + str(articulo)
-
-            print "len de seleccionados antes de appendear -> " + str(len(session['seleccionados']))
-
-            session['seleccionados'][cantidadSeleccionados] = articulo
-
-            print "len de seleccionadosdespues de appendear -> " + str(len(session['seleccionados']))
-
-        if (add == "0"):
-            for key in session['seleccionados']:
-                print session['seleccionados'][key]
-                #if(session['seleccionados'][key].idResultado == idResultado):
-                    #session['seleccionados'].pop(cantidadSeleccionados)
-
-
-        print "Articulos que tengo hasta ahora para agregar: "
-        print str(session['seleccionados'])
-
-        return str(len(session['seleccionados']))
     
 @app.route('/deleteArticle',methods = ['POST', 'GET'])
 def deleteArticle():
@@ -551,3 +502,4 @@ def classifyArticle():
 if __name__ == "__main__":
     app.debug = True
     app.run()
+    FLASK_DEBUG=1

@@ -149,8 +149,7 @@ def get_articles():
 
 	i = 0
 	for r in cur.fetchall():
-
-		articulo = Articulo(r[0], r[1], r[2], r[3], r[4], r[5], get_project().getProyecto(), get_user(r[7]))
+		articulo = Articulo(r[0], unicode(r[1], errors='replace'), r[2], r[3], r[4], r[5], get_project().getProyecto(), get_user(r[7]))
 
 		articulos[i] = articulo
 		i +=1

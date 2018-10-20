@@ -70,24 +70,7 @@
                          {% endif %}
                         
                     </div>
-                    <div class="col-md-3 col-3 align-self-right">
-                        {% if session['error'] %}
-                               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Error! </strong> {{session.pop('error')}} 
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              {% endif %}
-                              {% if session['status'] %}
-                               <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                {{session.pop('status')}} 
-                                <button type="button" class="close" data-dismiss="alert" id="success-alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              {% endif %}
-                    </div>
+
                 </div>
 
 
@@ -98,6 +81,7 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+
 
                 <div id="resultados">
                     <div class="table-responsive m-t-40">
@@ -187,7 +171,7 @@
                                                 <br>
                                                 <br>
                                                 <div class="checkbox checkbox-primary pull-left p-t-0">
-                                                    <input onClick="checkTest({{ resultados[key].getIdResultado() }}, '{{ resultados[key].getTitle()}}', '{{ resultados[key].getURL() }}')" id="checkbox-testeo{{ resultados[key].getIdResultado() }}" type="checkbox" disabled>
+                                                    <input onClick="checkTest({{ resultados[key].getIdResultado() }})" id="checkbox-testeo{{ resultados[key].getIdResultado() }}" type="checkbox" disabled>
                                                     <label for="checkbox-testeo{{ resultados[key].getIdResultado() }}"> Testeo </label>
                                                 </div>
                                             </form>
@@ -299,7 +283,7 @@
                 data: {'data': numero},
                 success: function (data) {
 
-                    $( "tr" ).remove( ".fila"+numero ).draw();
+                    $( "tr" ).remove( ".fila"+numero );
                     
                 },
                 error : function (xhr, ajaxOptions, thrownError){  
@@ -322,11 +306,13 @@
                 url: "addArticle",
                 contentType: 'application/json;charset=UTF-8',
                 data: {'data': numero, 'title': title, 'url': url, 'test': test},
+                async: false,
                 success: function (data) {
 
-                    $( "tr" ).remove( ".fila"+numero ).draw();
+                    $( "tr" ).remove( ".fila"+numero );
                     
                 },
+
                 error : function (xhr, ajaxOptions, thrownError){  
                   console.log(xhr.status);          
                   console.log(thrownError);
@@ -336,82 +322,75 @@
     </script>
 
     <script type="text/javascript">
-            cantidadSeleccionados = 0
+            var seleccionados = []
 
         function enableTest(numero, title, url) {
+            console.clear();
             test = 0
-            add = 0 // variable para saber si se selecciono o se deselecciono un checkbox
             if(document.getElementById("checkbox-testeo" + numero ).disabled == true){
             document.getElementById("checkbox-testeo"+ numero ).disabled = false;
             }
 
             if(document.getElementById("checkbox-select"+ numero ).checked == false){
-                cantidadSeleccionados --;
-                add = 0;
                 document.getElementById("checkbox-testeo"+ numero ).disabled = true;
                 document.getElementById("checkbox-testeo"+ numero ).checked = false;
+
+                for(a in seleccionados){
+                    if(seleccionados[a][0] == numero){
+                        seleccionados.splice(a, 1)
+                    }
+                }
             }
 
             if(document.getElementById("checkbox-select"+ numero ).checked == true){
-                cantidadSeleccionados ++;
-                add = 1;
+                var articulo = [numero, title, url, test];
+                seleccionados.push(articulo);
             }
 
+            showInConsole()
 
-            if(document.getElementById("checkbox-testeo"+ numero ).checked == true){
-                test = 1;
-            }
-            else{
-                test = 0;
-            }
-
-            if(cantidadSeleccionados > 0){
-                document.getElementById("agregarEnLote").style.display = "inline";
-            }
-
-            if(cantidadSeleccionados <= 0){
-                document.getElementById("agregarEnLote").style.display = "none";
-            }
-
-            actualizarSeleccionado(numero, title, url, test, add, cantidadSeleccionados)
-
+            if(seleccionados.length >= 1) document.getElementById("agregarEnLote").style.display = "inline";
+            else document.getElementById("agregarEnLote").style.display = "none";
+    
         }   
+        
 
-        function checkTest(numero, title, url) {
-            add = "1"
-
-            if(document.getElementById("checkbox-testeo"+ numero ).checked == true){
-                test = 1;
-            }
-            else{
-                test = 0;
-            }
-
-            actualizarSeleccionado(numero, title, url, test, add, cantidadSeleccionados)
-
-        }   
-
-
-
-        function actualizarSeleccionado(numero, title, url, test, add, cantidadSeleccionados) {
-            
-            $.ajax({
-                type: "GET",
-                url: "prepararSeleccionados",
-                contentType: 'application/json;charset=UTF-8',
-                data: {'data': numero, 'title': title, 'url': url, 'test': test, 'add': add, 'cantidadSeleccionados': cantidadSeleccionados},
-                success: function (data) {
-
-                    console.log(data)
-                    //$( "tr" ).remove( ".fila"+numero ).draw();
-                    
-                },
-                error : function (xhr, ajaxOptions, thrownError){  
-                  console.log(xhr.status);          
-                  console.log(thrownError);
+        function checkTest(numero){
+            console.clear();
+            if(document.getElementById("checkbox-testeo"+ numero ).checked == true) test = 1;
+            else test = 0;
+                
+             for(a in seleccionados){
+                    if(seleccionados[a][0] == numero){
+                        seleccionados[a][3] = test
+                    }
                 }
-            });
+
+            showInConsole()
+        }  
+
+        function showInConsole(){
+            for(a in seleccionados){
+                console.log(seleccionados[a])
+            }
         }
+
+
+        $( "#agregarEnLote").click(function() {
+            console.clear();
+            console.log("SE VA A AGREGAR EN LOTE LO SIGUIENTE: ")
+            for(a in seleccionados){
+                id = seleccionados[a][0]
+                title = seleccionados[a][1]
+                url = seleccionados[a][2]
+                console.log(id)
+                agregarArticulo(id, title, url)
+            }
+            seleccionados.splice(0,seleccionados.length)
+            document.getElementById("agregarEnLote").style.display = "none";
+            console.clear();
+        });
+
 
     </script>
 
