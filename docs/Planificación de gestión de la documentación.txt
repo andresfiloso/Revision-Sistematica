@@ -13,5 +13,5 @@ Versión: 0.1
 Dueño: Darío Andrés Cesarano
 
 4- Para definir las versiones se utilizará Versionado Semántico (https://semver.org/lang/es/).
-5- En caso de que un documento posea mas de una version, se deberá crear un directorio aparte para dichos documentos con el nombre del documento.
+5- Siempre se mantendra en el directorio la última versión del documento.
 
