@@ -104,9 +104,12 @@
                                 {% for key in proyectos %}
                                     {% if proyecto %}
                                          {% if (proyectos[key].getIdProyecto() == proyecto.getIdProyecto())%}
-                                            <li><a href="/project?project-id={{proyectos[key].getIdProyecto()}}"><i class="fa fa-check-circle"></i> {{proyectos[key].getProyecto()}} </a></li>
+                                            <li><a href="/project?project-id={{proyectos[key].getIdProyecto()}}">{{proyectos[key].getProyecto()}} <i class="fa fa-check"></i> </a></li>
+                                        {% else %}
+                                            <li><a href="/project?project-id={{proyectos[key].getIdProyecto()}}">{{proyectos[key].getProyecto()}} </a></li>
 
-                                             {% endif %}
+                                        {% endif %}
+                                    
                                     {% else %}
 
                                             <li><a href="/project?project-id={{proyectos[key].getIdProyecto()}}">{{proyectos[key].getProyecto()}} </a></li>

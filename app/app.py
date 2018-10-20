@@ -11,6 +11,10 @@ import jsonpickle
 import os
 import time
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 
@@ -117,23 +121,6 @@ def firstProject():
     else:
         return redirect(url_for('home'))
 
-
-@app.route('/results',methods = ['POST', 'GET'])
-def results():
-    if session.get('usuario') is not None:
-        proyectos = get_projects()
-        usuario = getSession()
-        if session.get('proyecto') is not None:
-            proyecto = get_project()
-            return render_template('results.html', **locals())
-        else:
-            session['error'] = "Antes de buscar articulos tienes que seleccionar un proyecto"
-            return redirect(url_for('projects'))
-    else: 
-        return redirect(url_for('home'))
-
-
-
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
     session['key'] = 0
@@ -203,15 +190,9 @@ def article():
         proyecto = get_project()
 
         url = request.form["url"]
-        callback = request.form["callback"]
+        callback = request.form["callback"] # Esta variable es utilizada saber quien llamo a /article
         enProyecto = request.form["enProyecto"]
 
-        print "El articulo esta en proyecto: " + enProyecto
-
-        print "Voy a scrapear el articulo a pedido de: " + callback
-
-        #abstract =  rawAbstract.replace('Abstract', '<h2 class="card-title">Abstract</h2>')
-    
         articulo = scrap_article(url)
 
         return render_template('article.html', **locals())
@@ -242,7 +223,6 @@ def project():
         proyectos = get_projects()
         idProyecto = request.args.get('project-id')
 
-        print "IDPROYECTO: " + str(idProyecto)
         if idProyecto != None: # Call project with GET
             proyecto = get_project(idProyecto)
             transacciones = get_transacciones()
@@ -333,10 +313,10 @@ def deleteTransaccion():
 def insertProyecto():
     if request.method == 'POST':
         
-        nombre = request.form["nombre"]
-        descripcion = request.form["descripcion"]
-        inclusion = request.form['inclusion']
-        exclusion = request.form['exclusion']
+        nombre = request.form["nombre"].encode('utf8')
+        descripcion = request.form["descripcion"].encode('utf8')
+        inclusion = request.form['inclusion'].encode('utf8')
+        exclusion = request.form['exclusion'].encode('utf8')
 
         if(new_proyect(nombre, descripcion, inclusion, exclusion)):
             session['status'] = "Proyecto creado correctamente"

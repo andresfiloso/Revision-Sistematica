@@ -17,12 +17,6 @@
     <link href="../static/css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="../static/css/colors/blue-dark.css" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 
 <body class="fix-header card-no-border">
@@ -81,23 +75,7 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
 
-                {% if session['error'] %}
-               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error! </strong> {{session.pop('error')}} 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              {% endif %}
-              {% if session['status'] %}
-               <div class="alert alert-info alert-dismissible fade show" role="alert">
-                {{session.pop('status')}} 
-                <button type="button" class="close" data-dismiss="alert" id="success-alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              {% endif %}
-
+            
                 <div class="table-responsive m-t-40">
                     <table id="myTable" class="table">
                         <thead>
@@ -128,7 +106,7 @@
                                                 <input type="hidden" name="callback" value="classify">
                                                 <input type="hidden" name="enProyecto" value="True">
                                                 <input type="hidden" name="url" value="{{ articulos[key].getURL() }}">
-                                             <h4 class="card-title" onClick="redirigir({{ articulos[key].getIdArticulo() }})"><a href="#">{{ articulos[key].getArticulo() }}</a>
+                                             <h4 class="card-title"><a onClick="redirigir({{ articulos[key].getIdArticulo() }})" href="#">{{ articulos[key].getArticulo() }}</a>
                                             </form>
 
                                                 {% if articulos[key].getClasificacion() != "0" %}
@@ -265,8 +243,6 @@
     <script src="../static/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!--Custom JavaScript -->
     <script src="../static/js/custom.min.js"></script>
-    <script src="../static/assets/plugins/toast-master/js/jquery.toast.js"></script>
-    <script src="../static/js/toastr.js"></script>
 
     <!-- This is data table -->
     <script src="../static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
