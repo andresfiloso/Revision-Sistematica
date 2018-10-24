@@ -1,4 +1,4 @@
-import MySQLdb
+import sqlite3
 
 #####################################################################
 # get_db -> Devuelve un objeto conexion							 	#
@@ -13,7 +13,9 @@ class DataSource:
 		self.cur = set_cur(self)
 
 def set_db():
-	db = MySQLdb.connect(host="127.0.0.1", user="root", passwd="", db="rsdb")
+	db = sqlite3.connect("rsdb.db", check_same_thread=False)
+	db.row_factory = sqlite3.Row
+	#db = sqlite3.connect(host="127.0.0.1", user="root", passwd="", db="rsdb")
 	return db
 
 def get_db(self):

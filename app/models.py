@@ -113,7 +113,7 @@ class Transaccion:
 
   def getFechahoraFormat(self):
     
-    datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M:%S')
+    datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M')
     now = datetime.now()
 
     difYear = now.year - datetime_object.year
@@ -155,7 +155,7 @@ class Transaccion:
 
   def getFechahoraFull(self):
     
-    datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M:%S')
+    datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M')
 
     #print self.fechaHora.month
 
@@ -199,7 +199,7 @@ class Busqueda:
 
   def getFechahoraFormat(self):
     
-    datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M:%S')
+    datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M')
 
     #print self.fechaHora.month
 
@@ -247,7 +247,7 @@ class Busqueda:
 
   def getFechahoraFull(self):
     
-    datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M:%S')
+    datetime_object = datetime.strptime(str(self.fechahora), '%Y-%m-%d %H:%M')
 
     #print self.fechaHora.month
 

@@ -152,8 +152,8 @@ def scrapping():
         except:
             print "VOY A EMPEZAR A SCRAPPEAR: "
             science = get_scrapping_sciencedirect()
-            #springer = get_scrapping_springer()
-            #ieee = get_scrapping_ieee()
+            springer = get_scrapping_springer()
+            ieee = get_scrapping_ieee()
 
             end = time.time()
             tiempoTotal = end - start
@@ -162,8 +162,8 @@ def scrapping():
 
             resultados = {}
             resultados.update(science)
-            #resultados.update(springer)
-            #resultados.update(ieee)
+            resultados.update(springer)
+            resultados.update(ieee)
 
             serialized = jsonpickle.encode(resultados)
 
@@ -211,7 +211,7 @@ def projects():
                 proyecto = get_project()
         else: # no projects founded
             session['noProject'] = True
-
+            session['proyecto'] = None
         return render_template('projects.html', **locals())
     else:
         return redirect(url_for('home'))
@@ -258,7 +258,8 @@ def newProyect():
     if session.get('usuario') is not None:
         usuario = getSession()
         proyectos = get_projects()
-        proyecto = get_project()
+        if session.get('proyecto') is not None:   
+            proyecto = get_project()
         return render_template('newProyect.html', **locals())
     else:
         return redirect(url_for('home'))

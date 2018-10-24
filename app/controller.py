@@ -10,20 +10,22 @@ datasource = DataSource()
 # Informacion de esta clase en datasource.py 						#
 #####################################################################
 
+import sys
+# sys.setdefaultencoding() does not exist, here!
+reload(sys)  # Reload does the trick!
+sys.setdefaultencoding('UTF8')
+
 def auth_user(user, password):
 	cur = get_cur(datasource)
 
-	sql = ("SELECT * FROM Usuario where usuario = '" + user + "' and pass = '" + password + "'")
+	sql = ("SELECT * FROM usuario where usuario = '" + user + "' and pass = '" + password + "'")
 	rows = cur.execute(sql)
 
-	if rows == 1: #Autenticacion correcta
+	for row in cur:
+		usuario = Usuario(row['idUsuario'], row['usuario'], row['email'])
+		session['usuario'] = usuario.getIdUsuario()
+		return rows
 
-	    for r in cur.fetchall():
-
-	        usuario = Usuario(r[0], r[1], r[3])
-
-	    session['usuario'] = usuario.getIdUsuario()
-	    return rows
 
 def getSession():
 
@@ -32,9 +34,8 @@ def getSession():
 	sql = ("SELECT * FROM Usuario where idUsuario = '" + str(session['usuario']) + "'")
 	rows = cur.execute(sql)
 
-	for r in cur.fetchall():
-
-		usuario = Usuario(r[0], r[1], r[3])
+	for row in cur:
+		usuario = Usuario(row['idUsuario'], row['usuario'], row['email'])
 
 	return usuario
 
@@ -45,9 +46,8 @@ def get_user(idUsuario):
 	sql = ("SELECT * FROM Usuario where idUsuario = '" + str(idUsuario) + "'")
 	rows = cur.execute(sql)
 
-	for r in cur.fetchall():
-
-		usuario = r[1]
+	for row in cur:
+		usuario = row['usuario']
 
 	return usuario
 
@@ -63,35 +63,29 @@ def get_projects():
 	# Proyectos donde se es autor
 	cur = get_cur(datasource)
 	sql = ("SELECT * FROM Proyecto where idUsuario = " + str(session['usuario']))
-	rows1 = cur.execute(sql)
-
-	print "ROWS1: " + str(rows1)
+	rows = cur.execute(sql)
 
 	i = 0
-	if (rows1): # At least, there is one project
-		for r in cur.fetchall():
 
-			objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
-			print objetoProyecto
-			proyectos[i] = objetoProyecto
-			i += 1
+	for row in cur:
+
+		objetoProyecto = Proyecto(row['idProyecto'], row['proyecto'], row['descripcion'], row['inclusion'], row['exclusion'], get_user(row['idUsuario']))
+		print objetoProyecto
+		proyectos[i] = objetoProyecto
+		i += 1
 
 	# Proyectos donde se es colaborador
-	cur = get_cur(datasource)
 	sql = ("SELECT p.* FROM proyecto p inner join colaborador c where c.idUsuario = " + str(session['usuario']) + " and c.idProyecto = p.idProyecto")
-	rows2 = cur.execute(sql)	
+	rows = cur.execute(sql)	
 
-	print "ROWS2: " + str(rows2)
-	if (rows2): # At least, there is one project
-		for r in cur.fetchall():
 
-			objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
-			print objetoProyecto
-			proyectos[i] = objetoProyecto
-			i += 1
+	for row in cur:
 
-	if(rows1 == 0 and rows2 == 0):
-		return 0
+		objetoProyecto = Proyecto(row['idProyecto'], row['proyecto'], row['descripcion'], row['inclusion'], row['exclusion'], get_user(row['idUsuario']))
+		print objetoProyecto
+		proyectos[i] = objetoProyecto
+		i += 1
+
 
 	return proyectos
 
@@ -101,32 +95,19 @@ def get_project(*args): # sobrecarga de metodo
 		sql = ("SELECT * FROM Proyecto where idProyecto = " + str(session['proyecto']))
 		rows = cur.execute(sql)
 
-		#print "ROWS: " + str(rows)
-
-		if(rows): # There should be something in rows
-			for r in cur.fetchall():
-
-				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
-		else: # Return 0, there is no project with this id
-			return rows
-
-		#print session['transacciones']
+		for row in cur:
+			objetoProyecto = Proyecto(row['idProyecto'], row['proyecto'], row['descripcion'], row['inclusion'], row['exclusion'], get_user(row['idUsuario']))
 		return objetoProyecto
+
 	if len(args) == 1:
 		cur = get_cur(datasource)
 		sql = ("SELECT * FROM Proyecto where idProyecto = " + args[0])
 		rows = cur.execute(sql)
 
-		if(rows): # There should be something in rows
-			for r in cur.fetchall():
-
-				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
-
+		for row in cur:
+			objetoProyecto = Proyecto(row['idProyecto'], row['proyecto'], row['descripcion'], row['inclusion'], row['exclusion'], get_user(row['idUsuario']))
 			session['proyecto'] = objetoProyecto.getIdProyecto()
-		else: # Return 0, there is no project with this id
-			return rows
-
-		return objetoProyecto
+			return objetoProyecto
 
 	if len(args) == 2:
 		if(args[1] == False): # Bussiness rule. No seleccionar proyecto
@@ -134,11 +115,9 @@ def get_project(*args): # sobrecarga de metodo
 			sql = ("SELECT * FROM Proyecto where idProyecto = " + args[0])
 			rows = cur.execute(sql)
 
-			for r in cur.fetchall():
-
-				objetoProyecto = Proyecto(r[0], r[1], r[2], r[3], r[4], get_user(r[5]))
-
-			return objetoProyecto
+			for row in cur:
+				objetoProyecto = Proyecto(row['idProyecto'], row['proyecto'], row['descripcion'], row['inclusion'], row['exclusion'], get_user(row['idUsuario']))
+				return objetoProyecto
 
 def get_articles():
 	cur = get_cur(datasource)
@@ -148,8 +127,8 @@ def get_articles():
 	articulos = {}
 
 	i = 0
-	for r in cur.fetchall():
-		articulo = Articulo(r[0], unicode(r[1], errors='replace'), r[2], r[3], r[4], r[5], get_project().getProyecto(), get_user(r[7]))
+	for row in cur:
+		articulo = Articulo(row['idArticulo'], row['articulo'], row['url'], row['test'], row['clasificacion'], row['keywords'], get_project().getProyecto(), get_user(row['idUsuario']))
 
 		articulos[i] = articulo
 		i +=1
@@ -158,7 +137,6 @@ def get_articles():
 
 
 def getVariablesArticles(articulos):
-	print "GoLA"
 	cantidadClasificados = 0
 	cantidadTesteados = 0
 	for key in articulos:
@@ -180,9 +158,8 @@ def get_article(idArticulo):
 	sql = ("SELECT * FROM Article where idArticulo = '" + str(idArticulo) + "'")
 	rows = cur.execute(sql)
 
-	for r in cur.fetchall():
-
-		articulo = Articulo(r[0], r[1], r[2], r[3], r[4], r[5], get_project().getProyecto(), get_user(r[7])) 
+	for row in cur:
+		articulo = Articulo(row['idArticulo'], row['articulo'], row['url'], row['test'], row['clasificacion'], row['keywords'], get_project().getProyecto(), get_user(row['idUsuario']))
 
 	return articulo
 
@@ -203,9 +180,9 @@ def get_transacciones():
 	transacciones = {}
 
 	i = 0
-	for r in cur.fetchall():
+	for row in cur:
 
-		transaccion = Transaccion(r[0], r[1], r[2], r[3], get_project().getProyecto(), get_user(r[5]))
+		transaccion = Transaccion(row['idTransaccion'], row['transaccion'], row['tipoTransaccion'], row['fechahora'], get_project().getProyecto(), get_user(row['idUsuario']))
 
 		transacciones[i] = transaccion
 		i +=1
@@ -221,9 +198,9 @@ def get_busquedas():
 	busquedas = {}
 
 	i = 0
-	for r in cur.fetchall():
+	for row in cur:
 
-		busqueda = Busqueda(r[0], r[1], r[2], get_project().getProyecto(), get_user(r[4]))
+		busqueda = Busqueda(row['idBusqueda'], row['busqueda'], row['fechahora'], get_project().getProyecto(), get_user(row['idUsuario']))
 
 		busquedas[i] = busqueda
 		i +=1
@@ -240,9 +217,9 @@ def get_colaboradores():
 	colaboradores = {}
 
 	i = 0
-	for r in cur.fetchall():
+	for row in cur:
 
-		colaborador = Usuario(r[0], r[1], r[3])
+		colaborador = Usuario(row['idUsuario'], row['usuario'], row['email'])
 		print "COLABORADOR ENCONTRADO: " + str(colaborador)
 		colaboradores[i] = colaborador
 		i +=1
@@ -292,15 +269,20 @@ def update_clasificacion(idArticulo, clasificacion):
 
 def update_project(idProyecto, proyecto, descripcion, inclusion, exclusion):
 
-	proyectoAnterior =  get_project(idProyecto, False)
+	proyectoAnterior = get_project(idProyecto, False)
+
+	proyecto = proyecto.replace("'", "''")
+	descripcion = descripcion.replace("'", "''")
+	inclusion = inclusion.replace("'", "''")
+	exclusion = exclusion.replace("'", "''")
 
 	idUsuario = str(session['usuario'])
 	sql = ("UPDATE `proyecto` SET `proyecto` = '" + proyecto + "', `descripcion` = '" + descripcion + "', `inclusion` = '" + inclusion + "', `exclusion` = '" + exclusion + "' WHERE `proyecto`.`idProyecto` = '" + idProyecto + "';")
-	rows = get_cur(datasource).execute(sql)
+	rows = get_cur(datasource).executescript(sql)
 	get_db(datasource).commit()
 
 	usuario = getSession()
-
+	"""
 	transaccion = usuario.getUsuario() + " edito el proyecto " + proyectoAnterior.getProyecto()
 	now = datetime.datetime.now()
 	fechahora = now.strftime("%Y-%m-%d %H:%M")
@@ -308,7 +290,8 @@ def update_project(idProyecto, proyecto, descripcion, inclusion, exclusion):
 	sql = ("INSERT INTO `transaccion` (`transaccion`, `tipoTransaccion`, `fechahora`, `idProyecto`, `idUsuario`) VALUES ('" + transaccion + "', 'updateProject', '" + str(fechahora) + "', '"+str(idProyecto)+"', '"+str(usuario.getIdUsuario())+"');")
 	rows = get_cur(datasource).execute(sql)
 	get_db(datasource).commit()
-
+	
+	"""
 	return rows
 
 def delete_project(idProyecto):
