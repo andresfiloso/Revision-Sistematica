@@ -67,7 +67,7 @@ def get_projects():
 
 	i = 0
 
-	for row in cur:
+	for row in cur.fetchall():
 
 		objetoProyecto = Proyecto(row['idProyecto'], row['proyecto'], row['descripcion'], row['inclusion'], row['exclusion'], get_user(row['idUsuario']))
 		print objetoProyecto
@@ -79,7 +79,7 @@ def get_projects():
 	rows = cur.execute(sql)	
 
 
-	for row in cur:
+	for row in cur.fetchall():
 
 		objetoProyecto = Proyecto(row['idProyecto'], row['proyecto'], row['descripcion'], row['inclusion'], row['exclusion'], get_user(row['idUsuario']))
 		print objetoProyecto
@@ -127,7 +127,8 @@ def get_articles():
 	articulos = {}
 
 	i = 0
-	for row in cur:
+	for row in cur.fetchall():
+		
 		articulo = Articulo(row['idArticulo'], row['articulo'], row['url'], row['test'], row['clasificacion'], row['keywords'], get_project().getProyecto(), get_user(row['idUsuario']))
 
 		articulos[i] = articulo
@@ -180,8 +181,7 @@ def get_transacciones():
 	transacciones = {}
 
 	i = 0
-	for row in cur:
-
+	for row in cur.fetchall():
 		transaccion = Transaccion(row['idTransaccion'], row['transaccion'], row['tipoTransaccion'], row['fechahora'], get_project().getProyecto(), get_user(row['idUsuario']))
 
 		transacciones[i] = transaccion
@@ -198,7 +198,7 @@ def get_busquedas():
 	busquedas = {}
 
 	i = 0
-	for row in cur:
+	for row in cur.fetchall():
 
 		busqueda = Busqueda(row['idBusqueda'], row['busqueda'], row['fechahora'], get_project().getProyecto(), get_user(row['idUsuario']))
 
@@ -217,7 +217,7 @@ def get_colaboradores():
 	colaboradores = {}
 
 	i = 0
-	for row in cur:
+	for row in cur.fetchall():
 
 		colaborador = Usuario(row['idUsuario'], row['usuario'], row['email'])
 		print "COLABORADOR ENCONTRADO: " + str(colaborador)

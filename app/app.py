@@ -338,6 +338,8 @@ def classify():
 
         articulos = get_articles()
 
+        print articulos
+
         if session.get('proyecto') is not None:
             return render_template('classify.html', **locals()) 
         else: # el proyecto no esta seleccionado

@@ -15,7 +15,6 @@ class DataSource:
 def set_db():
 	db = sqlite3.connect("rsdb.db", check_same_thread=False)
 	db.row_factory = sqlite3.Row
-	#db = sqlite3.connect(host="127.0.0.1", user="root", passwd="", db="rsdb")
 	return db
 
 def get_db(self):
