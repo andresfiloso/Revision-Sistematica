@@ -36,7 +36,7 @@ def scrap_article(url):
 ########################################################################
 
 def get_scrapping_full():
-	urlScience = "https://www.sciencedirect.com/search?qs=" + session['keywords'] + "&show=10&sortBy=relevance"
+	urlScience = "https://www.sciencedirect.com/search?qs=" + session['keywords'] + "&show=100&sortBy=relevance"
 	req = requests.get(urlScience)
 	statusCode = req.status_code
 	html = BeautifulSoup(req.text, "html.parser")

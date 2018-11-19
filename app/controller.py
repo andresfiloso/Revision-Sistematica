@@ -51,11 +51,46 @@ def get_user(idUsuario):
 
 	return usuario
 
+def get_all_users():
+	cur = get_cur(datasource)
+	sql = ("SELECT * FROM Usuario")
+	rows = cur.execute(sql)
+
+	usuarios = []
+
+	i = 0
+	for row in cur.fetchall():
+
+		usuario = row['usuario']
+		usuarios.append(usuario)
+
+	return usuarios
+
 def signup_user(usuario, email, password, password2):
     sql = ("INSERT INTO `usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES (NULL, '"+usuario+"', '"+password+"', '"+email+"');")
     rows = get_cur(datasource).execute(sql)
     get_db(datasource).commit()
     return rows
+
+def insert_colaboracion(usuario):
+
+	cur = get_cur(datasource)
+
+	sql = ("SELECT * FROM Usuario where usuario = '" + usuario + "'")
+	rows = cur.execute(sql)
+
+	idUsuario = ""
+
+	for row in cur:
+		idUsuario = row['idUsuario']
+
+	sql = ("INSERT INTO `colaborador` (`idProyecto`, `idUsuario`) VALUES ('"+ str(session['proyecto']) +"', '"+str(idUsuario)+"');")
+	rows = get_cur(datasource).execute(sql)
+	get_db(datasource).commit()
+
+	return rows
+
+
 
 def get_projects():
 	proyectos = {}
@@ -97,6 +132,7 @@ def get_project(*args): # sobrecarga de metodo
 
 		for row in cur:
 			objetoProyecto = Proyecto(row['idProyecto'], row['proyecto'], row['descripcion'], row['inclusion'], row['exclusion'], get_user(row['idUsuario']))
+
 		return objetoProyecto
 
 	if len(args) == 1:

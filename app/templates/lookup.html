@@ -84,7 +84,7 @@
                                             <div class="input-group">
                                                 <input  placeholder="include keyword" name="includeKeyword" id="includeKeyword" type="text" class="form-control">
                                                 <span class="input-group-btn">
-                                                <button id="addIncludeKeyword" data-toggle="tooltip" data-placement="top" title="Enter para introducir el termino" class="btn btn-info" type="button"><span class="fa fa-fw fa-plus field-icon "></span></button>
+                                                <button id="addIncludeKeyword" data-id="1" data-toggle="tooltip" data-placement="top" title="Enter para incluir el termino" class="btn btn-info" type="button"><span class="fa fa-fw fa-plus field-icon "></span></button>
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@
                                             <div class="input-group">
                                                 <input  placeholder="exclude keyword" name="excludeKeyword" id="excludeKeyword" type="text" class="form-control">
                                                 <span class="input-group-btn">
-                                                <button id="addExcludeKeyword" data-toggle="tooltip" data-placement="top" title="Enter para introducir el termino" class="btn btn-danger" type="button"><span class="fa fa-fw fa-minus field-icon "></span></button>
+                                                <button id="addExcludeKeyword" data-id="1" data-toggle="tooltip" data-placement="top" title="Enter para excluir el termino" class="btn btn-danger" type="button"><span class="fa fa-fw fa-minus field-icon "></span></button>
                                             </div>
                                         </div>
                                     </div>
@@ -186,6 +186,7 @@
    <script>
     $(document).ready(function(){
         $("#addIncludeKeyword").on("click", function(){
+            var dataId = $('#addIncludeKeyword').data("id");
             var keywords = document.getElementById("keywords").value;
             var includeKeyword = document.getElementById("includeKeyword").value;
             if(keywords == ""){
@@ -238,40 +239,50 @@
     $("#addTermino").click(function (e) {
         cantTerminos ++;
      $("#terminos").append('<div class="row">'+
-                    '<div class="col-12">'+
-                    '<div class="card">'+
-                    '<div class="card-body ">'+
-                    '<div class="row" id="args">'+
-                    '<div class="col-xs-12 col-md-11">'+
-                    '<h5 class="card-title">Busqueda '+ cantTerminos +'</h5>'+
-                    '</div>'+
-                    '<div class="col-xs-8 col-md-8">'+
-                    '<div class="controls">'+
-                    '<div class="input-group">'+
-                    '<input placeholder="keywords" name="keywords'+cantTerminos+'" id="keywords'+cantTerminos+'" type="text" class="form-control" required="">'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="col-xs-3 col-md-3">'+
-                    '<div class="controls">'+
-                    '<div class="input-group">'+
-                    '<input  placeholder="add keyword" name="'+cantTerminos+'newKeyword" id="newKeyword" type="text" class="form-control">'+
-                    '<span class="input-group-btn">'+
-                    '<button id="addKeyword'+cantTerminos+'" class="btn btn-info" type="button"><span class="fa fa-fw fa-plus field-icon "></span></button>'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '<a class="delete ribbon ribbon-corner ribbon-default ribbon-right"><i class="fa fa-times"></i></a>'+
-                    '</div>'+
+            '<div class="col-12">'+
+            '<div class="card">'+
+            '<div class="card-body ">'+
+            '<div class="row" id="args">'+
+            '<div class="col-xs-12 col-md-12 " >'+
+            '<h5 class="card-title">Busqueda '+cantTerminos+'</h5>'+
+            '</div>'+
 
-                    '</div>'+
-                    '</div>'
+            '<div class="col-xs-6 col-md-6">'+
+            '<div class="controls">'+
+            '<div class="input-group">'+
+            '<input placeholder="keywords" name="keywords'+cantTerminos+'" id="keywords" type="text" class="form-control" required="">'+
+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '<br>'+
+            '<div class="col-xs-3 col-md-3">'+
+            '<div class="controls">'+
+            '<div class="input-group">'+
+            '<input  placeholder="include keyword" name="includeKeyword" id="includeKeyword" type="text" class="form-control">'+
+            '<span class="input-group-btn">'+
+            '<button id="addIncludeKeyword" data-id="2" data-toggle="tooltip" data-placement="top" title="Enter para incluir el termino" class="btn btn-info" type="button"><span class="fa fa-fw fa-plus field-icon "></span></button>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '<div class="col-xs-3 col-md-3">'+
+            '<div class="controls">'+
+            '<div class="input-group">'+
+            '<input  placeholder="exclude keyword" name="excludeKeyword" id="excludeKeyword" type="text" class="form-control">'+
+            '<span class="input-group-btn">'+
+            '<button id="addExcludeKeyword" data-toggle="tooltip" data-placement="top" title="Enter para excluir el termino" class="btn btn-danger" type="button"><span class="fa fa-fw fa-minus field-icon "></span></button>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '</div>'
 
 
 
-
+        
      ); });
 
 

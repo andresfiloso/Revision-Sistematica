@@ -57,7 +57,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/project">{{ proyecto.getProyecto() }}</a></li>
                             <li class="breadcrumb-item"><a href="/lookup">Buscador</a></li>
-                            <li class="breadcrumb-item active">{{ keywords }}</li>
+                            <li class="breadcrumb-item active">{{ session['keywords'] }}</li>
                         </ol>
                         {% if tiempoTotal != "" %}
                         <ol class="breadcrumb">

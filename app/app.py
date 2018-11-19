@@ -81,6 +81,19 @@ def registrarUsuario():
         session['error'] = "Error al registrar usuario"
 
 
+@app.route('/add_user_2_project', methods = ['POST', 'GET'])
+def add_user_2_project():
+    usuario = request.form["usuario"]
+
+    if(insert_colaboracion(usuario)):
+        session['status'] = "Usuario invitado correctamente"
+        return redirect(url_for('project'))
+    else:
+        session['error'] = "Error al invitar usuario"
+
+
+
+
 @app.route('/micuenta',methods = ['POST', 'GET'])
 def micuenta():
     if session.get('usuario') is not None:
@@ -131,9 +144,40 @@ def scrapping():
         proyecto = get_project()
 
         keywords = request.args.get('keywords', default = '*', type = str)
-        newKeyword = request.args.get('newKeyword', default = '*', type = str)
+        keywords2 = request.args.get('keywords2', default = '*', type = str)
+        keywords3 = request.args.get('keywords3', default = '*', type = str)
+        keywords4 = request.args.get('keywords4', default = '*', type = str)
+        keywords5 = request.args.get('keywords5', default = '*', type = str)
+        keywords6 = request.args.get('keywords6', default = '*', type = str)
+        keywords7 = request.args.get('keywords7', default = '*', type = str)
+        keywords8 = request.args.get('keywords8', default = '*', type = str)
+        keywords9 = request.args.get('keywords9', default = '*', type = str)
+        keywords10 = request.args.get('keywords10', default = '*', type = str)
 
-        session['keywords'] = keywords
+        terminosKeywords = keywords.split(' AND ')
+        terminosKeywords2 = keywords2.split(' AND ')
+        terminosKeywords3 = keywords3.split(' AND ')
+        terminosKeywords4 = keywords4.split(' AND ')
+        terminosKeywords5 = keywords5.split(' AND ')
+        terminosKeywords6 = keywords6.split(' AND ')
+
+        query = ""
+        print terminosKeywords
+
+
+        if (keywords2 != "*"):
+            for i in range(len(terminosKeywords2)):
+                aux = terminosKeywords2[i]
+                if(i != len(terminosKeywords2)-1):
+                    query = query + keywords + " AND " + aux + " OR "
+                else:
+                    query = query + keywords + " AND " + aux 
+        else:
+            query = keywords
+            
+        print query
+        
+        session['keywords'] = query 
 
         start = time.time()
 
@@ -178,6 +222,7 @@ def scrapping():
             session['cantArticulos'] = len(resultados)
 
             return render_template('results.html', **locals())
+
     else:
         return redirect(url_for('home'))
 
@@ -223,9 +268,14 @@ def project():
         proyectos = get_projects()
         idProyecto = request.args.get('project-id')
 
+        usuarios = get_all_users()
+
+        print usuarios
+
+        usuarios = json.dumps(usuarios)
+
         if idProyecto != None: # Call project with GET
             proyecto = get_project(idProyecto)
-            transacciones = get_transacciones()
             busquedas = get_busquedas()
             colaboradores = get_colaboradores()
             articulos = get_articles()
@@ -288,6 +338,7 @@ def deleteProject():
 
         if(delete_project(idProyecto)):
             session['status'] = "Proyecto eliminado correctamente"
+            session['proyecto'] = None
             return redirect(url_for('projects'))
         else:
             session['error'] = "Hubo un error al eliminar el proyecto"
