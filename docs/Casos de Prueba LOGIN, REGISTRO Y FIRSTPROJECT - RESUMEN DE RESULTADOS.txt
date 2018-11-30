@@ -1,0 +1,49 @@
+==============================================
+REVISION SISTEMÁTICA - CASOS DE PRUEBA
+MODULOS LOGIN - REGISTRO - FIRSTPROJECT
+FECHA 30/11/2018
+RESULTADOS DE CASOS DE PRUEBA
+==============================================
+
+
+MODULO LOGIN (Casos 5 a 10)
+
+5) Sin user: 	       -> Aprobado
+6) Sin pass:	       -> Aprobado
+7) Datos incorrectos   -> Aprobado
+8) Datos correctos     -> Aprobado
+9) Datos basura        -> No aprobado -> El sqlite tira un error operacional,
+los detalles de la String utilizada estan en el caso de prueba. Habria que permitir
+que solo se ingresen letras y numeros.
+10) Reservado como seguimiento del 9.
+
+============================================================================
+
+MODULO SIGNUP (Casos 11 a 18)
+
+11) Sin user: 		           -> Aprobado
+12) Sin pass: 		           -> Aprobado
+13) Sin E-Mail: 	           -> Aprobado
+14) Concidencia de contraseñas:    -> No aprobado -> El usuario se registra aunque las contraseñas no concidan.
+15) Datos Correctos: 		   -> Aprobado
+16) Usuario ya registrado:         -> No aprobado -> El usuario se registra aunque el username ya pertenezca a otro usuario.
+17) E-Mail ya registrado	   -> No aprobado -> El usuario se registra aunque ese e-mail ya pertenezca a otro usuario.
+18) Datos Basura:                  -> No aprobado -> Error de sqLite, igual al del Login.
+
+=============================================================================
+
+MODULO FIRSTPROJECT (Casos 19 a 22)
+
+19) Proyecto sin nombre:	  -> Aprobado
+20) Proyecto sin descripcion:	  -> Aprobado
+!!No testie excluyentes/excluyentes porque iba a ser lo mismo y me parecio innecesario!!
+21) Nombre basura:		  -> No Aprobado -> Mismo error de sqLite de antes.
+NOTA: El error lo tira despues de que pasas a la pagina de poner descripcion y terminos exc/inc. Habria que hacer que chequee el String antes
+de que te mande a esa etapa..
+22) Descripcion basura:           -> No Aprobado -> Mismo error de sqLite
+
+NOTA: En aproximadamente el 20% de los casos, sqLite no tira el error operacional y si te poner caracteres invalidos en la descripcion
+o el nombre.
+
+
+=============================================================================
