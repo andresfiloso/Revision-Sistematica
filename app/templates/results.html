@@ -105,7 +105,7 @@
                                     <div class="row">
                                         <div class="card col-md-12 col-lg-12">
                                             <div class="card-body">
-                                                {% if resultados[key].getPDF() != "0" %}
+                                                {% if resultados[key].getPDF() != False %}
 
                                                 <h1><span class="pull-right label label-danger">
                                                     <a href="{{ resultados[key].getPDF() }}" target="_blank">

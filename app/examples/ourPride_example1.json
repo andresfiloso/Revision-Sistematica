@@ -1,0 +1,152 @@
+{
+  "0": {
+    "metadata": "Xiaolong Jin - Big Data Research, 2015-06-30",
+    "pdf": false,
+    "title": "Significance and Challenges of Big Data Research",
+    "url": "https://www.sciencedirect.com/science/article/pii/S2214579615000076"
+  },
+  "1": {
+    "metadata": "Jae-Gil Lee - Big Data Research, 2015-06-30",
+    "pdf": false,
+    "title": "Geospatial Big Data: Challenges and Opportunities",
+    "url": "https://www.sciencedirect.com/science/article/pii/S2214579615000040"
+  },
+  "2": {
+    "metadata": "Pierre-André G. Maugis - Journal of Forensic and Legal Medicine, 2018-07-31",
+    "pdf": false,
+    "title": "Big data uncertainties",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1752928X16301172"
+  },
+  "3": {
+    "metadata": "Dong-Hee Shin - Telematics and Informatics, 2015-05-31",
+    "pdf": false,
+    "title": "Ecological views of big data: Perspectives and issues",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0736585314000665"
+  },
+  "4": {
+    "metadata": "Anant Mandawat - Heart Failure Clinics, 2017-04-30",
+    "pdf": false,
+    "title": "Cardio-oncology: The Role of Big Data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1551713616301726"
+  },
+  "5": {
+    "metadata": "Leo Willyanto Santoso - Procedia Computer Science, 2017-12-31",
+    "pdf": true,
+    "title": "Data Warehouse with Big Data Technology for Higher Education",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1877050917329022"
+  },
+  "6": {
+    "metadata": "Naveen Garg - Procedia Computer Science, 2016-12-31",
+    "pdf": true,
+    "title": "Challenges and Techniques for Testing of Big Data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1877050916306354"
+  },
+  "7": {
+    "metadata": "Václav Snášel - Future Generation Computer Systems, 2017-02-28",
+    "pdf": true,
+    "title": "Geometrical and topological approaches to Big Data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0167739X16301856"
+  },
+  "8": {
+    "metadata": "Gunasekaran Manogaran - Procedia Computer Science, 2016-12-31",
+    "pdf": true,
+    "title": "MetaCloudDataStorage Architecture for Big Data Security in Cloud Computing",
+    "url": "https://www.sciencedirect.com/science/article/pii/S187705091630477X"
+  },
+  "9": {
+    "metadata": "Richard Herschel - Technology in Society, 2017-05-31",
+    "pdf": false,
+    "title": "Ethics & Big Data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0160791X16301373"
+  },
+  "10": {
+    "metadata": "Patricia Schwerdtle - Nurse Education Today, 2017-04-30",
+    "pdf": false,
+    "title": "‘Big Data in Nurse Education’",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0260691716301502"
+  },
+  "11": {
+    "metadata": "Bonnie L. Westra - AORN Journal, 2016-10-31",
+    "pdf": false,
+    "title": "Big Data and Perioperative Nursing",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0001209216304410"
+  },
+  "12": {
+    "metadata": "Filipe Portela - Procedia Computer Science, 2016-12-31",
+    "pdf": true,
+    "title": "Why Big Data? Towards a Project Assessment Framework",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1877050916322396"
+  },
+  "13": {
+    "metadata": "Hayat Khaloufi - Procedia Computer Science, 2018-12-31",
+    "pdf": true,
+    "title": "Security model for Big Healthcare Data Lifecycle",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1877050918318520"
+  },
+  "14": {
+    "metadata": "Dmitry Kangin - Procedia Computer Science, 2015-12-31",
+    "pdf": true,
+    "title": "Evolving Classifier TEDAClass for Big Data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1877050915017779"
+  },
+  "15": {
+    "metadata": "Tsvi Achler - Procedia Computer Science, 2015-12-31",
+    "pdf": true,
+    "title": "A Localist Paradigm for Big Data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1877050915018153"
+  },
+  "16": {
+    "metadata": "Roxanne Connelly - Social Science Research, 2016-09-30",
+    "pdf": true,
+    "title": "The role of administrative data in the big data revolution in social science research",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0049089X1630206X"
+  },
+  "17": {
+    "metadata": "Samuel T. McAbee - Human Resource Management Review, 2017-06-30",
+    "pdf": false,
+    "title": "Inductive reasoning: The promise of big data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1053482216300377"
+  },
+  "18": {
+    "metadata": "Ibrar Yaqoob - International Journal of Information Management, 2016-12-31",
+    "pdf": false,
+    "title": "Big data: From beginning to future",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0268401216304753"
+  },
+  "19": {
+    "metadata": "Danilo Ardagna - Future Generation Computer Systems, 2018-12-31",
+    "pdf": false,
+    "title": "Context-aware data quality assessment for big data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0167739X17329151"
+  },
+  "20": {
+    "metadata": "L. Nelson Sanchez-Pinto - Chest, 2018-11-30",
+    "pdf": false,
+    "title": "Big Data and Data Science in Critical Care",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0012369218307256"
+  },
+  "21": {
+    "metadata": "Richard Kemp - Computer Law & Security Review, 2014-10-31",
+    "pdf": false,
+    "title": "Legal aspects of managing Big Data",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0267364914001253"
+  },
+  "22": {
+    "metadata": "Asma Hassani - Procedia Computer Science, 2017-12-31",
+    "pdf": true,
+    "title": "A framework for Business Process Data Management based on Big Data Approach",
+    "url": "https://www.sciencedirect.com/science/article/pii/S1877050917322962"
+  },
+  "23": {
+    "metadata": "Alessandro Merendino - Journal of Business Research, 2018-12-31",
+    "pdf": false,
+    "title": "Big data, big decisions: The impact of big data on board level decision-making",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0148296318304132"
+  },
+  "24": {
+    "metadata": "Marijn Janssen - Journal of Business Research, 2017-01-31",
+    "pdf": false,
+    "title": "Factors influencing big data decision-making quality",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0148296316304945"
+  }
+}

@@ -5,7 +5,8 @@ from flask import Flask, render_template, redirect, session, url_for, request
 from datasource import *
 from controller import *
 from models import *
-from scrapping import *
+#from scrapping import *
+from scrappingBeta import *
 
 import jsonpickle
 import os
@@ -134,6 +135,12 @@ def firstProject():
     else:
         return redirect(url_for('home'))
 
+@app.route('/search', methods = ['POST', 'GET'])
+def search():
+    query = request.args.get('q', default = '*', type = str)
+
+    return searchAPI(query)
+
 @app.route('/scrapping',methods = ['POST', 'GET'])
 def scrapping():
     session['key'] = 0
@@ -174,12 +181,14 @@ def scrapping():
                     query = query + keywords + " AND " + aux 
         else:
             query = keywords
-            
+
         print query
         
         session['keywords'] = query 
 
         start = time.time()
+
+        resultados = {}
 
         try:
             print "INTENTANDO BUSCAR JSON"
@@ -195,30 +204,37 @@ def scrapping():
             
         except:
             print "VOY A EMPEZAR A SCRAPPEAR: "
-            science = get_scrapping_sciencedirect()
-            springer = get_scrapping_springer()
-            ieee = get_scrapping_ieee()
+                
+            data_json = searchAPI(session['keywords'])
+
+            data_dict = json.loads(data_json)
+
+            for key in data_dict:
+
+                title = data_dict[key]['title']
+                url = data_dict[key]['url']
+                pdf = data_dict[key]['pdf']
+                metadata = data_dict[key]['metadata']
+                abstract = data_dict[key]['abstract']
+
+                resultado = Resultado(key, title, url, pdf, abstract, metadata, False, False)
+
+                resultados[key] = resultado
 
             end = time.time()
             tiempoTotal = end - start
             tiempoTotal = str(tiempoTotal)
             print "Tiempo de scrapping: " + str(tiempoTotal) + " segundos"
 
-            resultados = {}
-            resultados.update(science)
-            resultados.update(springer)
-            resultados.update(ieee)
-
             serialized = jsonpickle.encode(resultados)
+
+            with open('json/'+session['keywords']+'.json', 'w') as file:
+                json.dump(serialized, file)
 
             print "Cantidad de resultados: " + str(len(resultados))  
 
             new_busqueda(session['keywords']);
 
-
-            with open('json/'+session['keywords']+'.json', 'w') as file:
-                json.dump(serialized, file)
-            
             session['cantArticulos'] = len(resultados)
 
             return render_template('results.html', **locals())

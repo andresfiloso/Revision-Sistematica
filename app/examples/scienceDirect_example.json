@@ -1,0 +1,1050 @@
+{
+  "search-results": {
+    "entry": [
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Xiaolong Jin"
+            },
+            {
+              "$": "Benjamin W. Wah"
+            },
+            {
+              "$": "Xueqi Cheng"
+            },
+            {
+              "$": "Yuanzhuo Wang"
+            }
+          ]
+        },
+        "dc:creator": "Xiaolong Jin",
+        "dc:identifier": "DOI:10.1016/j.bdr.2015.01.006",
+        "dc:title": "Significance and Challenges of Big Data Research",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S2214579615000076",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S2214579615000076?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2015-02-26T00:00:00Z",
+        "openaccess": false,
+        "pii": "S2214579615000076",
+        "prism:coverDate": "2015-06-30",
+        "prism:doi": "10.1016/j.bdr.2015.01.006",
+        "prism:endingPage": "64",
+        "prism:publicationName": "Big Data Research",
+        "prism:startingPage": "59",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S2214579615000076",
+        "prism:volume": "2"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Jae-Gil Lee"
+            },
+            {
+              "$": "Minseo Kang"
+            }
+          ]
+        },
+        "dc:creator": "Jae-Gil Lee",
+        "dc:identifier": "DOI:10.1016/j.bdr.2015.01.003",
+        "dc:title": "Geospatial Big Data: Challenges and Opportunities",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S2214579615000040",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S2214579615000040?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2015-02-18T00:00:00Z",
+        "openaccess": false,
+        "pii": "S2214579615000040",
+        "prism:coverDate": "2015-06-30",
+        "prism:doi": "10.1016/j.bdr.2015.01.003",
+        "prism:endingPage": "81",
+        "prism:publicationName": "Big Data Research",
+        "prism:startingPage": "74",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S2214579615000040",
+        "prism:volume": "2"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": "Pierre-André G. Maugis"
+        },
+        "dc:creator": "Pierre-André G. Maugis",
+        "dc:identifier": "DOI:10.1016/j.jflm.2016.09.005",
+        "dc:title": "Big data uncertainties",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1752928X16301172",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1752928X16301172?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-09-10T00:00:00Z",
+        "openaccess": false,
+        "pii": "S1752928X16301172",
+        "prism:coverDate": "2018-07-31",
+        "prism:doi": "10.1016/j.jflm.2016.09.005",
+        "prism:endingPage": "11",
+        "prism:publicationName": "Journal of Forensic and Legal Medicine",
+        "prism:startingPage": "7",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1752928X16301172",
+        "prism:volume": "57"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Dong-Hee Shin"
+            },
+            {
+              "$": "Min Jae Choi"
+            }
+          ]
+        },
+        "dc:creator": "Dong-Hee Shin",
+        "dc:identifier": "DOI:10.1016/j.tele.2014.09.006",
+        "dc:title": "Ecological views of big data: Perspectives and issues",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0736585314000665",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0736585314000665?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2014-09-30T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0736585314000665",
+        "prism:coverDate": "2015-05-31",
+        "prism:doi": "10.1016/j.tele.2014.09.006",
+        "prism:endingPage": "320",
+        "prism:publicationName": "Telematics and Informatics",
+        "prism:startingPage": "311",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0736585314000665",
+        "prism:volume": "32"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Anant Mandawat"
+            },
+            {
+              "$": "Andrew E. Williams"
+            },
+            {
+              "$": "Sanjeev A. Francis"
+            }
+          ]
+        },
+        "dc:creator": "Anant Mandawat",
+        "dc:identifier": "DOI:10.1016/j.hfc.2016.12.010",
+        "dc:title": "Cardio-oncology: The Role of Big Data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1551713616301726",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1551713616301726?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2017-03-07T00:00:00Z",
+        "openaccess": false,
+        "pii": "S1551713616301726",
+        "prism:coverDate": "2017-04-30",
+        "prism:doi": "10.1016/j.hfc.2016.12.010",
+        "prism:endingPage": "408",
+        "prism:publicationName": "Heart Failure Clinics",
+        "prism:startingPage": "403",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1551713616301726",
+        "prism:volume": "13"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Naveen Garg"
+            },
+            {
+              "$": "Sanjay Singla"
+            },
+            {
+              "$": "Surender Jangra"
+            }
+          ]
+        },
+        "dc:creator": "Naveen Garg",
+        "dc:identifier": "DOI:10.1016/j.procs.2016.05.285",
+        "dc:title": "Challenges and Techniques for Testing of Big Data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1877050916306354",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1877050916306354?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-06-01T00:00:00Z",
+        "openaccess": true,
+        "pii": "S1877050916306354",
+        "prism:coverDate": "2016-12-31",
+        "prism:doi": "10.1016/j.procs.2016.05.285",
+        "prism:endingPage": "948",
+        "prism:publicationName": "Procedia Computer Science",
+        "prism:startingPage": "940",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1877050916306354",
+        "prism:volume": "85"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Leo Willyanto Santoso"
+            },
+            {
+              "$": " Yulia"
+            }
+          ]
+        },
+        "dc:creator": "Leo Willyanto Santoso",
+        "dc:identifier": "DOI:10.1016/j.procs.2017.12.134",
+        "dc:title": "Data Warehouse with Big Data Technology for Higher Education",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1877050917329022",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1877050917329022?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2017-12-26T00:00:00Z",
+        "openaccess": true,
+        "pii": "S1877050917329022",
+        "prism:coverDate": "2017-12-31",
+        "prism:doi": "10.1016/j.procs.2017.12.134",
+        "prism:endingPage": "99",
+        "prism:publicationName": "Procedia Computer Science",
+        "prism:startingPage": "93",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1877050917329022",
+        "prism:volume": "124"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Václav Snášel"
+            },
+            {
+              "$": "Jana Nowaková"
+            },
+            {
+              "$": "Fatos Xhafa"
+            },
+            {
+              "$": "Leonard Barolli"
+            }
+          ]
+        },
+        "dc:creator": "Václav Snášel",
+        "dc:identifier": "DOI:10.1016/j.future.2016.06.005",
+        "dc:title": "Geometrical and topological approaches to Big Data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0167739X16301856",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0167739X16301856?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-06-29T00:00:00Z",
+        "openaccess": true,
+        "pii": "S0167739X16301856",
+        "prism:coverDate": "2017-02-28",
+        "prism:doi": "10.1016/j.future.2016.06.005",
+        "prism:endingPage": "296",
+        "prism:publicationName": "Future Generation Computer Systems",
+        "prism:startingPage": "286",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0167739X16301856",
+        "prism:volume": "67"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Gunasekaran Manogaran"
+            },
+            {
+              "$": "Chandu Thota"
+            },
+            {
+              "$": "M. Vijay Kumar"
+            }
+          ]
+        },
+        "dc:creator": "Gunasekaran Manogaran",
+        "dc:identifier": "DOI:10.1016/j.procs.2016.05.138",
+        "dc:title": "MetaCloudDataStorage Architecture for Big Data Security in Cloud Computing",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S187705091630477X",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S187705091630477X?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-06-07T00:00:00Z",
+        "openaccess": true,
+        "pii": "S187705091630477X",
+        "prism:coverDate": "2016-12-31",
+        "prism:doi": "10.1016/j.procs.2016.05.138",
+        "prism:endingPage": "133",
+        "prism:publicationName": "Procedia Computer Science",
+        "prism:startingPage": "128",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S187705091630477X",
+        "prism:volume": "87"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Richard Herschel"
+            },
+            {
+              "$": "Virginia M. Miori"
+            }
+          ]
+        },
+        "dc:creator": "Richard Herschel",
+        "dc:identifier": "DOI:10.1016/j.techsoc.2017.03.003",
+        "dc:title": "Ethics & Big Data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0160791X16301373",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0160791X16301373?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2017-03-10T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0160791X16301373",
+        "prism:coverDate": "2017-05-31",
+        "prism:doi": "10.1016/j.techsoc.2017.03.003",
+        "prism:endingPage": "36",
+        "prism:publicationName": "Technology in Society",
+        "prism:startingPage": "31",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0160791X16301373",
+        "prism:volume": "49"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Patricia Schwerdtle"
+            },
+            {
+              "$": "James Bonnamy"
+            }
+          ]
+        },
+        "dc:creator": "Patricia Schwerdtle",
+        "dc:identifier": "DOI:10.1016/j.nedt.2016.08.003",
+        "dc:title": "‘Big Data in Nurse Education’",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0260691716301502",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0260691716301502?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-08-10T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0260691716301502",
+        "prism:coverDate": "2017-04-30",
+        "prism:doi": "10.1016/j.nedt.2016.08.003",
+        "prism:endingPage": "116",
+        "prism:publicationName": "Nurse Education Today",
+        "prism:startingPage": "114",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0260691716301502",
+        "prism:volume": "51"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Bonnie L. Westra"
+            },
+            {
+              "$": "Jessica J. Peterson"
+            }
+          ]
+        },
+        "dc:creator": "Bonnie L. Westra",
+        "dc:identifier": "DOI:10.1016/j.aorn.2016.07.009",
+        "dc:title": "Big Data and Perioperative Nursing",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0001209216304410",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0001209216304410?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-09-28T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0001209216304410",
+        "prism:coverDate": "2016-10-31",
+        "prism:doi": "10.1016/j.aorn.2016.07.009",
+        "prism:endingPage": "292",
+        "prism:publicationName": "AORN Journal",
+        "prism:startingPage": "286",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0001209216304410",
+        "prism:volume": "104"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Filipe Portela"
+            },
+            {
+              "$": "Luciana Lima"
+            },
+            {
+              "$": "Manuel Filipe Santos"
+            }
+          ]
+        },
+        "dc:creator": "Filipe Portela",
+        "dc:identifier": "DOI:10.1016/j.procs.2016.09.094",
+        "dc:title": "Why Big Data? Towards a Project Assessment Framework",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1877050916322396",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1877050916322396?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-09-21T00:00:00Z",
+        "openaccess": true,
+        "pii": "S1877050916322396",
+        "prism:coverDate": "2016-12-31",
+        "prism:doi": "10.1016/j.procs.2016.09.094",
+        "prism:endingPage": "609",
+        "prism:publicationName": "Procedia Computer Science",
+        "prism:startingPage": "604",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1877050916322396",
+        "prism:volume": "98"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Hayat Khaloufi"
+            },
+            {
+              "$": "Karim Abouelmehdi"
+            },
+            {
+              "$": "Abderrahim Beni-hssane"
+            },
+            {
+              "$": "Mostafa Saadi"
+            }
+          ]
+        },
+        "dc:creator": "Hayat Khaloufi",
+        "dc:identifier": "DOI:10.1016/j.procs.2018.10.199",
+        "dc:title": "Security model for Big Healthcare Data Lifecycle",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1877050918318520",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1877050918318520?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2018-11-05T00:00:00Z",
+        "openaccess": true,
+        "pii": "S1877050918318520",
+        "prism:coverDate": "2018-12-31",
+        "prism:doi": "10.1016/j.procs.2018.10.199",
+        "prism:endingPage": "301",
+        "prism:publicationName": "Procedia Computer Science",
+        "prism:startingPage": "294",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1877050918318520",
+        "prism:volume": "141"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Dmitry Kangin"
+            },
+            {
+              "$": "Plamen Angelov"
+            },
+            {
+              "$": "Jose Antonio Iglesias"
+            },
+            {
+              "$": "Araceli Sanchis"
+            }
+          ]
+        },
+        "dc:creator": "Dmitry Kangin",
+        "dc:identifier": "DOI:10.1016/j.procs.2015.07.274",
+        "dc:title": "Evolving Classifier TEDAClass for Big Data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1877050915017779",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1877050915017779?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2015-08-10T00:00:00Z",
+        "openaccess": true,
+        "pii": "S1877050915017779",
+        "prism:coverDate": "2015-12-31",
+        "prism:doi": "10.1016/j.procs.2015.07.274",
+        "prism:endingPage": "18",
+        "prism:publicationName": "Procedia Computer Science",
+        "prism:startingPage": "9",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1877050915017779",
+        "prism:volume": "53"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": "Tsvi Achler"
+        },
+        "dc:creator": "Tsvi Achler",
+        "dc:identifier": "DOI:10.1016/j.procs.2015.07.312",
+        "dc:title": "A Localist Paradigm for Big Data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1877050915018153",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1877050915018153?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2015-08-10T00:00:00Z",
+        "openaccess": true,
+        "pii": "S1877050915018153",
+        "prism:coverDate": "2015-12-31",
+        "prism:doi": "10.1016/j.procs.2015.07.312",
+        "prism:endingPage": "364",
+        "prism:publicationName": "Procedia Computer Science",
+        "prism:startingPage": "356",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1877050915018153",
+        "prism:volume": "53"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Roxanne Connelly"
+            },
+            {
+              "$": "Christopher J. Playford"
+            },
+            {
+              "$": "Vernon Gayle"
+            },
+            {
+              "$": "Chris Dibben"
+            }
+          ]
+        },
+        "dc:creator": "Roxanne Connelly",
+        "dc:identifier": "DOI:10.1016/j.ssresearch.2016.04.015",
+        "dc:title": "The role of administrative data in the big data revolution in social science research",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0049089X1630206X",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0049089X1630206X?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-04-14T00:00:00Z",
+        "openaccess": true,
+        "pii": "S0049089X1630206X",
+        "prism:coverDate": "2016-09-30",
+        "prism:doi": "10.1016/j.ssresearch.2016.04.015",
+        "prism:endingPage": "12",
+        "prism:publicationName": "Social Science Research",
+        "prism:startingPage": "1",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0049089X1630206X",
+        "prism:volume": "59"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Samuel T. McAbee"
+            },
+            {
+              "$": "Ronald S. Landis"
+            },
+            {
+              "$": "Maura I. Burke"
+            }
+          ]
+        },
+        "dc:creator": "Samuel T. McAbee",
+        "dc:identifier": "DOI:10.1016/j.hrmr.2016.08.005",
+        "dc:title": "Inductive reasoning: The promise of big data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1053482216300377",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1053482216300377?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-08-16T00:00:00Z",
+        "openaccess": false,
+        "pii": "S1053482216300377",
+        "prism:coverDate": "2017-06-30",
+        "prism:doi": "10.1016/j.hrmr.2016.08.005",
+        "prism:endingPage": "290",
+        "prism:publicationName": "Human Resource Management Review",
+        "prism:startingPage": "277",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1053482216300377",
+        "prism:volume": "27"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Ibrar Yaqoob"
+            },
+            {
+              "$": "Ibrahim Abaker Targio Hashem"
+            },
+            {
+              "$": "Abdullah Gani"
+            },
+            {
+              "$": "Salimah Mokhtar"
+            },
+            {
+              "$": "Athanasios V. Vasilakos"
+            }
+          ]
+        },
+        "dc:creator": "Ibrar Yaqoob",
+        "dc:identifier": "DOI:10.1016/j.ijinfomgt.2016.07.009",
+        "dc:title": "Big data: From beginning to future",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0268401216304753",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0268401216304753?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-09-16T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0268401216304753",
+        "prism:coverDate": "2016-12-31",
+        "prism:doi": "10.1016/j.ijinfomgt.2016.07.009",
+        "prism:endingPage": "1247",
+        "prism:publicationName": "International Journal of Information Management",
+        "prism:startingPage": "1231",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0268401216304753",
+        "prism:volume": "36"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Danilo Ardagna"
+            },
+            {
+              "$": "Cinzia Cappiello"
+            },
+            {
+              "$": "Walter Samá"
+            },
+            {
+              "$": "Monica Vitali"
+            }
+          ]
+        },
+        "dc:creator": "Danilo Ardagna",
+        "dc:identifier": "DOI:10.1016/j.future.2018.07.014",
+        "dc:title": "Context-aware data quality assessment for big data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0167739X17329151",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0167739X17329151?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2018-07-17T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0167739X17329151",
+        "prism:coverDate": "2018-12-31",
+        "prism:doi": "10.1016/j.future.2018.07.014",
+        "prism:endingPage": "562",
+        "prism:publicationName": "Future Generation Computer Systems",
+        "prism:startingPage": "548",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0167739X17329151",
+        "prism:volume": "89"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "L. Nelson Sanchez-Pinto"
+            },
+            {
+              "$": "Yuan Luo"
+            },
+            {
+              "$": "Matthew M. Churpek"
+            }
+          ]
+        },
+        "dc:creator": "L. Nelson Sanchez-Pinto",
+        "dc:identifier": "DOI:10.1016/j.chest.2018.04.037",
+        "dc:title": "Big Data and Data Science in Critical Care",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0012369218307256",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0012369218307256?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2018-05-09T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0012369218307256",
+        "prism:coverDate": "2018-11-30",
+        "prism:doi": "10.1016/j.chest.2018.04.037",
+        "prism:endingPage": "1248",
+        "prism:publicationName": "Chest",
+        "prism:startingPage": "1239",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0012369218307256",
+        "prism:volume": "154"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": "Richard Kemp"
+        },
+        "dc:creator": "Richard Kemp",
+        "dc:identifier": "DOI:10.1016/j.clsr.2014.07.006",
+        "dc:title": "Legal aspects of managing Big Data",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0267364914001253",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0267364914001253?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2014-09-18T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0267364914001253",
+        "prism:coverDate": "2014-10-31",
+        "prism:doi": "10.1016/j.clsr.2014.07.006",
+        "prism:endingPage": "491",
+        "prism:publicationName": "Computer Law & Security Review",
+        "prism:startingPage": "482",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0267364914001253",
+        "prism:volume": "30"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Asma Hassani"
+            },
+            {
+              "$": "Sonia Ayachi Gahnouchi"
+            }
+          ]
+        },
+        "dc:creator": "Asma Hassani",
+        "dc:identifier": "DOI:10.1016/j.procs.2017.11.096",
+        "dc:title": "A framework for Business Process Data Management based on Big Data Approach",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S1877050917322962",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S1877050917322962?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2017-12-14T00:00:00Z",
+        "openaccess": true,
+        "pii": "S1877050917322962",
+        "prism:coverDate": "2017-12-31",
+        "prism:doi": "10.1016/j.procs.2017.11.096",
+        "prism:endingPage": "747",
+        "prism:publicationName": "Procedia Computer Science",
+        "prism:startingPage": "740",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S1877050917322962",
+        "prism:volume": "121"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Alessandro Merendino"
+            },
+            {
+              "$": "Sally Dibb"
+            },
+            {
+              "$": "Maureen Meadows"
+            },
+            {
+              "$": "Lee Quinn"
+            },
+            {
+              "$": "Ana Canhoto"
+            }
+          ]
+        },
+        "dc:creator": "Alessandro Merendino",
+        "dc:identifier": "DOI:10.1016/j.jbusres.2018.08.029",
+        "dc:title": "Big data, big decisions: The impact of big data on board level decision-making",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0148296318304132",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0148296318304132?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2018-09-01T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0148296318304132",
+        "prism:coverDate": "2018-12-31",
+        "prism:doi": "10.1016/j.jbusres.2018.08.029",
+        "prism:endingPage": "78",
+        "prism:publicationName": "Journal of Business Research",
+        "prism:startingPage": "67",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0148296318304132",
+        "prism:volume": "93"
+      },
+      {
+        "@_fa": "true",
+        "authors": {
+          "author": [
+            {
+              "$": "Marijn Janssen"
+            },
+            {
+              "$": "Haiko van der Voort"
+            },
+            {
+              "$": "Agung Wahyudi"
+            }
+          ]
+        },
+        "dc:creator": "Marijn Janssen",
+        "dc:identifier": "DOI:10.1016/j.jbusres.2016.08.007",
+        "dc:title": "Factors influencing big data decision-making quality",
+        "link": [
+          {
+            "@_fa": "true",
+            "@href": "https://api.elsevier.com/content/article/pii/S0148296316304945",
+            "@ref": "self"
+          },
+          {
+            "@_fa": "true",
+            "@href": "https://www.sciencedirect.com/science/article/pii/S0148296316304945?dgcid=api_sd_search-api-endpoint",
+            "@ref": "scidir"
+          }
+        ],
+        "load-date": "2016-08-09T00:00:00Z",
+        "openaccess": false,
+        "pii": "S0148296316304945",
+        "prism:coverDate": "2017-01-31",
+        "prism:doi": "10.1016/j.jbusres.2016.08.007",
+        "prism:endingPage": "345",
+        "prism:publicationName": "Journal of Business Research",
+        "prism:startingPage": "338",
+        "prism:url": "https://api.elsevier.com/content/article/pii/S0148296316304945",
+        "prism:volume": "70"
+      }
+    ],
+    "link": [
+      {
+        "@_fa": "true",
+        "@href": "https://api.elsevier.com/content/search/sciencedirect?start=25&count=25&start=25&count=25&query=big+data&apiKey=7f59af901d2d86f78a1fd60c1bf9426a",
+        "@ref": "self",
+        "@type": "application/json"
+      },
+      {
+        "@_fa": "true",
+        "@href": "https://api.elsevier.com/content/search/sciencedirect?start=0&count=25&start=25&count=25&query=big+data&apiKey=7f59af901d2d86f78a1fd60c1bf9426a",
+        "@ref": "first",
+        "@type": "application/json"
+      },
+      {
+        "@_fa": "true",
+        "@href": "https://api.elsevier.com/content/search/sciencedirect?start=0&count=25&start=25&count=25&query=big+data&apiKey=7f59af901d2d86f78a1fd60c1bf9426a",
+        "@ref": "prev",
+        "@type": "application/json"
+      },
+      {
+        "@_fa": "true",
+        "@href": "https://api.elsevier.com/content/search/sciencedirect?start=50&count=25&start=25&count=25&query=big+data&apiKey=7f59af901d2d86f78a1fd60c1bf9426a",
+        "@ref": "next",
+        "@type": "application/json"
+      },
+      {
+        "@_fa": "true",
+        "@href": "https://api.elsevier.com/content/search/sciencedirect?start=5975&count=25&start=25&count=25&query=big+data&apiKey=7f59af901d2d86f78a1fd60c1bf9426a",
+        "@ref": "last",
+        "@type": "application/json"
+      }
+    ],
+    "opensearch:Query": {
+      "@role": "request",
+      "@searchTerms": "big data",
+      "@startPage": "25"
+    },
+    "opensearch:itemsPerPage": "25",
+    "opensearch:startIndex": "25",
+    "opensearch:totalResults": "637920"
+  }
+}

@@ -273,7 +273,7 @@ class Busqueda:
 #######################
 
 class Resultado:
-  def __init__(self, idResultado, title, url, pdfLink, abstract, metadata, test,  enProyecto):
+  def __init__(self, idResultado, title, url, pdfLink, abstract, metadata, test, enProyecto):
     self.idResultado = idResultado
     self.title = title
     self.url = url
