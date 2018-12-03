@@ -18,19 +18,9 @@ sys.setdefaultencoding('utf8')
 
 def scrap_article(url):
 
-	if "www.sciencedirect.com" in url:
-		page = "ScienceDirect"
-	elif "link.springer.com" in url:
-		page = "Springer"
-	elif "ieeexplore.ieee.org" in url:
-		page = "IEEE Xplore"
-
-	if(page == "ScienceDirect"):
-		return scrap_article_sciencedirect(url)
-	if(page == "Springer"):
-		return scrap_article_springer(url)
-	if(page == "IEEE Xplore"):
-		return scrap_article_ieee(url)
+	if "www.sciencedirect.com" in url:return scrap_article_sciencedirect(url)
+	elif "link.springer.com" in url: return scrap_article_springer(url)
+	elif "ieeexplore.ieee.org" in url: return scrap_article_ieee(url)
 
 ########################################################################
 ########################################################################

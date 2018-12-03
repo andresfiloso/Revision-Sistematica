@@ -118,6 +118,15 @@
 
                                               </h4>
                                                <h6 class="card-subtitle mb-2 text-muted">
+                                                     {% if articulos[key].getURL().find("springer") != -1 %}
+                                                            <img src="https://www.springer.com/favicon.ico">
+                                                    {% endif %}
+                                                    {% if articulos[key].getURL().find("sciencedirect") != -1 %}
+                                                            <img src="https://sdfestaticassets-us-east-1.sciencedirectassets.com/shared-assets/18/images/favSD.ico">
+                                                    {% endif %}
+                                                    {% if articulos[key].getURL().find("ieeexplore") != -1 %}
+                                                            <img src="https://ieeexplore.ieee.org/favicon.ico">
+                                                    {% endif %}
                                                     <a href="{{ articulos[key].getURL() }}" target="_blank">{{ articulos[key].getURL() }}</a>
                                                 </h6>
 

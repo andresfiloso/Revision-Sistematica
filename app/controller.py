@@ -368,4 +368,11 @@ def new_proyect(nombre, descripcion, inclusion, exclusion):
 
 	return rows
 
+def validCharacters(string):
+
+	whitelist = set('abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890$%^&*()!')
+	string = ''.join(filter(whitelist.__contains__, string))
+
+	return string
+
 	

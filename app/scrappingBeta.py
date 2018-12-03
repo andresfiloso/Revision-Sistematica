@@ -5,13 +5,20 @@ import requests
 import re
 import io
 from models import *
+from datetime import datetime
 
 import time
-
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+
+
+def scrap_article(url):
+
+	if "www.sciencedirect.com" in url:return scienceDirect_articleAPI(url)
+	elif "link.springer.com" in url: return springer_articleAPI(url)
+	elif "ieeexplore.ieee.org" in url: return ieeeXplore_articleAPI(url)
 
 ######################################################################################################################################
 ########################################################## SCIENCE DIRECT ############################################################
@@ -296,3 +303,241 @@ def searchAPI(query):
 
 	return data
 
+
+
+
+def springer_articleAPI(url):
+
+	pdf = False # springer no tiene pdfs
+	req = requests.get(url)
+	statusCode = req.status_code
+	html = BeautifulSoup(req.text, "html.parser")
+
+	now = datetime.now()
+
+	print now
+
+	with io.open('logs/'+str(now)[-5:]+'-springer.html', 'w', encoding='utf-8') as f:
+		f.write(unicode(html))
+
+	title = html.find('h1', {'class': 'ChapterTitle'})
+	if(title != None):
+		title = title.text
+	else:
+		title = "El articulo no tiene titulo"
+
+	abstract = html.find('p', {'class': 'Para'})
+	if(abstract != None):
+	    abstract = 'Abstract' + abstract.text
+	else:
+	    abstract = "El articulo no tiene abstract"
+
+	metadata = ""
+	keywordsRaw = html.findAll('span', {'class': 'Keyword'})
+
+	if(keywordsRaw != None):
+		for i in range(len(keywordsRaw)):
+			if i == 0:
+				metadata = keywordsRaw[i].text[:-1] # Se borra el ultimo espacio.
+			else:
+				metadata = metadata + "; " + keywordsRaw[i].text[:-1]
+	else:
+		metadata = "Metadata is not available"
+
+
+	pdf = html.find('a', {'class': 'gtm-pdf-link'})
+	if(pdf != None):
+		pdf = "https://link.springer.com" + pdf['href']
+	else:
+		pdf = False
+
+	response = {
+				"title" : title,
+				"url": url,
+				"pdf": pdf,
+				"abstract": abstract,
+				"metadata": metadata,
+			}
+
+	data = json.dumps(response, ensure_ascii=False)
+
+	with io.open('json_raws/'+str(now)[-5:]+'-springer.html', 'w', encoding='utf-8') as f:
+		f.write(unicode(data))
+
+	#resultado = Resultado(0, title, url, pdf, abstract, metadata, False, False)
+
+	return data
+
+
+
+
+
+
+def ieeeXplore_articleAPI(url):
+
+	pdf = False
+	articleNumber = url.split("/")[4] # el elemento en la posicion 4 del link si se splitea en / es el articleNumber 
+
+	headers = {
+				'User-Agent':'BeautifulSoup, contact me at andresfilosok@gmail.com', 
+				'Referer': 'https://ieeexplore.ieee.org/document/' + articleNumber,
+				'Content-type': 'application/json'
+	}
+
+	urlSnippet = "https://ieeexplore.ieee.org/rest/document/" + articleNumber + "/snippet"
+	req = requests.get(urlSnippet, headers=headers)
+	statusCode = req.status_code
+	html = BeautifulSoup(req.text, "html.parser")
+
+	now = datetime.now()
+
+	print now
+
+	with io.open('logs/'+str(now)[-5:]+'-ieee.html', 'w', encoding='utf-8') as f:
+		f.write(unicode(html))
+
+	introduction = html.find('h3')
+	snippet = html.find('p')
+
+	if (introduction != None):
+		introduction = introduction.text
+	else:
+		introduction = ""
+
+	if (snippet != None):
+		snippet = snippet.text
+	else:
+		snippet = "No abstract available"
+
+	abstract = str(introduction + snippet)
+
+	print abstract.encode('utf8')
+
+	urlSimilar = "https://ieeexplore.ieee.org/rest/document/" + articleNumber + "/similar"
+	req = requests.get(urlSimilar, headers=headers)
+	json_data = req.text
+	item_dict = json.loads(json_data)
+
+	title = item_dict['title']
+
+	url = "https://ieeexplore.ieee.org/document/" + articleNumber
+
+	metadata = "Metadata is not available" # issue
+
+	response = {
+				"title" : title,
+				"url": url,
+				"pdf": pdf,
+				"abstract": abstract,
+				"metadata": metadata,
+			}
+
+	data = json.dumps(response, ensure_ascii=False)
+
+	with io.open('json_raws/'+str(now)[-5:]+'-xplore.html', 'w', encoding='utf-8') as f:
+		f.write(unicode(data))
+ 	
+	#resultado = Resultado(0, title, url, pdf, snippet, metadata, False, False)
+
+	return data
+
+
+
+def scienceDirect_articleAPI(url):
+
+	# URL Example 		
+	# https://www.sciencedirect.com/science/article/pii/S0185269813718221
+	# 1       2                     3       4       5   6
+	pii = url.split("/")[6]
+
+	# API Example
+	# https://api.elsevier.com/content/article/pii/S0185269813718221?apiKey=3491fbfd6948a9e127f3ccf8eed94e2c
+
+	print pii
+
+	api_url = 'https://api.elsevier.com/content/article/pii/'+pii+'?apiKey=3491fbfd6948a9e127f3ccf8eed94e2c'
+	headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8', 'Accept': 'application/json'}
+	r = requests.get(api_url, headers=headers).json()
+
+	results = json.dumps(r, indent=4, sort_keys=True)
+
+	#print results
+
+	data = json.loads(results)
+
+	now = datetime.now()
+
+	#print now
+
+	with io.open('logs/'+str(now)[-5:]+'-science.html', 'w', encoding='utf-8') as f:
+		f.write(unicode(results))
+
+	try:
+		title = data['full-text-retrieval-response']['coredata']['dc:title']
+		title = title.split("1 1")[0] # Esto es porque a veces el titulo puede venir con una referencia (1 1). Solamente tomo la primera parte
+	except:
+		try: title = data['full-text-retrieval-response']['coredata']['pubType']
+		except: title = "No title available"
+
+	try: 
+		print "Voy a ir a buscar el abstract"
+		abstract = data['full-text-retrieval-response']['coredata']['dc:description'].encode('utf8').strip()
+		abstract = abstract.replace("ÔÇö", "-")
+		print "Encontre abstract: " + abstract.encode('utf8')
+	except: 
+		abstract = "No abstract available"
+
+	if abstract == None:
+		print "No hay abstract. Se esta yendo a buscar el texto original"
+		try: 
+			abstract = data['full-text-retrieval-response']['originalText'].split(title)[2] # Esto es porque si el texto original tiene mucha informacion basura 
+			#print abstract.encode('utf8')																	# y cuando aparece el titulo de del articulo comienza un psudo abstract
+		except IndexError: 																	# En caso de que (2) arroje una excepcion por index out of range se intenta
+			abstract = data['full-text-retrieval-response']['originalText'].split(title)[1] # capturar el primer item del split. Esta funcionalidad es a modo de prueba.
+			#print abstract.encode('utf8')																
+		except:
+			abstract = "No abstract available" 
+	
+	metadata = ""
+	
+	try: 
+		keywordsRaw = data['full-text-retrieval-response']['coredata']['dcterms:subject'] # Dict of keywords
+
+		#print keywordsRaw
+
+		cantidadKeywords = len(keywordsRaw)/2
+
+		for i in range (cantidadKeywords):
+			if i == 0:
+				metadata = keywordsRaw[i]['$']
+				#print metadatakeywords
+			else:
+				metadata = metadata + "; " + keywordsRaw[i]['$']
+				#print keywords
+	except: 
+		metadata = "Metadata not available"
+
+
+	try: pdf = data['full-text-retrieval-response']['coredata']['openaccessArticle'] # True o False
+	except: pdf = "False"
+
+	print "Voy a armar el articulo"
+	print "El abstract es este: "
+	print abstract.encode('utf8')
+
+	response = {
+				"title" : title,
+				"url": url,
+				"pdf": pdf,
+				"abstract": abstract,
+				"metadata": metadata,
+			}
+
+	data = json.dumps(response, ensure_ascii=False)
+
+	with io.open('json_raws/'+str(now)[-5:]+'-science.html', 'w', encoding='utf-8') as f:
+		f.write(unicode(data))
+
+	#resultado = Resultado(0, title, url, pdf, abstract, keywords, False, False)
+
+	return data

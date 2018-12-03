@@ -100,13 +100,13 @@
 
                                 <br><br>
 
-                                {% if articulo.getPDF() == '0' %}
+                                {% if articulo.getPDF() == False %}
 
                                 <button class="btn btn-outline-danger waves-effect waves-light" type="button" disabled><span class="btn-label"><i class="fa fa-file-pdf-o"></i></span>PDF no disponible</button>
 
                                 {% endif %}
 
-                                {% if articulo.getPDF() != '0' %}
+                                {% if articulo.getPDF() != False %}
 
                                 <a href="{{ articulo.getPDF() }}" target="_blank" >
 
@@ -195,6 +195,7 @@
 
 <script>
         $(document).ready(function() {  // Hay que cambiar la logica de esto porque no es viable a largo plazo
+
             var returnAbstract = '{{ articulo.getAbstract() }}';
 
             returnAbstract = returnAbstract.replace('Abstract','<h2 class="card-title">Abstract</h2>');
@@ -205,6 +206,7 @@
             returnAbstract = returnAbstract.replace('Introduction','<h4 class="card-title">Introduction</h4>');
             returnAbstract = returnAbstract.replace('Results','<br><br><h4 class="card-title">Results</h4>');
             returnAbstract = returnAbstract.replace('Conclusions','<br><br><h4 class="card-title">Conclusions</h4>');
+            returnAbstract = returnAbstract.replace('INTRODUCTION','<br><br><h2 class="card-title">Introduction</h2>');
 
 
             returnAbstract = returnAbstract.replace('Introducción','<h4 class="card-title">Introducción</h4>');

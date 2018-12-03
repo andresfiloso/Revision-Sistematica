@@ -4,3 +4,29 @@ MySQL_python-1.2.5-cp27-none-win_amd64.whl
 
 set FLASK_DEBUG=1
 flask run
+
+
+
+
+
+<!-- favicons before url in results and classify. (for classify, articulos[key]....)
+
+{% if resultados[key].getURL().find("springer") != -1 %}
+<img src="https://www.springer.com/favicon.ico">
+{% endif %}
+{% if resultados[key].getURL().find("sciencedirect") != -1 %}
+<img src="https://sdfestaticassets-us-east-1.sciencedirectassets.com/shared-assets/18/images/favSD.ico">
+{% endif %}
+{% if resultados[key].getURL().find("ieeexplore") != -1 %}
+<img src="https://ieeexplore.ieee.org/favicon.ico">
+{% endif %}
+
+--> Graficos con foto en el medio. Puede servir para mostrar el porcentaje de articulos de cada participante
+
+<!-- favicons before url in results and classify. (for classify, articulos[key]....)
+
+<div class="col-lg-3 m-b-30">
+	<div data-label="10%" class="css-bar css-bar-10 css-bar-lg css-bar-default"><img src="../assets/images/users/1.jpg" alt="User"></div>
+</div>
+
+-->

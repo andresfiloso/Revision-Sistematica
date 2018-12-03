@@ -5,7 +5,6 @@ from flask import Flask, render_template, redirect, session, url_for, request
 from datasource import *
 from controller import *
 from models import *
-#from scrapping import *
 from scrappingBeta import *
 
 import jsonpickle
@@ -91,8 +90,6 @@ def add_user_2_project():
         return redirect(url_for('project'))
     else:
         session['error'] = "Error al invitar usuario"
-
-
 
 
 @app.route('/micuenta',methods = ['POST', 'GET'])
@@ -254,7 +251,19 @@ def article():
         callback = request.form["callback"] # Esta variable es utilizada saber quien llamo a /article
         enProyecto = request.form["enProyecto"]
 
-        articulo = scrap_article(url)
+        data_json = scrap_article(url)
+
+        data_dict = json.loads(data_json)
+
+        title = validCharacters(data_dict['title'])
+        url = data_dict['url']
+        pdf = data_dict['pdf']
+        abstract = validCharacters(data_dict['abstract'])
+        metadata = validCharacters(data_dict['metadata'])
+
+
+        # Se connstruye el objeto articulo que va a ser utilizado en el template
+        articulo = Resultado(0, title, url, pdf, abstract, metadata, False, False)
 
         return render_template('article.html', **locals())
     else:
