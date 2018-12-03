@@ -47,3 +47,15 @@ o el nombre.
 
 
 =============================================================================
+
+*****FECHA 01/12/2018*******************
+
+MODULO LOOKUP (Busqueda) (Casos 23 a 25)
+
+23) Busqueda con valores basura   		-> No aprobado -> se rompe con un ValueError en el JSON
+24) Busqueda con una string sin sentido		-> Aprobado
+25) Busqueda normal 				-> Aprobado
+26) Busqueda usando exclude y include 		-> Aprobado (NO FUNCIONA EN BUSQUEDAS SUBSIGUIENTES SOLO EN LA PRIMERA).
+27) Busqueda múltiple				-> No aprobado -> a partir de la tercera busqueda, ya no se incluye en la busqueda general.
+NOTA: No deberían estar unidas por un OR en vez de un AND? ---
+28) Segunda busqueda con valores basura		-> No aprobado -> se rompe como se esperaba.
