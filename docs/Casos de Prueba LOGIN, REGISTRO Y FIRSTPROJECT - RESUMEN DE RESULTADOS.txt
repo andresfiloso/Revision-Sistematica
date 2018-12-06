@@ -1,7 +1,7 @@
 ==============================================
 REVISION SISTEMÁTICA - CASOS DE PRUEBA
-MODULOS LOGIN - REGISTRO - FIRSTPROJECT
-FECHA 30/11/2018
+MODULOS LOGIN - REGISTRO - FIRSTPROJECT - LOOKUP
+*****FECHA 30/11/2018****************
 RESULTADOS DE CASOS DE PRUEBA
 ==============================================
 
@@ -59,3 +59,16 @@ MODULO LOOKUP (Busqueda) (Casos 23 a 25)
 27) Busqueda múltiple				-> No aprobado -> a partir de la tercera busqueda, ya no se incluye en la busqueda general.
 NOTA: No deberían estar unidas por un OR en vez de un AND? ---
 28) Segunda busqueda con valores basura		-> No aprobado -> se rompe como se esperaba.
+
+
+
+===============================================================================
+
+****FECHA 06/12/2018*********************
+
+MODULO SIGNUP
+
+29) Seguimiento prueba 14 "Coincidencia de contraseñas" 	-> Aprobado
+30) Seguimiento prueba 16 "Usuario ya registrado"		-> Aprobado
+31) Seguimiento prueba 17 "E-Mail ya registrado"		-> Aprobado
+32) 
