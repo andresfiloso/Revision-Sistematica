@@ -67,10 +67,33 @@ def get_all_users():
 	return usuarios
 
 def signup_user(usuario, email, password, password2):
-    sql = ("INSERT INTO `usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES (NULL, '"+usuario+"', '"+password+"', '"+email+"');")
-    rows = get_cur(datasource).execute(sql)
-    get_db(datasource).commit()
-    return rows
+
+	cur = get_cur(datasource)
+
+	sql = ("SELECT count(*) FROM Usuario where usuario = '" + usuario + "'")
+	rows = cur.execute(sql).fetchall()[0][0]
+
+	print rows
+
+	if rows != 0:
+		print usuario + " was founded"
+		session['error_desc'] = "El nombre de usuario ya esta en uso"
+		return 0
+
+	sql = ("SELECT count(*) FROM Usuario where email = '" + email + "'")
+	rows = cur.execute(sql).fetchall()[0][0]
+
+	if rows != 0:
+		print email + " was founded"
+		session['error_desc'] = "El email ya esta en uso"
+		return 0
+
+	if rows == 0:
+		sql = ("INSERT INTO `usuario` (`idUsuario`, `usuario`, `pass`, `email`) VALUES (NULL, '"+usuario+"', '"+password+"', '"+email+"');")
+		rows = get_cur(datasource).execute(sql)
+		get_db(datasource).commit()
+		print "Se dio de alta el usuario " + usuario
+		return rows
 
 def insert_colaboracion(usuario):
 

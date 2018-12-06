@@ -79,12 +79,11 @@ def registrarUsuario():
             session['status'] = "Usuario registrado correctamente"
             return redirect(url_for('home'))
         else:
-            session['error'] = "Error al registrar usuario"
-            return redirect(url_for('signup'))
+            session['error'] = "Error: " + session['error_desc']
+            return render_template('signup.html', **locals())
     else:
         session['error'] = "Las contraseñas no coinciden!"
         return render_template('signup.html', **locals())
-   
 
 
 @app.route('/add_user_2_project', methods = ['POST', 'GET'])
