@@ -74,11 +74,17 @@ def registrarUsuario():
     password = request.form["password"]
     password2 = request.form["password2"]
 
-    if(signup_user(usuario, email, password, password2)):
-        session['status'] = "Usuario registrado correctamente"
-        return redirect(url_for('home'))
+    if(password == password2):
+        if(signup_user(usuario, email, password, password2)):
+            session['status'] = "Usuario registrado correctamente"
+            return redirect(url_for('home'))
+        else:
+            session['error'] = "Error al registrar usuario"
+            return redirect(url_for('signup'))
     else:
-        session['error'] = "Error al registrar usuario"
+        session['error'] = "Las contraseñas no coinciden!"
+        return render_template('signup.html', **locals())
+   
 
 
 @app.route('/add_user_2_project', methods = ['POST', 'GET'])
