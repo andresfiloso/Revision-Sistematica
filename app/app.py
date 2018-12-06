@@ -129,7 +129,7 @@ def lookup():
 def firstProject():
     if session.get('usuario') is not None:
         usuario = getSession()
-        nombre = request.form["nombre"]
+        nombre = validCharacters(request.form["nombre"]) # issue #3 
 
         session['nombreProyecto'] = nombre
 
