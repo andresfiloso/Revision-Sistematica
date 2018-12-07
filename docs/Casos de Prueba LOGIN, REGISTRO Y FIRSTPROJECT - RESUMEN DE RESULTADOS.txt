@@ -71,4 +71,23 @@ MODULO SIGNUP
 29) Seguimiento prueba 14 "Coincidencia de contraseñas" 	-> Aprobado
 30) Seguimiento prueba 16 "Usuario ya registrado"		-> Aprobado
 31) Seguimiento prueba 17 "E-Mail ya registrado"		-> Aprobado
-32) 
+
+
+================================================================================
+
+****FECHA 07/12/2018*********************
+
+MODULO PROJECTS (Test del método validCharacters(string): String)
+
+32) Test de validCharacters(string) #1		-> Aprobado
+33) Test de validCharacters(string) #2		-> Aprobado
+
+
+MODULO LOOKUP (Test del metodo validQuery(string): String)
+
+34) Test de validQuery(string) #1		-> Aprobado
+35) Test de validQuery(string) #2		-> Aprobado
+
+
+==================================================================================
+
