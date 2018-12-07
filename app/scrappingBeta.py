@@ -27,14 +27,20 @@ def scrap_article(url):
 def scienceDirectAPI(query):
 	url = 'https://api.elsevier.com/content/search/sciencedirect?start=25&count=25&query='+ query +'&apiKey=7f59af901d2d86f78a1fd60c1bf9426a'
 	headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
-	r = requests.get(url, headers=headers).json()
+	
+	response = {}
+
+	try: 
+		r = requests.get(url, headers=headers).json()
+	except: 
+		data = json.dumps(response, indent=4, sort_keys=True)
+		return data
+		
 	results = json.dumps(r)
 
 	#print results
 
 	data = json.loads(results)
-
-	response = {}
 
 	try:
 		almost_one = data["search-results"]["entry"]

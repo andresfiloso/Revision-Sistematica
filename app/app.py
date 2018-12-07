@@ -133,6 +133,8 @@ def firstProject():
 
         session['nombreProyecto'] = nombre
 
+        print "Nombre del proyecto: " + nombre
+
         return render_template('firstProject.html', **locals())
     else:
         return redirect(url_for('home'))
@@ -186,7 +188,7 @@ def scrapping():
 
         print query
         
-        session['keywords'] = query 
+        session['keywords'] = validQuery(query) #issue #7 
 
         start = time.time()
 

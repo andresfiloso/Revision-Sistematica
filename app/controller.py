@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import session, jsonify, json
 from datasource import *
 from models import *
@@ -393,7 +394,17 @@ def new_proyect(nombre, descripcion, inclusion, exclusion):
 
 def validCharacters(string):
 
-	whitelist = set('abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890$%^&*()!#@-_+/%$.,:{;[]}')
+	whitelist = set('abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890$%^&*()!#@-_+/%$.,:{;[]}|?¬><~?><¿')
+	string = ''.join(filter(whitelist.__contains__, string))
+
+	return string
+
+
+
+# A filename cannot contain any of the following characters: \ / : * ? " < > |
+def validQuery(string):
+
+	whitelist = set('abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890$%^&()!#@-_+%$.,{;[]}')
 	string = ''.join(filter(whitelist.__contains__, string))
 
 	return string
