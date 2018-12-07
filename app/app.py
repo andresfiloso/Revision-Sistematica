@@ -27,7 +27,9 @@ def default():
 
 @app.route('/dev_db', methods = ['POST', 'GET'])
 def dev_db():
-    return render_template('dev_db.html',)
+    columns = 0
+    columnsName = 0
+    return render_template('dev_db.html', **locals())
 
 @app.route('/execute_query', methods = ['POST', 'GET'])
 def execute_query():
