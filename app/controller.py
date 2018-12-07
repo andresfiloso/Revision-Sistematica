@@ -409,4 +409,50 @@ def validQuery(string):
 
 	return string
 
+
+def execute_query_controller(query):
+	cur = get_cur(datasource)
+	print "SQL A EJECUTAR: " + query
+	try: 
+		rows = cur.execute(query)
+
+		response = {}
+
+
+
+		params = query.split()
+		table = params[params.index("from") + 1]
+
+		print "TABLA: " + table
+
+
+
+		i = 0
+
+		data = cur.fetchall()
+
+		session['registros'] = len(data)
+		print len(data)
+
+		session['columns'] = len(data[0])
+		print len(data[0])
+
+
+		rows = cur.execute("PRAGMA table_info("+table+");")
+
+		j = 0
+		columnsName = {}
+		for row in rows:
+			columnsName[j] = row[1]
+			j +=1
+
+		session['columnsName'] = columnsName
+
+		return [tuple(row) for row in data]
+
+	except Exception as inst:
+	 	return inst
+
+	
+	
 	

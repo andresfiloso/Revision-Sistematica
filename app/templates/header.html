@@ -47,7 +47,9 @@
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="user-img">
                                 <span class="round">
-                                  {{ usuario.getUsuario()[0:2].upper() }}
+                                  {% if usuario %}
+                                    {{ usuario.getUsuario()[0:2].upper() }}
+                                  {% endif %}
                                 </span>
                                 <span class="profile-status away pull-right"></span>
                               </div>
@@ -58,8 +60,10 @@
                                     <li>
                                         <div class="dw-user-box">
                                             <div class="u-text">
+                                                {% if usuario %}
                                                 <h4>  {{usuario.getUsuario()}}</h4>
                                                 <p class="text-muted">{{ usuario.getEmail()}}</p></div>
+                                                {% endif %}
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>

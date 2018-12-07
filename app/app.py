@@ -24,6 +24,21 @@ datasource = DataSource()
 def default():
     return redirect(url_for('home'),code=307)
 
+
+@app.route('/dev_db', methods = ['POST', 'GET'])
+def dev_db():
+    return render_template('dev_db.html',)
+
+@app.route('/execute_query', methods = ['POST', 'GET'])
+def execute_query():
+
+    query = request.args.get('query', default = '*', type = str)
+    results = execute_query_controller(query)
+
+    columns = session['columns']
+    columnsName = session['columnsName'] 
+    return render_template('dev_db.html', **locals())
+
 @app.route('/home', methods = ['POST', 'GET'])
 def home():
     if session.get('usuario') is not None:
