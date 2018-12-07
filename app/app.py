@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, redirect, session, url_for, request
 
+from itertools import product
 from datasource import *
 from controller import *
 from models import *
@@ -171,40 +172,50 @@ def scrapping():
         proyectos = get_projects()
         proyecto = get_project()
 
-        keywords = request.args.get('keywords', default = '*', type = str)
-        keywords2 = request.args.get('keywords2', default = '*', type = str)
-        keywords3 = request.args.get('keywords3', default = '*', type = str)
-        keywords4 = request.args.get('keywords4', default = '*', type = str)
-        keywords5 = request.args.get('keywords5', default = '*', type = str)
-        keywords6 = request.args.get('keywords6', default = '*', type = str)
-        keywords7 = request.args.get('keywords7', default = '*', type = str)
-        keywords8 = request.args.get('keywords8', default = '*', type = str)
-        keywords9 = request.args.get('keywords9', default = '*', type = str)
-        keywords10 = request.args.get('keywords10', default = '*', type = str)
-
-        terminosKeywords = keywords.split(' AND ')
-        terminosKeywords2 = keywords2.split(' AND ')
-        terminosKeywords3 = keywords3.split(' AND ')
-        terminosKeywords4 = keywords4.split(' AND ')
-        terminosKeywords5 = keywords5.split(' AND ')
-        terminosKeywords6 = keywords6.split(' AND ')
-
+        url = request.query_string
+        kw_count = url.split("&")
+        levels = len(kw_count)
+        print "Cantidad de parametros: " + str(levels)
         query = ""
-        print terminosKeywords
 
+        values = []
 
-        if (keywords2 != "*"):
-            for i in range(len(terminosKeywords2)):
-                aux = terminosKeywords2[i]
-                if(i != len(terminosKeywords2)-1):
-                    query = query + keywords + " AND " + aux + " OR "
+        for item in kw_count:
+            itemValue = item.split('=')[1]
+            itemValue = itemValue.replace("+AND+NOT+", "+NOT+")
+            values.append(itemValue)
+
+        real_vals = []
+        toShow = []
+
+        for item in values:
+            toShow.append(item.replace("+AND+", " AND ").replace("+", " "))
+            real_vals.append(item.split("+AND+"))
+
+        print toShow
+        print real_vals
+
+        organized = [' AND '.join(x) for x in product(*real_vals)]
+        
+
+        i = 0
+        for item in organized:
+            item = item.replace("+NOT+", " AND NOT ")
+            item = item.replace("+", " ")
+            print item
+
+            if i == 0:
+                query = item
+                i += 1
+            else:
+                if levels > 1:
+                    query = query + " OR " + item 
                 else:
-                    query = query + keywords + " AND " + aux 
-        else:
-            query = keywords
+                    query = query + " AND " + item
+        
+
 
         print query
-        
         session['keywords'] = validQuery(query) #issue #7 
 
         start = time.time()
@@ -262,7 +273,7 @@ def scrapping():
 
     else:
         return redirect(url_for('home'))
-
+    
 
 @app.route('/article',methods = ['POST', 'GET'])
 def article():
