@@ -128,6 +128,19 @@ def micuenta():
         return redirect(url_for('home'))
 
 
+@app.route('/user_guide',methods = ['POST', 'GET'])
+def user_guide():
+    if session.get('usuario') is not None:
+        if session.get('proyecto') is not None:
+            proyecto = get_project()
+        proyectos = get_projects()
+        usuario = getSession()
+        
+        return render_template('user_guide.html', **locals()) 
+    else:
+        return redirect(url_for('home'))
+
+
 @app.route('/lookup',methods = ['POST', 'GET'])
 def lookup():
     if session.get('usuario') is not None:
