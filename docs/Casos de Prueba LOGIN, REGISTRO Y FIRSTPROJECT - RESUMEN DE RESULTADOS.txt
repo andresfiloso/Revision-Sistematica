@@ -91,3 +91,21 @@ MODULO LOOKUP (Test del metodo validQuery(string): String)
 
 ==================================================================================
 
+****FECHA 07/12/2018*********************
+
+MODULO LOOKUP (Busqueda) (Pruebas para solucionar issues #4 y #5)
+
+36) Seguimiento prueba 26: 		-> Aprobado
+37) Seguimiento prueba 27: 		-> No aprobado	->IOError: No such file or directory --> Se rompe porque la query es muy gande?
+
+
+====================================================================================
+
+MODULO AgregarColaborador() (Casos 39-40)
+
+39) Agregar un colaborador 			-> Aprobado
+40) Agregar al creador como colaborador		-> No aprobado -> No se deberia permitir que esto pase
+41) Agregar 2 veces al mismo colaborador	-> No aprobado -> sqlite3 Integrity Error 
+
+
+
