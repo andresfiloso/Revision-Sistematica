@@ -108,4 +108,17 @@ MODULO AgregarColaborador() (Casos 39-40)
 41) Agregar 2 veces al mismo colaborador	-> No aprobado -> sqlite3 Integrity Error 
 
 
+=====================================================================================
 
+Agregar articulos al proyecto - Scrapping (15/12/2018)
+
+43) Agregar articulos a un proyecto		-> Aprobado 
+
+
+
+Clasificar artículos
+
+44) Clasificar articulos 			-> Aprobado 
+45) Cambiar la clasificacion del articulo 	-> Aprobado
+
+---Estas tres pruebas las hice para la especificacion de pruebas---
